@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/calander"
+            android:title="Calendar" />
+        <item
+            android:id="@+id/nav_medicine"
+            android:icon="@drawable/pills"
+            android:title="Medicine" />
+        <item
+            android:id="@+id/nav_caretaker"
+            android:icon="@drawable/caretakers"
+            android:title="Caretakers" />
+        <item
+            android:id="@+id/nav_scanQR"
+            android:icon="@drawable/qrcode"
+            android:title="Scan QR code" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/account"
+            android:title="Login / Register" />
+
+    </group>
+</menu>
