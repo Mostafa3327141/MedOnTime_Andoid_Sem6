@@ -1,4 +1,4 @@
-package fingertiptech.medontime.ui.calendar2;
+package fingertiptech.medontime.ui.calendar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package fingertiptech.medontime.ui.calendar2;
+package fingertiptech.medontime.ui.calendar;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
