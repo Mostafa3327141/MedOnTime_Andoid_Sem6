@@ -10,4 +10,6 @@
     <string name="menu_home">Home</string>
     <string name="menu_calendar">Calendar</string>
     <string name="menu_medicine">Medicine</string>
+    <string name="menu_scan_qr_code">Scan QR Code</string>
+
 </resources>

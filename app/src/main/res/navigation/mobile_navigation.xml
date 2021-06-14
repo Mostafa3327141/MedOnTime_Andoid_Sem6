@@ -22,4 +22,9 @@
         android:name="fingertiptech.medontime.ui.medicine.MedicineFragment"
         android:label="@string/menu_medicine"
         tools:layout="@layout/fragment_medicine" />
+    <fragment
+        android:id="@+id/nav_scanQR"
+        android:name="fingertiptech.medontime.ui.scanQRcode.ScanQRCodeFragment"
+        android:label="@string/menu_scan_qr_code"
+        tools:layout="@layout/fragment_scan_qr_code" />
 </navigation>
