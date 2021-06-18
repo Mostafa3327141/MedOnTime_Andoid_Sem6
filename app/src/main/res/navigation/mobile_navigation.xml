@@ -22,4 +22,10 @@
         android:name="fingertiptech.medontime.ui.medicine.MedicineFragment"
         android:label="@string/menu_medicine"
         tools:layout="@layout/fragment_medicine" />
+
+    <fragment
+        android:id="@+id/nav_caretaker"
+        android:name="fingertiptech.medontime.ui.caretaker.CaretakerFragment"
+        android:label="@string/menu_caretaker"
+        tools:layout="@layout/fragment_caretaker" />
 </navigation>
