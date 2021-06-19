@@ -28,4 +28,10 @@
         android:name="fingertiptech.medontime.ui.caretaker.CaretakerFragment"
         android:label="@string/menu_caretaker"
         tools:layout="@layout/fragment_caretaker" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="fingertiptech.medontime.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
