@@ -34,4 +34,9 @@
         android:name="fingertiptech.medontime.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_scanQR"
+        android:name="fingertiptech.medontime.ui.scanQRcode.ScanQRCodeFragment"
+        android:label="@string/menu_scan_qr_code"
+        tools:layout="@layout/fragment_scan_qr_code" />
 </navigation>
