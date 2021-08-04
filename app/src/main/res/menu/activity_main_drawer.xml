@@ -15,7 +15,7 @@
         <item
             android:id="@+id/nav_medicine"
             android:icon="@drawable/pills"
-            android:title="Medicine" />
+            android:title="Add Medicine" />
         <item
             android:id="@+id/nav_caretaker"
             android:icon="@drawable/caretakers"

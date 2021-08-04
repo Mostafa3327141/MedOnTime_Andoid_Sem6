@@ -1,22 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.profile.ProfileFragment">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/text_profile"
-        android:layout_width="match_parent"
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_width="fill_parent"
+        android:layout_margin="15dp">
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:text="User Name:"
+                />
+            <EditText
+                android:id="@+id/textview_UserName_Login"
+                android:width="200dp"
+                android:hint="Enter username here"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:text="Password:"
+                />
+            <EditText
+                android:id="@+id/textview_Password_Login"
+                android:hint="Enter password here"
+                android:password="true"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView />
+            <CheckBox
+                android:id="@+id/chkRememberPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Remember Password"
+                />
+        </TableRow>
+
+        <TableRow>
+            <TextView />
+            <Button
+                android:id="@+id/btnForgotPassword"
+                android:text="Forgot Password?"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        style="@style/btnStyle"
+        android:id="@+id/btnSignIn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign In"/>
+
+    <Button
+        style="@style/btnStyle"
+        android:id="@+id/btnRegister"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:onClick="nextIntent"/>
+
+
+
+</LinearLayout>

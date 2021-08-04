@@ -12,4 +12,30 @@
     <string name="menu_medicine">Medicine</string>
     <string name="menu_caretaker">Caretaker</string>
     <string name="menu_profile">Profile</string>
+
+    <string name="add_medicine">Add Medicine</string>
+    <string name="unitTypePrompt">Unit Type</string>
+
+    <string-array name="UnitTypeList">
+        <item>g</item>
+        <item>IU</item>
+        <item>mcg</item>
+        <item>mcg/hr</item>
+        <item>mcg/ml</item>
+        <item>mEg</item>
+        <item>mg</item>
+        <item>mg/cm2</item>
+        <item>mg/g</item>
+        <item>mg/ml</item>
+        <item>mL</item>
+        <item>%</item>
+    </string-array>
+
+    <string-array name="FrequencyList">
+        <item>Every Day</item>
+        <item>As needed</item>
+        <item>Specific Days</item>
+        <item>Days Interval</item>
+        <item>Birth Control Cycle</item>
+    </string-array>
 </resources>
