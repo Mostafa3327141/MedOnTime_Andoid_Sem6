@@ -1,4 +1,4 @@
-package fingertiptech.medontime.ui.profile;
+package fingertiptech.medontime.ui.login;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,21 +8,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import fingertiptech.medontime.R;
-import fingertiptech.medontime.ui.profile.ProfileViewModel;
 
-public class ProfileFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
-    private ProfileViewModel profileViewModel;
+    private LoginViewModel loginViewModel;
     EditText editText_username;
     EditText getEditText_password;
     Button btn_signIn;
@@ -32,9 +27,9 @@ public class ProfileFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        loginViewModel =
+                new ViewModelProvider(this).get(LoginViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_login, container, false);
 
         editText_username = root.findViewById(R.id.editText_userName);
         getEditText_password = root.findViewById(R.id.editText_Password);
