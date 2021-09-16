@@ -13,5 +13,6 @@
     <string name="menu_caretaker">Caretaker</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_scan_qr_code">Scan QR Code</string>
+    <string name="menu_scan_NFC_tag">Scan NFC Tag</string>
 
 </resources>
