@@ -1,16 +1,16 @@
-package fingertiptech.medontime.ui.calendar;
+package fingertiptech.medontime.ui.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class CalendarViewModel extends ViewModel {
+public class ProfileViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public CalendarViewModel() {
+    public ProfileViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is Calendar fragment");
+        mText.setValue("This is Profile fragment");
     }
 
     public LiveData<String> getText() {

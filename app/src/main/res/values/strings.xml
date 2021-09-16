@@ -8,7 +8,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_calendar">Calendar</string>
+    <string name="menu_profile">Profile</string>
     <string name="menu_medicine">Medicine</string>
     <string name="menu_caretaker">Caretaker</string>
     <string name="menu_LogIn">Login</string>
