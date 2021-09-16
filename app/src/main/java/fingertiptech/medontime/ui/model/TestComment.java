@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class TestComment {
     private String postId , id, name , email;
+
     @SerializedName("body")
     private String commentText;
 

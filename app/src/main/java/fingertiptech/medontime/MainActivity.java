@@ -19,7 +19,9 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-
+//    https://medontime-api.herokuapp.com/api/caretakerapi?key=sH5O!2cdOqP1%5E
+//    https://medontime-api.herokuapp.com/API/MedicationAPI?key=sH5O!2cdOqP1%5E
+//    https://medontime-api.herokuapp.com/API/PatientAPI?key=sH5O!2cdOqP1%5E
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

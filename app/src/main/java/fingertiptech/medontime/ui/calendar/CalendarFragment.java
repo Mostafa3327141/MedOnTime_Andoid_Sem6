@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.Hashing.HashingPassword;
 
 public class CalendarFragment extends Fragment {
 
@@ -30,6 +31,8 @@ public class CalendarFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+
         return root;
     }
 }
