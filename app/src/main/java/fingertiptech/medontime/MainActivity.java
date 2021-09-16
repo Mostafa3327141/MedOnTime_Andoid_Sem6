@@ -44,7 +44,11 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_medicine,
                 R.id.nav_caretaker,
                 R.id.nav_profile,
-                R.id.nav_testmockapi)
+                R.id.nav_testmockapi,
+                R.id.nav_testmockapiquery,
+                R.id.nav_testmockapipost,
+                R.id.nav_testmockapiputpatch,
+                R.id.nav_testmockapidelete)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
