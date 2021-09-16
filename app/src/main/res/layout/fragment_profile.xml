@@ -8,7 +8,6 @@
     android:layout_gravity="center">
 
     <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_margin="15dp">
@@ -34,19 +33,21 @@
         </TableRow>
         <TableRow>
             <TextView />
+
             <CheckBox
                 android:id="@+id/chkRememberPassword"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Remember Password"
-                />
+                android:layout_height="match_parent"
+                android:text="Remember Password" />
         </TableRow>
 
         <TableRow>
             <TextView />
+
             <Button
                 android:id="@+id/btnForgotPassword"
-                android:text="Forgot Password?"/>
+                android:layout_height="34dp"
+                android:text="Forgot Password?" />
         </TableRow>
 
     </TableLayout>

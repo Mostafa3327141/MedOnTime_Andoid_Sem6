@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ public class ProfileFragment extends Fragment {
     EditText getEditText_password;
     Button btn_signIn;
     Button btn_register;
+    Button btn_forgotPass;
+    CheckBox checkBox_rmbPass;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,14 +40,19 @@ public class ProfileFragment extends Fragment {
         getEditText_password = root.findViewById(R.id.editText_Password);
         btn_signIn = root.findViewById(R.id.btnSignIn);
         btn_register = root.findViewById(R.id.btnRegister);
+        btn_forgotPass = root.findViewById(R.id.btnForgotPassword);
+        checkBox_rmbPass = root.findViewById(R.id.chkRememberPassword);
+
 
         btn_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = editText_username.getText().toString();
                 String password = getEditText_password.getText().toString();
+                boolean passRemember = checkBox_rmbPass.isChecked();
                 Log.wtf("Username: ", username+"\n");
-                Log.wtf("Password: ", password);
+                Log.wtf("Password: ", password+"\n");
+                if(passRemember){Log.wtf("Remember password?", "Yes");}
             }
         });
 
@@ -52,6 +60,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.wtf("Register", "Register is clicked");
+            }
+        });
+
+        btn_forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.wtf("Forgot password!", "Forgot password is clicked");
             }
         });
 
