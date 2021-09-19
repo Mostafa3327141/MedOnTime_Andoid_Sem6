@@ -3,6 +3,7 @@ package fingertiptech.medontime.ui.Hashing;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +17,7 @@ public class HashingPassword {
 
 
     public String getHash(String password, String email) {
-        String contentToBeHashed = password + email;
+        String contentToBeHashed = password + email.toLowerCase(Locale.ROOT);
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("SHA-256");
