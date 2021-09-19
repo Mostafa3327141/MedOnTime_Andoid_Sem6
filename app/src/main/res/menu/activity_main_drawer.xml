@@ -28,6 +28,20 @@
             android:id="@+id/nav_login"
             android:icon="@drawable/account"
             android:title="Login / Register" />
-
+        <item
+            android:id="@+id/nav_testmockapi"
+            android:title="Test(GET) / MockApi" />
+        <item
+            android:id="@+id/nav_testmockapiquery"
+            android:title="Test(GET Query) / MockApi" />
+        <item
+            android:id="@+id/nav_testmockapipost"
+            android:title="Test(POST) / MockApi" />
+        <item
+            android:id="@+id/nav_testmockapiputpatch"
+            android:title="Test(PUT PATCH) / MockApi" />
+        <item
+            android:id="@+id/nav_testmockapidelete"
+            android:title="Test(Delete) / MockApi" />
     </group>
 </menu>
