@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+    <TableLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_margin="15dp">
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:text="User Name:" />
+            <EditText
+                android:id="@+id/editText_userName"
+                android:width="200dp"
+                android:hint="Enter username here"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:text="Password:"
+                />
+            <EditText
+                android:id="@+id/editText_Password"
+                android:hint="Enter password here"
+                android:password="true"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView />
+
+            <CheckBox
+                android:id="@+id/chkRememberPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:text="Remember Password" />
+        </TableRow>
+
+        <TableRow>
+            <TextView />
+
+            <Button
+                android:id="@+id/btnForgotPassword"
+                android:layout_height="34dp"
+                android:text="Forgot Password?" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btnSignIn"
+        style="@style/btnStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign In"/>
+
+    <Button
+        android:id="@+id/btnRegister"
+        style="@style/btnStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account? Register!"
+        android:onClick="nextIntent"/>
+
+
+
+</LinearLayout>

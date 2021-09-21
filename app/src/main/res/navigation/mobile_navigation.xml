@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_calendar"
-        android:name="fingertiptech.medontime.ui.calendar.CalendarFragment"
-        android:label="@string/menu_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        android:id="@+id/nav_profile"
+        android:name="fingertiptech.medontime.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_medicine"
@@ -30,15 +30,10 @@
         tools:layout="@layout/fragment_caretaker" />
 
     <fragment
-        android:id="@+id/nav_profile"
-        android:name="fingertiptech.medontime.ui.profile.ProfileFragment"
-        android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/nav_scanQR"
-        android:name="fingertiptech.medontime.ui.scanQRcode.ScanQRCodeFragment"
-        android:label="@string/menu_scan_qr_code"
-        tools:layout="@layout/fragment_scan_qr_code" />
+        android:id="@+id/nav_login"
+        android:name="fingertiptech.medontime.ui.login.LoginFragment"
+        android:label="@string/menu_LogIn"
+        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/nav_testmockapi"
         android:name="fingertiptech.medontime.ui.testmockapiGET.TestMockApiGetFragment"

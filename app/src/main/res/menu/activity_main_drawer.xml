@@ -9,13 +9,13 @@
             android:icon="@drawable/home"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_calendar"
-            android:icon="@drawable/calander"
-            android:title="Calendar" />
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/account"
+            android:title="Profile" />
         <item
             android:id="@+id/nav_medicine"
             android:icon="@drawable/pills"
-            android:title="Medicine" />
+            android:title="Add Medicine" />
         <item
             android:id="@+id/nav_caretaker"
             android:icon="@drawable/caretakers"
@@ -25,7 +25,7 @@
             android:icon="@drawable/qrcode"
             android:title="Scan QR code" />
         <item
-            android:id="@+id/nav_profile"
+            android:id="@+id/nav_login"
             android:icon="@drawable/account"
             android:title="Login / Register" />
         <item

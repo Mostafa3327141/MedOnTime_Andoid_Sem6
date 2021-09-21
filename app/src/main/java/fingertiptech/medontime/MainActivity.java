@@ -3,6 +3,7 @@ package fingertiptech.medontime;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -41,11 +42,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,
-                R.id.nav_calendar,
-                R.id.nav_medicine,
-                R.id.nav_caretaker,
-                R.id.nav_profile,
+                R.id.nav_home, R.id.nav_profile, R.id.nav_medicine, R.id.nav_caretaker, R.id.nav_login,
                 R.id.nav_testmockapi,
                 R.id.nav_testmockapiquery,
                 R.id.nav_testmockapipost,
@@ -70,5 +67,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void displayToast(CharSequence text){
+        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
