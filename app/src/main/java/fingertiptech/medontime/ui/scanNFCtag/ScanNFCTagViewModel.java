@@ -9,7 +9,7 @@ public class ScanNFCTagViewModel extends ViewModel {
 
     public ScanNFCTagViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is Scan NFC Tag Fragment");
+        mText.setValue("Testing NFC fragment");
     }
 
     public LiveData<String> getText() {
