@@ -82,33 +82,6 @@ public class LoginFragment extends Fragment {
                 String hashPassword = new HashingPassword().getHash(password,username);
                 // Verify email and password match
                 verifyPatient(username, hashPassword);
-//                Call<List<Patient>> callPatient = patientJSONPlaceholder.getAllPatients();
-//                ArrayList<Patient> allPatients = new ArrayList<>();
-//                callPatient.enqueue(new Callback<List<Patient>>() {
-//                    @Override
-//                    public void onResponse(Call<List<Patient>> call, Response<List<Patient>> response) {
-//                        if (response.isSuccessful()){
-////                    Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
-//                            Toast.makeText(getActivity(), "TEST", Toast.LENGTH_SHORT).show();
-//                            allPatients.addAll(response.body());
-//                            Log.wtf("test nancy ", "TESTTEST");
-//
-////                    if (verifyLogin(hashPassword) != null){
-////                        Toast.makeText(getActivity(), verifyLogin(hashPassword).getFirstName(), Toast.LENGTH_LONG).show();
-////                    }else{
-////                        Toast.makeText(getActivity(), "Not found", Toast.LENGTH_LONG).show();
-////                    }
-//                        }
-//                        List<Patient> itemList = response.body();
-//                        System.out.println(itemList.toArray().toString());
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<List<Patient>> call, Throwable t) {
-//                        Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                });
 
             }
         });
@@ -142,7 +115,6 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
                 }
                 List<Patient> patientsList = response.body();
-                System.out.println(patientsList.toArray().toString());
                 for(Patient patient: patientsList){
                     if(hashPassword.equals(patient.getPassword())){
                         Toast.makeText(getActivity(), "Welcome " +patient.getFirstName(), Toast.LENGTH_LONG).show();
@@ -161,19 +133,6 @@ public class LoginFragment extends Fragment {
         });
     }
 
-//    public ArrayList<Patient> passPatients(ArrayList<Patient> patients){
-//        allPatient = patients;
-//        return patients;
-//    }
-//
-//    public Patient verifyLogin(String hashPassword){
-//        for(int i = 0 ; i <= getAllPatient.size(); i++){
-//            if(hashPassword.equals(getAllPatient.get(i).getPassword())){
-//                return getAllPatient.get(i);
-//            }
-//        }
-//        return null;
-//    }
     public void addPatient(){
         Patient patient = new Patient(0,0,"Hung1","Chen1","test1@mail.com",new HashingPassword().getHash("admin1","test1@mail.com"),"9993332222",30,null,null,null);
 
