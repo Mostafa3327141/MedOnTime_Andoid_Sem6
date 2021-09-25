@@ -28,7 +28,11 @@
         android:name="fingertiptech.medontime.ui.caretaker.CaretakerFragment"
         android:label="@string/menu_caretaker"
         tools:layout="@layout/fragment_caretaker" />
-
+    <fragment
+        android:id="@+id/nav_scanQR"
+        android:name="fingertiptech.medontime.ui.scanQRcode.ScanQRCodeFragment"
+        android:label="@string/menu_ScanQR"
+        tools:layout="@layout/fragment_scan_qr_code" />
     <fragment
         android:id="@+id/nav_login"
         android:name="fingertiptech.medontime.ui.login.LoginFragment"
