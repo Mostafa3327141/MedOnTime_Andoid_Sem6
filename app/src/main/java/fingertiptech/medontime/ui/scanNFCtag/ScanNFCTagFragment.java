@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 
 import fingertiptech.medontime.R;
 
+//TODO: Edit scan nfc fragment to have the write button look like a frame for the UI.
 
 public class ScanNFCTagFragment extends Fragment {
 
@@ -37,7 +38,7 @@ public class ScanNFCTagFragment extends Fragment {
 
     // for passing data to activity
     public interface OnDataPass {
-        public void onDataPass(String data);
+        public void onDataPass(String data, View view);
     }
 
     public ScanNFCTagFragment() {
@@ -52,18 +53,18 @@ public class ScanNFCTagFragment extends Fragment {
     }
 
     // for when you need to handle the passing of data in this fragment
-    public void passData(String data) {
-        dataPasser.onDataPass(data);
+    public void passData(String data, View view) {
+        dataPasser.onDataPass(data, view);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.scan_nfc_tag_fragment, container, false);
 
-        passData("NFC Fragment Active");
+        passData("NFC Fragment Active", view);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.scan_nfc_tag_fragment,
-                container, false);
+        return view;
     }
 
 
