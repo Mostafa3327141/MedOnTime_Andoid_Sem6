@@ -9,22 +9,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BinaryBitmap;
@@ -37,14 +34,26 @@ import com.google.zxing.common.HybridBinarizer;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.jsonplaceholder.MedicationJSONPlaceholder;
+import fingertiptech.medontime.ui.model.Medication;
+import fingertiptech.medontime.ui.recycleadpoter.MedicationAdaptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     public static final int PICK_IMAGE = 1;
     String resultQRScan;
+    private RecyclerView medicationRecyclerViewItems;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +62,12 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         Button btnAddMed = root.findViewById(R.id.btnAddMed);
         Button btnScanQRGallery = root.findViewById(R.id.btnScanQRGallary);
+
+        medicationRecyclerViewItems =root.findViewById(R.id.recycleView_medicine);
+        medicationRecyclerViewItems.setHasFixedSize(true);
+        medicationRecyclerViewItems.setLayoutManager(new LinearLayoutManager(getContext()));
+
+//        getMedicine("614e6672b92d4b88216b0fe6");
 
         btnAddMed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +102,58 @@ public class HomeFragment extends Fragment {
         });
 
 
+
+
+
         return root;
+    }
+
+    public void getMedicine(String medicatinId){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://medontime-api.herokuapp.com/API/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        MedicationJSONPlaceholder medicationJSONPlaceholder = retrofit.create(MedicationJSONPlaceholder.class);
+//        Call<List<Medication>> callMedication = medicationJSONPlaceholder.getMedicationList(medicatinId);
+        Call<Medication> callMedication = medicationJSONPlaceholder.getMedication(medicatinId);
+
+        callMedication.enqueue(new Callback<Medication>() {
+            @Override
+            public void onResponse(Call<Medication> call, Response<Medication> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                List<Medication> medicationsList = new ArrayList<Medication>();
+                Medication medicationList = response.body();
+                medicationsList.add(medicationList);
+                MedicationAdaptor postAdapter = new MedicationAdaptor(getActivity() , medicationsList);
+                medicationRecyclerViewItems.setAdapter(postAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<Medication> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();
+            }
+        });
+//        callMedication.enqueue(new Callback<List<Medication>>() {
+//            @Override
+//            public void onResponse(Call<List<Medication>> call, Response<List<Medication>> response) {
+//                if (!response.isSuccessful()){
+//                    Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                List<Medication> medicationList = response.body();
+//                MedicationAdaptor postAdapter = new MedicationAdaptor(getActivity() , medicationList);
+//                medicationRecyclerViewItems.setAdapter(postAdapter);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Medication>> call, Throwable t) {
+//                Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
     private void startGallery() {
         Intent intent = new Intent();
@@ -131,18 +197,14 @@ public class HomeFragment extends Fragment {
                     resultQRScan = result.getText();
 
 
-                    Toast.makeText(getActivity().getApplicationContext(),resultQRScan,Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(getActivity(),resultQRScan,Toast.LENGTH_LONG).show();
+                    getMedicine(resultQRScan);
                     Thread.sleep(2000);
-
 //                    Intent intent = new Intent(getActivity().getApplicationContext(),HomeActivity.class);
 //                    intent.putExtra("resultQRScan",resultQRScan);
 //                    startActivity(intent);
 
 //                    getMedicationFromDB(resultQRScan);
-
-                    //after scan qr image and forward to home
-
 
                 }catch (Exception e){
 
@@ -156,13 +218,13 @@ public class HomeFragment extends Fragment {
 
                 e.printStackTrace();
 
-//                Toast.makeText(GallaryScanQRActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
 
             }
 
         }else {
 
-//            Toast.makeText(GallaryScanQRActivity.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "You haven't picked Image",Toast.LENGTH_LONG).show();
 
         }
 
