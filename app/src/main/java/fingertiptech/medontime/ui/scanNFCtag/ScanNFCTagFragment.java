@@ -32,6 +32,10 @@ import fingertiptech.medontime.R;
 
 //TODO: Edit scan nfc fragment to have the write button look like a frame for the UI.
 
+
+// TODO: Within Add Medicine fragment, prompt the caretaker to scan the NFC for initially writing it's object ID.
+// We could also add another field in the Medication to instead detect whether it's been added to an NFC tag yet.
+
 public class ScanNFCTagFragment extends Fragment {
 
     OnDataPass dataPasser;

@@ -25,23 +25,28 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="70sp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <EditText
             android:id="@+id/edit_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:hint="Type something..." />
+            android:hint="Type something..."
+            android:minHeight="48dp" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
             android:id="@+id/ActivateButton"
-            android:layout_weight="1"
-            android:text="Activate Tag"
-            android:textColor="#000000"/>
+            android:padding="32sp"
+            android:text="Scan Here"
+            android:textSize="30dp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/nfc_contents"
@@ -60,7 +65,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20dp"/>
     <!-- NFC Tag Testing End -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
