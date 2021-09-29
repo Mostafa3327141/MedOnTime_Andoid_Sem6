@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void displayToast(CharSequence text){
-        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-        toast.show();
-    }
+//    public void displayToast(CharSequence text){
+//        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+//        toast.show();
+//    }
 }

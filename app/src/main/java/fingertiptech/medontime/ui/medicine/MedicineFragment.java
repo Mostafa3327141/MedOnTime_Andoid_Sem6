@@ -11,12 +11,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import fingertiptech.medontime.MainActivity;
 import fingertiptech.medontime.R;
 
 public class MedicineFragment extends Fragment {
@@ -31,7 +28,7 @@ public class MedicineFragment extends Fragment {
     EditText editText_hoursInBetween;
     TextView textView_medicine_setAlarm;
     Button btnScanQR;
-    Button btnAdd;
+    Button btnNext;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,20 +43,22 @@ public class MedicineFragment extends Fragment {
         textView_medicine_setAlarm = root.findViewById(R.id.textView_displaySettingTime);
         frequencySpinner = root.findViewById(R.id.frequencySpinner);
         editText_hoursInBetween = root.findViewById(R.id.editText_hoursInBetween);
-        btnAdd = root.findViewById(R.id.btnAdd);
+        btnNext = root.findViewById(R.id.btnNext);
         btnScanQR = root.findViewById(R.id.useQRbtn);
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.wtf("Button Clicked","Add button clicked");
+                MedicineFragmentStep2 stepTwoAddMedicine = new MedicineFragmentStep2();
+                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , stepTwoAddMedicine).commit();
+
             }
         });
 
         btnScanQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.wtf("Button Clicked","Scan QR button clicked");
+                Log.wtf("Button Clicked", "Scan QR button clicked");
             }
         });
 

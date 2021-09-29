@@ -22,6 +22,16 @@
         android:name="fingertiptech.medontime.ui.medicine.MedicineFragment"
         android:label="@string/menu_medicine"
         tools:layout="@layout/fragment_medicine" />
+    <fragment
+        android:id="@+id/nav_medicine_step2"
+        android:name="fingertiptech.medontime.ui.medicine.MedicineFragmentStep2"
+        android:label="Medicine Step 2"
+        tools:layout="@layout/fragment_medicine_step2" />
+    <fragment
+        android:id="@+id/nav_medicine_step3"
+        android:name="fingertiptech.medontime.ui.medicine.MedicineFragmentStep3"
+        android:label="Medicine Step 3"
+        tools:layout="@layout/fragment_medicine_step3" />
 
     <fragment
         android:id="@+id/nav_caretaker"
@@ -34,4 +44,9 @@
         android:name="fingertiptech.medontime.ui.login.LoginFragment"
         android:label="@string/menu_LogIn"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/nav_register"
+        android:name="fingertiptech.medontime.ui.register.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register" />
 </navigation>

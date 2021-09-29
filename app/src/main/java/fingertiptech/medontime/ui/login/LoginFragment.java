@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.register.RegisterFragment;
 
 public class LoginFragment extends Fragment {
 
@@ -54,7 +55,8 @@ public class LoginFragment extends Fragment {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.wtf("Register", "Register is clicked");
+                RegisterFragment registerFragment = new RegisterFragment();
+                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , registerFragment).commit();
             }
         });
 
