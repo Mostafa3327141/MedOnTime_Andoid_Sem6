@@ -9,13 +9,14 @@
             android:icon="@drawable/home"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_calendar"
-            android:icon="@drawable/calander"
-            android:title="Calendar" />
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/account"
+            android:title="Profile" />
         <item
             android:id="@+id/nav_medicine"
             android:icon="@drawable/pills"
-            android:title="Medicine" />
+            android:title="Add Medicine" />
+
         <item
             android:id="@+id/nav_caretaker"
             android:icon="@drawable/caretakers"
@@ -25,13 +26,30 @@
             android:icon="@drawable/qrcode"
             android:title="Scan QR code" />
         <item
+            android:id="@+id/nav_login"
             android:id="@+id/nav_scanNFC"
             android:icon="@drawable/nfc_tag_icon"
             android:title="Scan NFC Tag" />
         <item
             android:id="@+id/nav_profile"
+
             android:icon="@drawable/account"
             android:title="Login / Register" />
 
+        <item
+            android:id="@+id/nav_testmockapi"
+            android:title="Test(GET) / MockApi" />
+        <item
+            android:id="@+id/nav_testmockapiquery"
+            android:title="Test(GET Query) / MockApi" />
+        <item
+            android:id="@+id/nav_testmockapipost"
+            android:title="Test(POST) / MockApi" />
+        <item
+            android:id="@+id/nav_testmockapiputpatch"
+            android:title="Test(PUT PATCH) / MockApi" />
+        <item
+            android:id="@+id/nav_testmockapidelete"
+            android:title="Test(Delete) / MockApi" />
     </group>
 </menu>

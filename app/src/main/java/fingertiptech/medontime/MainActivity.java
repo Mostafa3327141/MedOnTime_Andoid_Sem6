@@ -40,6 +40,12 @@ public class MainActivity extends AppCompatActivity implements ScanNFCTagFragmen
 
     private AppBarConfiguration mAppBarConfiguration;
 
+//    https://medontime.herokuapp.com/
+//    https://medontime-api.herokuapp.com/api/caretakerapi?key=sH5O!2cdOqP1%5E
+//    https://medontime-api.herokuapp.com/API/MedicationAPI?key=sH5O!2cdOqP1%5E
+//    https://medontime-api.herokuapp.com/API/PatientAPI?key=sH5O!2cdOqP1%5E
+
+
     // adding messages for NFC tagging
     public static final String Error_Detected = "No NFC Tag Detected";
     public static final String Write_Success = "Text Written Successfully";
@@ -120,7 +126,12 @@ public class MainActivity extends AppCompatActivity implements ScanNFCTagFragmen
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_calendar, R.id.nav_medicine, R.id.nav_caretaker, R.id.nav_profile)
+                R.id.nav_home, R.id.nav_profile, R.id.nav_medicine, R.id.nav_caretaker, R.id.nav_login,
+                R.id.nav_testmockapi,
+                R.id.nav_testmockapiquery,
+                R.id.nav_testmockapipost,
+                R.id.nav_testmockapiputpatch,
+                R.id.nav_testmockapidelete)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -242,4 +253,9 @@ public class MainActivity extends AppCompatActivity implements ScanNFCTagFragmen
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+//    public void displayToast(CharSequence text){
+//        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+//        toast.show();
+//    }
 }

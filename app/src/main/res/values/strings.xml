@@ -2,17 +2,47 @@
     <string name="app_name">MedOnTime</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">MedOnTime</string>
+    <string name="nav_header_subtitle">https://medontime.herokuapp.com/</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_calendar">Calendar</string>
+    <string name="menu_profile">Profile</string>
     <string name="menu_medicine">Medicine</string>
     <string name="menu_caretaker">Caretaker</string>
+
+    <string name="menu_LogIn">Login</string>
+
+    <string name="add_medicine">Add Medicine</string>
+    <string name="unitTypePrompt">Unit Type</string>
+
+    <string-array name="UnitTypeList">
+        <item>g</item>
+        <item>IU</item>
+        <item>mcg</item>
+        <item>mcg/hr</item>
+        <item>mcg/ml</item>
+        <item>mEg</item>
+        <item>mg</item>
+        <item>mg/cm2</item>
+        <item>mg/g</item>
+        <item>mg/ml</item>
+        <item>mL</item>
+        <item>%</item>
+    </string-array>
+
     <string name="menu_profile">Profile</string>
     <string name="menu_scan_qr_code">Scan QR Code</string>
     <string name="menu_scan_NFC_tag">Scan NFC Tag</string>
 
+    <string-array name="FrequencyList">
+        <item>Every Day</item>
+        <item>As needed</item>
+        <item>Specific Days</item>
+        <item>Days Interval</item>
+        <item>Birth Control Cycle</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

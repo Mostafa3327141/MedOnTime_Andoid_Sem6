@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import fingertiptech.medontime.R;
-import fingertiptech.medontime.ui.profile.ProfileViewModel;
 
 public class ProfileFragment extends Fragment {
 
@@ -24,7 +23,7 @@ public class ProfileFragment extends Fragment {
         profileViewModel =
                 new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final TextView textView = root.findViewById(R.id.text_profile);
+        final TextView textView = root.findViewById(R.id.text_calendar);
         profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
