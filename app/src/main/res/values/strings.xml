@@ -11,6 +11,7 @@
     <string name="menu_profile">Profile</string>
     <string name="menu_medicine">Medicine</string>
     <string name="menu_caretaker">Caretaker</string>
+
     <string name="menu_LogIn">Login</string>
 
     <string name="add_medicine">Add Medicine</string>
@@ -30,6 +31,10 @@
         <item>mL</item>
         <item>%</item>
     </string-array>
+
+    <string name="menu_profile">Profile</string>
+    <string name="menu_scan_qr_code">Scan QR Code</string>
+    <string name="menu_scan_NFC_tag">Scan NFC Tag</string>
 
     <string-array name="FrequencyList">
         <item>Every Day</item>
