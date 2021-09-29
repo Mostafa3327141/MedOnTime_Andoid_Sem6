@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_login.xml" value="0.22" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/test_mock_api_delete_fragment.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/test_mock_api_get_fragment.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/test_mock_api_post_fragment.xml" value="0.1" />
