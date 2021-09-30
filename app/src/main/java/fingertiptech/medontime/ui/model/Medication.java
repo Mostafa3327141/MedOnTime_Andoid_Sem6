@@ -17,6 +17,7 @@ public class Medication {
     String shape;
     List<Calendar> Times;
 
+    // this constructor is for retrive from db
     public Medication(String id, String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String firstDoseTime, int hoursBetween, String frequency, String shape, List<Calendar> times) {
         this.id = id;
         this.caretakerID = caretakerID;
@@ -31,7 +32,20 @@ public class Medication {
         this.shape = shape;
         Times = times;
     }
-
+    // this constructor is for add to db
+    public Medication(String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String firstDoseTime, int hoursBetween, String frequency, String shape, List<Calendar> times) {
+        this.caretakerID = caretakerID;
+        this.patientID = patientID;
+        this.medicationName = medicationName;
+        this.medicationImage = medicationImage;
+        this.unit = unit;
+        this.quantity = quantity;
+        this.firstDoseTime = firstDoseTime;
+        this.hoursBetween = hoursBetween;
+        this.frequency = frequency;
+        this.shape = shape;
+        Times = times;
+    }
     public String getId() {
         return id;
     }

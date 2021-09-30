@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,10 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fingertiptech.medontime.R;
-import fingertiptech.medontime.databinding.FragmentRegisterBinding;
 import fingertiptech.medontime.ui.jsonplaceholder.MedicationJSONPlaceholder;
 import fingertiptech.medontime.ui.model.Medication;
-import fingertiptech.medontime.ui.recycleadpoter.MedicationAdaptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,6 +66,8 @@ public class MedicineFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
+        medicineViewModel.init();
+
         View root = inflater.inflate(R.layout.fragment_medicine, container, false);
 
         editText_medicine_name = root.findViewById(R.id.editText_medName);
@@ -135,7 +134,7 @@ public class MedicineFragment extends Fragment {
                 List<Medication> medicationsList = new ArrayList<Medication>();
                 Medication medicationList = response.body();
                 medicationsList.add(medicationList);
-                MedicationAdaptor postAdapter = new MedicationAdaptor(getActivity() , medicationsList);
+//                MedicationAdaptor postAdapter = new MedicationAdaptor(getActivity() , medicationsList);
 //                medicationRecyclerViewItems.setAdapter(postAdapter);
             }
 
@@ -202,11 +201,6 @@ public class MedicineFragment extends Fragment {
                     Toast.makeText(getActivity(),resultQRScan,Toast.LENGTH_LONG).show();
                     getMedicine(resultQRScan);
                     Thread.sleep(2000);
-//                    Intent intent = new Intent(getActivity().getApplicationContext(),HomeActivity.class);
-//                    intent.putExtra("resultQRScan",resultQRScan);
-//                    startActivity(intent);
-
-//                    getMedicationFromDB(resultQRScan);
 
                 }catch (Exception e){
 
