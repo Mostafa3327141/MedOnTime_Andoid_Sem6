@@ -45,7 +45,7 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
 
         holder.name.setText("Name : " + medicationItem.getMedicationName());
         holder.time.setText("Time : " + medicationItem.getFirstDoseTime());
-        holder.dosage.setText("Dosage :" + medicationItem.getDosage());
+        holder.dosage.setText("Dosage :" + medicationItem.getUnit());
         holder.quantity.setText("Quantity :" + medicationItem.getQuantity());
     }
 
