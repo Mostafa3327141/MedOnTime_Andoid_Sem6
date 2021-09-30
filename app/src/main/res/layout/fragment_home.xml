@@ -20,13 +20,6 @@
             android:layout_height="wrap_content"
             android:text="@string/add_medicine"
             android:onClick="nextIntent"/>
-        <Button
-            android:id="@+id/btnScanQRGallary"
-            style="@style/btnStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Scan QR code from Gallary" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView_medicine"

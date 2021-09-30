@@ -61,13 +61,11 @@ public class HomeFragment extends Fragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         Button btnAddMed = root.findViewById(R.id.btnAddMed);
-        Button btnScanQRGallery = root.findViewById(R.id.btnScanQRGallary);
 
         medicationRecyclerViewItems =root.findViewById(R.id.recycleView_medicine);
         medicationRecyclerViewItems.setHasFixedSize(true);
         medicationRecyclerViewItems.setLayoutManager(new LinearLayoutManager(getContext()));
 
-//        getMedicine("614e6672b92d4b88216b0fe6");
 
         btnAddMed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,149 +83,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        btnScanQRGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE);
-
-                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    startGallery();
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            2000);
-                }
-            }
-        });
-
-
-
-
-
         return root;
     }
 
-    public void getMedicine(String medicatinId){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://medontime-api.herokuapp.com/API/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        MedicationJSONPlaceholder medicationJSONPlaceholder = retrofit.create(MedicationJSONPlaceholder.class);
-//        Call<List<Medication>> callMedication = medicationJSONPlaceholder.getMedicationList(medicatinId);
-        Call<Medication> callMedication = medicationJSONPlaceholder.getMedication(medicatinId);
-
-        callMedication.enqueue(new Callback<Medication>() {
-            @Override
-            public void onResponse(Call<Medication> call, Response<Medication> response) {
-                if (!response.isSuccessful()){
-                    Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                List<Medication> medicationsList = new ArrayList<Medication>();
-                Medication medicationList = response.body();
-                medicationsList.add(medicationList);
-                MedicationAdaptor postAdapter = new MedicationAdaptor(getActivity() , medicationsList);
-                medicationRecyclerViewItems.setAdapter(postAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<Medication> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();
-            }
-        });
-//        callMedication.enqueue(new Callback<List<Medication>>() {
-//            @Override
-//            public void onResponse(Call<List<Medication>> call, Response<List<Medication>> response) {
-//                if (!response.isSuccessful()){
-//                    Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                List<Medication> medicationList = response.body();
-//                MedicationAdaptor postAdapter = new MedicationAdaptor(getActivity() , medicationList);
-//                medicationRecyclerViewItems.setAdapter(postAdapter);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Medication>> call, Throwable t) {
-//                Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();
-//            }
-//        });
-    }
-    private void startGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-    }
-    @Override
-    public void onActivityResult(int reqCode, int resultCode, Intent data) {
-
-        super.onActivityResult(reqCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-
-            try {
-
-                final Uri imageUri = data.getData();
-
-                final InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
-
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
-                try {
-
-                    Bitmap bMap = selectedImage;
-
-                    resultQRScan = null;
-
-                    int[] intArray = new int[bMap.getWidth()*bMap.getHeight()];
-
-                    bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight());
-
-                    LuminanceSource source = new RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray);
-
-                    BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-
-                    Reader reader = new MultiFormatReader();
-
-                    Result result = reader.decode(bitmap);
-
-                    resultQRScan = result.getText();
-
-
-                    Toast.makeText(getActivity(),resultQRScan,Toast.LENGTH_LONG).show();
-                    getMedicine(resultQRScan);
-                    Thread.sleep(2000);
-//                    Intent intent = new Intent(getActivity().getApplicationContext(),HomeActivity.class);
-//                    intent.putExtra("resultQRScan",resultQRScan);
-//                    startActivity(intent);
-
-//                    getMedicationFromDB(resultQRScan);
-
-                }catch (Exception e){
-
-                    e.printStackTrace();
-
-                }
-
-                //  image_view.setImageBitmap(selectedImage);
-
-            } catch (FileNotFoundException e) {
-
-                e.printStackTrace();
-
-                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
-
-            }
-
-        }else {
-
-            Toast.makeText(getActivity(), "You haven't picked Image",Toast.LENGTH_LONG).show();
-
-        }
 
     }
 
-}
