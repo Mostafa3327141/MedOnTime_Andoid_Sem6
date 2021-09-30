@@ -8,10 +8,8 @@ public class Medication {
     String caretakerID;
     int patientID;
     String medicationName;
-    String methodOfTaking;
     String medicationImage;
-    String dosage;
-    String medicationType;
+    String unit;
     int quantity;
     String firstDoseTime;
     int hoursBetween;
@@ -19,15 +17,13 @@ public class Medication {
     String shape;
     List<Calendar> Times;
 
-    public Medication(String id, String caretakerID, int patientID, String medicationName, String methodOfTaking, String medicationImage, String dosage, String medicationType, int quantity, String firstDoseTime, int hoursBetween, String frequency, String shape, List<Calendar> times) {
+    public Medication(String id, String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String firstDoseTime, int hoursBetween, String frequency, String shape, List<Calendar> times) {
         this.id = id;
         this.caretakerID = caretakerID;
         this.patientID = patientID;
         this.medicationName = medicationName;
-        this.methodOfTaking = methodOfTaking;
         this.medicationImage = medicationImage;
-        this.dosage = dosage;
-        this.medicationType = medicationType;
+        this.unit = unit;
         this.quantity = quantity;
         this.firstDoseTime = firstDoseTime;
         this.hoursBetween = hoursBetween;
@@ -68,14 +64,6 @@ public class Medication {
         this.medicationName = medicationName;
     }
 
-    public String getMethodOfTaking() {
-        return methodOfTaking;
-    }
-
-    public void setMethodOfTaking(String methodOfTaking) {
-        this.methodOfTaking = methodOfTaking;
-    }
-
     public String getMedicationImage() {
         return medicationImage;
     }
@@ -84,20 +72,12 @@ public class Medication {
         this.medicationImage = medicationImage;
     }
 
-    public String getDosage() {
-        return dosage;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setDosage(String dosage) {
-        this.dosage = dosage;
-    }
-
-    public String getMedicationType() {
-        return medicationType;
-    }
-
-    public void setMedicationType(String medicationType) {
-        this.medicationType = medicationType;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public int getQuantity() {
@@ -148,3 +128,4 @@ public class Medication {
         Times = times;
     }
 }
+
