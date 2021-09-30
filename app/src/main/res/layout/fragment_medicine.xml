@@ -27,8 +27,8 @@
                 android:hint="Enter name here"
                 android:maxLength="30" />
         </TableRow>
-        <TableRow>
 
+        <TableRow>
             <TextView
                 style="@style/CustomText"
                 android:layout_width="80dp"
@@ -49,7 +49,20 @@
         </TableRow>
 
         <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="165dp"
+                android:text="Quantity" />
 
+            <EditText
+                android:id="@+id/editText_quantity"
+                android:width="150dp"
+                android:layout_span="2"
+                android:inputType="number"
+                android:hint="Quantity?" />
+        </TableRow>
+
+        <TableRow>
             <TextView
                 style="@style/CustomText"
                 android:layout_width="165dp"
@@ -62,32 +75,7 @@
                 android:hint="What are you taking this medication for?" />
         </TableRow>
 
-        <TableRow>
-            <TextView
-                style="@style/CustomText"
-                android:text="Upload Picture"
-                />
 
-            <Button
-                style="@style/btnStyle"
-                android:id="@+id/btnMedPic"
-                android:layout_span="2"
-                android:text="Open Camera"
-                android:onClick="openCamera"/>
-
-        </TableRow>
-        <TableRow>
-            <TextView
-                style="@style/CustomText"
-                android:text="Picture"
-                />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="180dp"
-                android:layout_height="150dp"
-                />
-        </TableRow>
         <TableRow>
             <TextView
                 style="@style/CustomText"
@@ -161,11 +149,12 @@
     </TableLayout>
     <Button
         style="@style/btnStyle"
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnNext"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Add"
-        android:onClick="volleyPost"/>
+        android:text="Next"/>
+<!--        android:onClick="volleyPost"-->
+
 
     <Button
         style="@style/btnStyle"

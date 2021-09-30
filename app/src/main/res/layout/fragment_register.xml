@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+    <TableLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="15dp">
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="187dp"
+                android:layout_height="57dp"
+                android:text="First Name" />
+            <EditText
+                android:id="@+id/txtFirstName"
+                android:width="200dp"
+                android:hint="Enter first name here"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:text="Last Name"
+                />
+            <EditText
+                android:id="@+id/txtLastName"
+                android:width="200dp"
+                android:hint="Enter last name here"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:text="UserName"
+                />
+            <EditText
+                android:id="@+id/textview_UserName_Register"
+                android:width="200dp"
+                android:hint="UserName"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:text="Password"
+                />
+
+            <EditText
+                android:id="@+id/textview_Password_Register"
+                android:width="200dp"
+                android:hint="Passwrod"
+                android:inputType="textPassword" />
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:text="Phone"
+                />
+            <EditText
+                android:id="@+id/textview_phoneNumber"
+                android:width="200dp"
+                android:hint="Phone Number"
+                android:inputType="phone"/>
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:text="Email"
+                />
+            <EditText
+                android:id="@+id/textview_email"
+                android:width="200dp"
+                android:hint="Email"/>
+
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register" />
+</LinearLayout>

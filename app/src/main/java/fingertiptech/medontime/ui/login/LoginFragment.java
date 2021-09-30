@@ -23,6 +23,7 @@ import fingertiptech.medontime.ui.Hashing.HashingPassword;
 import fingertiptech.medontime.ui.home.HomeFragment;
 import fingertiptech.medontime.ui.jsonplaceholder.PatientJSONPlaceholder;
 import fingertiptech.medontime.ui.model.Patient;
+import fingertiptech.medontime.ui.register.RegisterFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -89,7 +90,8 @@ public class LoginFragment extends Fragment {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.wtf("Register", "Register is clicked");
+                RegisterFragment registerFragment = new RegisterFragment();
+                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , registerFragment).commit();
             }
         });
 
