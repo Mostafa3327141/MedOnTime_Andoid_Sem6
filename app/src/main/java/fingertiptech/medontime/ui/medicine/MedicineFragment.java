@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.databinding.FragmentRegisterBinding;
 
 public class MedicineFragment extends Fragment {
 

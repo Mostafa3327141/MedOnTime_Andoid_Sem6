@@ -14,8 +14,10 @@ public interface MedicationJSONPlaceholder {
 
     @GET("MedicationAPI/{id}?key=sH5O!2cdOqP1%5E")
     Call<List<Medication>> getMedicationList(@Path("id") String medicationId);
+
     @GET("MedicationAPI/{id}?key=sH5O!2cdOqP1%5E")
     Call<Medication> getMedication(@Path("id") String medicationId);
-//    @POST("MedicationAPI?key=sH5O!2cdOqP1%5E")
-//    Call<Patient> addPatient(@Body Patient patient);
+
+    @POST("MedicationAPI?key=sH5O!2cdOqP1%5E")
+    Call<Medication> addMedication(@Body Medication medication);
 }
