@@ -20,7 +20,7 @@ public class MedicineViewModel extends ViewModel {
 
     }
 
-    public LiveData<Medication> getPatientRepository() {
+    public LiveData<Medication> getMedicationRepository() {
         return medicationMutableLiveData;
     }
 

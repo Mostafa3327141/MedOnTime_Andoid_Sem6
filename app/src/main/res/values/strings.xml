@@ -34,7 +34,7 @@
 
     <string-array name="FrequencyList">
         <item>Every Day</item>
-        <item>As needed</item>
+<!--        <item>As needed</item>-->
         <item>Specific Days</item>
         <item>Days Interval</item>
         <item>Birth Control Cycle</item>
