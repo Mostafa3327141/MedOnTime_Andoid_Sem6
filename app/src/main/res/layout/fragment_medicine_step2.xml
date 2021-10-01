@@ -24,10 +24,10 @@
 
             <Button
                 style="@style/btnStyle"
-                android:id="@+id/btnMedPic"
+                android:id="@+id/btnOpenCamera"
                 android:layout_span="2"
                 android:text="Open Camera"
-                android:onClick="openCamera"/>
+                />
 
         </TableRow>
         <TableRow>
