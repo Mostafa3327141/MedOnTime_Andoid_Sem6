@@ -43,7 +43,7 @@ public class MedicineFragmentStep2 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_medicine_step2, container, false);
+        View root = inflater.inflate(R.layout.fragment_medicine_step2_camera_image, container, false);
 
         btnNext2 = root.findViewById(R.id.btnNext2);
         btnCamera = root.findViewById(R.id.btnOpenCamera);
