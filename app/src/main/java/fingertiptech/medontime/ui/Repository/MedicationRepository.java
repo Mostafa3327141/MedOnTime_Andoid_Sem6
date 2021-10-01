@@ -25,9 +25,9 @@ public class MedicationRepository {
         medicationJSONPlaceholder = MedicationRetrofitService.cteateService(MedicationJSONPlaceholder.class);
     }
 
-    public MutableLiveData<Medication> getPatient(){
+    public MutableLiveData<Medication> getPatient(String scanQRId){
         MutableLiveData<Medication> patientData = new MutableLiveData<>();
-        medicationJSONPlaceholder.getMedication("61560fef194b861525b1dd30").enqueue(new Callback<Medication>() {
+        medicationJSONPlaceholder.getMedication(scanQRId).enqueue(new Callback<Medication>() {
             @Override
             public void onResponse(Call<Medication> call,
                                    Response<Medication> response) {

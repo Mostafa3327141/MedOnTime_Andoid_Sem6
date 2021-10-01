@@ -51,7 +51,7 @@ public class MedicineFragment extends Fragment {
 
     private MedicineViewModel medicineViewModel;
     public static final int PICK_IMAGE = 1;
-    String resultQRScan;
+    public static String resultQRScan;
 
     EditText editText_medicine_name;
     EditText editText_unit;
@@ -82,23 +82,6 @@ public class MedicineFragment extends Fragment {
 
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
-        medicineViewModel.init();
-        medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
-//            List<NewsArticle> newsArticles = newsResponse.getArticles();
-//            articleArrayList.addAll(newsArticles);
-//            newsAdapter.notifyDataSetChanged();
-            editText_medicine_name.setText(medicationsResponse.getMedicationName());
-            // for our unit from api will be "34 g" so we need split number and unit
-            // number will be input the textfield and unit will be in spinner
-            editText_unit.setText(medicationsResponse.getUnit().replaceAll("[^0-9]", ""));
-            setSpinner(medicationsResponse.getUnit().replaceAll("[0-9]", ""),unitTypeSpinner);
-            editText_quantity.setText(String.valueOf(medicationsResponse.getQuantity()));
-
-            editText_medicine_condition.setText("null yet");
-            setSpinner(medicationsResponse.getFrequency(), frequencySpinner);
-            editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
-            textView_medicine_setAlarm.setText(medicationsResponse.getFirstDoseTime());
-        });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,12 +112,27 @@ public class MedicineFragment extends Fragment {
     }
 
 
-//    private void setUnitSpinner(String unit) {
-//        int unitNumberOnly= Integer.valueOf(unit.replaceAll("[^0-9]", ""));
-//        String unitOnly = unit.replaceAll("[0-9]", "");
-//        editText_unit.setText(unitOnly);
-//
-//    }
+    public void writeIntoFeild(){
+        medicineViewModel.init(resultQRScan);
+        medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
+//            List<NewsArticle> newsArticles = newsResponse.getArticles();
+//            articleArrayList.addAll(newsArticles);
+//            newsAdapter.notifyDataSetChanged();
+            editText_medicine_name.setText(medicationsResponse.getMedicationName());
+            // for our unit from api will be "34 g" so we need split number and unit
+            // number will be input the textfield and unit will be in spinner
+            editText_unit.setText(medicationsResponse.getUnit().replaceAll("[^0-9]", ""));
+            setSpinner(medicationsResponse.getUnit().replaceAll("[0-9]", ""),unitTypeSpinner);
+            editText_quantity.setText(String.valueOf(medicationsResponse.getQuantity()));
+
+            editText_medicine_condition.setText("null yet");
+            setSpinner(medicationsResponse.getFrequency(), frequencySpinner);
+            editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
+            textView_medicine_setAlarm.setText(medicationsResponse.getFirstDoseTime());
+        });
+
+    }
+
     public void setSpinner(String s, Spinner spinner){
         for (int position = 0; position < spinner.getCount(); position++) {
             if(spinner.getItemAtPosition(position).toString().toLowerCase(Locale.ROOT).trim().equals(s.toLowerCase(Locale.ROOT).trim())) {
@@ -143,14 +141,7 @@ public class MedicineFragment extends Fragment {
             }
         }
     }
-//    public void setFrequencySpinner(String frequency){
-//        for (int position = 0; position < frequencySpinner.getCount(); position++) {
-//            if(frequencySpinner.getItemAtPosition(position).toString().toLowerCase(Locale.ROOT).trim().equals(frequency.toLowerCase(Locale.ROOT).trim())) {
-//                frequencySpinner.setSelection(position);
-//                return;
-//            }
-//        }
-//    }
+
     private void startGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -158,53 +149,39 @@ public class MedicineFragment extends Fragment {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
 
-    public void getMedicine(String medicatinId){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://medontime-api.herokuapp.com/API/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        MedicationJSONPlaceholder medicationJSONPlaceholder = retrofit.create(MedicationJSONPlaceholder.class);
-//        Call<List<Medication>> callMedication = medicationJSONPlaceholder.getMedicationList(medicatinId);
-        Call<Medication> callMedication = medicationJSONPlaceholder.getMedication(medicatinId);
-
-        callMedication.enqueue(new Callback<Medication>() {
-            @Override
-            public void onResponse(Call<Medication> call, Response<Medication> response) {
-                if (!response.isSuccessful()){
-                    Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                List<Medication> medicationsList = new ArrayList<Medication>();
-                Medication medicationList = response.body();
-                medicationsList.add(medicationList);
-//                MedicationAdaptor postAdapter = new MedicationAdaptor(getActivity() , medicationsList);
-//                medicationRecyclerViewItems.setAdapter(postAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<Medication> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();
-            }
-        });
-//        callMedication.enqueue(new Callback<List<Medication>>() {
+//
+//
+//    public void getMedicine(String medicatinId){
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("https://medontime-api.herokuapp.com/API/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        MedicationJSONPlaceholder medicationJSONPlaceholder = retrofit.create(MedicationJSONPlaceholder.class);
+////        Call<List<Medication>> callMedication = medicationJSONPlaceholder.getMedicationList(medicatinId);
+//        Call<Medication> callMedication = medicationJSONPlaceholder.getMedication(medicatinId);
+//
+//        callMedication.enqueue(new Callback<Medication>() {
 //            @Override
-//            public void onResponse(Call<List<Medication>> call, Response<List<Medication>> response) {
+//            public void onResponse(Call<Medication> call, Response<Medication> response) {
 //                if (!response.isSuccessful()){
 //                    Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
-//                List<Medication> medicationList = response.body();
-//                MedicationAdaptor postAdapter = new MedicationAdaptor(getActivity() , medicationList);
-//                medicationRecyclerViewItems.setAdapter(postAdapter);
+//                List<Medication> medicationsList = new ArrayList<Medication>();
+//                Medication medicationList = response.body();
+//                medicationsList.add(medicationList);
+////                MedicationAdaptor postAdapter = new MedicationAdaptor(getActivity() , medicationsList);
+////                medicationRecyclerViewItems.setAdapter(postAdapter);
 //            }
 //
 //            @Override
-//            public void onFailure(Call<List<Medication>> call, Throwable t) {
+//            public void onFailure(Call<Medication> call, Throwable t) {
 //                Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();
 //            }
 //        });
-    }
+
+//    }
 
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
@@ -243,7 +220,8 @@ public class MedicineFragment extends Fragment {
 
 
                     Toast.makeText(getActivity(),resultQRScan,Toast.LENGTH_LONG).show();
-                    getMedicine(resultQRScan);
+                    writeIntoFeild();
+//                    getMedicine(resultQRScan);
                     Thread.sleep(2000);
 
                 }catch (Exception e){
