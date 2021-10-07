@@ -34,9 +34,10 @@ import androidx.appcompat.widget.Toolbar;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import fingertiptech.medontime.ui.medicine.MedicineFragmentStep3;
 import fingertiptech.medontime.ui.scanNFCtag.ScanNFCTagFragment;
 
-public class MainActivity extends AppCompatActivity implements ScanNFCTagFragment.OnDataPass {
+public class MainActivity extends AppCompatActivity implements MedicineFragmentStep3.OnDataPass {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -212,7 +213,9 @@ public class MainActivity extends AppCompatActivity implements ScanNFCTagFragmen
     private void readFromIntent(Intent intent) {
         String action = intent.getAction();
 
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action) || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action) || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action) ||
+                NfcAdapter.ACTION_TECH_DISCOVERED.equals(action) ||
+                NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
             Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             NdefMessage[] msgs = null;
             if (rawMsgs != null) {

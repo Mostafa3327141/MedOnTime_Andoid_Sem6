@@ -38,35 +38,35 @@ import fingertiptech.medontime.R;
 
 public class ScanNFCTagFragment extends Fragment {
 
-    OnDataPass dataPasser;
-
-    // for passing data to activity
-    public interface OnDataPass {
-        public void onDataPass(String data, View view);
-    }
+//    OnDataPass dataPasser;
+//
+//    // for passing data to activity
+//    public interface OnDataPass {
+//        public void onDataPass(String data, View view);
+//    }
 
     public ScanNFCTagFragment() {
         // Required empty public constructor
     }
 
     // connecting the containing class' implementation of the interface to the fragment in the onAttach method
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        dataPasser = (OnDataPass) context;
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        dataPasser = (OnDataPass) context;
+//    }
 
-    // for when you need to handle the passing of data in this fragment
-    public void passData(String data, View view) {
-        dataPasser.onDataPass(data, view);
-    }
+//    // for when you need to handle the passing of data in this fragment
+//    public void passData(String data, View view) {
+//        dataPasser.onDataPass(data, view);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.scan_nfc_tag_fragment, container, false);
 
-        passData("NFC Fragment Active", view);
+//        passData("NFC Fragment Active", view);
         // Inflate the layout for this fragment
         return view;
     }
