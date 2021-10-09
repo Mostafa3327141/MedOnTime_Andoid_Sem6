@@ -35,14 +35,15 @@
                 android:hint="Enter last name here"/>
         </TableRow>
         <TableRow>
+
             <TextView
                 style="@style/CustomText"
-                android:text="UserName"
-                />
+                android:text="Age" />
+
             <EditText
-                android:id="@+id/textview_UserName_Register"
+                android:id="@+id/textview_Age_Register"
                 android:width="200dp"
-                android:hint="UserName"/>
+                android:hint="Age" />
         </TableRow>
         <TableRow>
             <TextView

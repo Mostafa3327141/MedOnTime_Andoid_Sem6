@@ -24,10 +24,10 @@
 
             <Button
                 style="@style/btnStyle"
-                android:id="@+id/btnMedPic"
+                android:id="@+id/btnOpenCamera"
                 android:layout_span="2"
                 android:text="Open Camera"
-                android:onClick="openCamera"/>
+                />
 
         </TableRow>
         <TableRow>
@@ -37,7 +37,7 @@
                 android:text="Picture" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageMedicationView"
                 android:layout_width="180dp"
                 android:layout_height="150dp"
                 />

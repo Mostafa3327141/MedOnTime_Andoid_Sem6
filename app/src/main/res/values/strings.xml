@@ -13,6 +13,7 @@
     <string name="menu_caretaker">Caretaker</string>
 
     <string name="menu_LogIn">Login</string>
+    <string name="menu_ScanQR">ScanQR</string>
 
     <string name="add_medicine">Add Medicine</string>
     <string name="unitTypePrompt">Unit Type</string>
@@ -37,7 +38,7 @@
 
     <string-array name="FrequencyList">
         <item>Every Day</item>
-        <item>As needed</item>
+<!--        <item>As needed</item>-->
         <item>Specific Days</item>
         <item>Days Interval</item>
         <item>Birth Control Cycle</item>

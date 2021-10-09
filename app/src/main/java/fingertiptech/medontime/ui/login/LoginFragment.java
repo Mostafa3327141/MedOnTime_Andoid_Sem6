@@ -120,6 +120,8 @@ public class LoginFragment extends Fragment {
                 for(Patient patient: patientsList){
                     if(hashPassword.equals(patient.getPassword())){
                         Toast.makeText(getActivity(), "Welcome " +patient.getFirstName(), Toast.LENGTH_LONG).show();
+                        HomeFragment forwardToHomePage = new HomeFragment();
+                        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardToHomePage).commit();
                         return;
                     }
                 }
