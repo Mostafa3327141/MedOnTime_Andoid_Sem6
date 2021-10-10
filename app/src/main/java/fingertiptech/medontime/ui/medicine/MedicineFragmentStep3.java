@@ -2,7 +2,9 @@ package fingertiptech.medontime.ui.medicine;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +20,7 @@ import fingertiptech.medontime.ui.scanNFCtag.ScanNFCTagFragment;
 
 public class MedicineFragmentStep3 extends Fragment {
 
-    private MedicineFragmentStep3ViewModel mViewModel;
+    private MedicineViewModel medicineViewModel;
 
     MedicineFragmentStep3.OnDataPass dataPasser;
 
@@ -46,7 +48,22 @@ public class MedicineFragmentStep3 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_medicine_step3, container, false);
+
+        System.out.println("See me??");
+        System.out.println(MedicineFragment.resultQRScan);
+        medicineViewModel =
+                new ViewModelProvider(this).get(MedicineViewModel.class);
+
+        if(MedicineFragment.resultQRScan != null){
+            medicineViewModel.init(MedicineFragment.resultQRScan);
+            medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
+                System.out.println(medicationsResponse.getId());
+                //imageViewMedication.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
+            });
+        }
+
+
+        View view = inflater.inflate(R.layout.fragment_medicine_step3_nfc_scan, container, false);
         passData("NFC Fragment Active", view);
         return view;
     }

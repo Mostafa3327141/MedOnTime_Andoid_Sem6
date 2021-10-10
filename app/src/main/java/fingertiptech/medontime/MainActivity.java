@@ -1,7 +1,9 @@
 package fingertiptech.medontime;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.FormatException;
@@ -79,6 +81,17 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         ActivateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("NFC tag cannot be written")
+                        .setCancelable(false)
+                        .setNeutralButton("Close", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
                 try {
                     if (myTag == null) {
                         Toast.makeText(context, Error_Detected, Toast.LENGTH_LONG).show();
