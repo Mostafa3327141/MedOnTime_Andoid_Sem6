@@ -93,10 +93,13 @@ public class RegisterFragment extends Fragment {
     }
 
     private void updatePassword(Patient patient, String resetPassword) {
-        Patient updatePatientPass = new Patient(patient.getId(), null,null,null,null,null,
+        Patient updatePatientPass = new Patient(patient.getId(), patient.getPatientID(),patient.getCaretakerID(),
+                patient.getFirstName(),patient.getLastName(),patient.getEmail(),
                 new HashingPassword().getHash(
                         resetPassword,
-                        patient.getEmail().toLowerCase(Locale.ROOT).trim()),null,5, false,null,null,null);
+                        patient.getEmail().toLowerCase(Locale.ROOT).trim()),
+                patient.getPhoneNum(),patient.getAge(), false,
+                patient.getUnSelectedShapes(),patient.getMedicationIDs(),patient.getPrescriptionIDs());
 
         Call<Patient> updateCall = patientJSONPlaceholder.updatePatientPassword(updatePatientPass);
         updateCall.enqueue(new Callback<Patient>() {
