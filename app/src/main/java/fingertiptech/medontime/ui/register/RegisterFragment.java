@@ -87,9 +87,7 @@ public class RegisterFragment extends Fragment {
                 }
                 Log.e("Total patient in db", String.valueOf(patientsList.size()));
                 addPatient(patientsList.size());
-
             }
-
             @Override
             public void onFailure(Call<List<Patient>> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();

@@ -1,6 +1,5 @@
 package fingertiptech.medontime.ui.model;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class Medication {
@@ -15,10 +14,10 @@ public class Medication {
     int hoursBetween;
     String frequency;
     String shape;
-    List<Calendar> Times;
+    List<String> times;
 
     // this constructor is for retrive from db
-    public Medication(String id, String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String firstDoseTime, int hoursBetween, String frequency, String shape, List<Calendar> times) {
+    public Medication(String id, String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String firstDoseTime, int hoursBetween, String frequency, String shape, List<String> times) {
         this.id = id;
         this.caretakerID = caretakerID;
         this.patientID = patientID;
@@ -30,10 +29,10 @@ public class Medication {
         this.hoursBetween = hoursBetween;
         this.frequency = frequency;
         this.shape = shape;
-        Times = times;
+        this.times = times;
     }
     // this constructor is for add to db
-    public Medication(String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String firstDoseTime, int hoursBetween, String frequency, String shape, List<Calendar> times) {
+    public Medication(String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String firstDoseTime, int hoursBetween, String frequency, String shape, List<String> times) {
         this.caretakerID = caretakerID;
         this.patientID = patientID;
         this.medicationName = medicationName;
@@ -44,7 +43,7 @@ public class Medication {
         this.hoursBetween = hoursBetween;
         this.frequency = frequency;
         this.shape = shape;
-        Times = times;
+        this.times = times;
     }
     public String getId() {
         return id;
@@ -134,12 +133,12 @@ public class Medication {
         this.shape = shape;
     }
 
-    public List<Calendar> getTimes() {
-        return Times;
+    public List<String> getTimes() {
+        return times;
     }
 
-    public void setTimes(List<Calendar> times) {
-        Times = times;
+    public void setTimes(List<String> times) {
+        this.times = times;
     }
 }
 

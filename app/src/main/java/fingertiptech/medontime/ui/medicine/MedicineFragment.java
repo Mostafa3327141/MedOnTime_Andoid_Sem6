@@ -39,11 +39,12 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import fingertiptech.medontime.R;
 
-public class MedicineFragment extends Fragment implements TimePickerDialog.OnTimeSetListener{
+public class MedicineFragment extends Fragment {
 
     private MedicineViewModel medicineViewModel;
     public static final int PICK_IMAGE = 1;
@@ -118,6 +119,7 @@ public class MedicineFragment extends Fragment implements TimePickerDialog.OnTim
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         textView_medicine_setAlarm.setText( selectedHour + ":" + selectedMinute);
+
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -132,9 +134,6 @@ public class MedicineFragment extends Fragment implements TimePickerDialog.OnTim
     public void writeIntoFeild(){
         medicineViewModel.init(resultQRScan);
         medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
-//            List<NewsArticle> newsArticles = newsResponse.getArticles();
-//            articleArrayList.addAll(newsArticles);
-//            newsAdapter.notifyDataSetChanged();
             editText_medicine_name.setText(medicationsResponse.getMedicationName());
             // for our unit from api will be "34 g" so we need split number and unit
             // number will be input the textfield and unit will be in spinner
@@ -146,6 +145,7 @@ public class MedicineFragment extends Fragment implements TimePickerDialog.OnTim
             setSpinner(medicationsResponse.getFrequency(), frequencySpinner);
             editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
             textView_medicine_setAlarm.setText(medicationsResponse.getFirstDoseTime());
+            List<String> s = medicationsResponse.getTimes();
         });
 
     }
@@ -165,40 +165,6 @@ public class MedicineFragment extends Fragment implements TimePickerDialog.OnTim
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
-
-//
-//
-//    public void getMedicine(String medicatinId){
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("https://medontime-api.herokuapp.com/API/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        MedicationJSONPlaceholder medicationJSONPlaceholder = retrofit.create(MedicationJSONPlaceholder.class);
-////        Call<List<Medication>> callMedication = medicationJSONPlaceholder.getMedicationList(medicatinId);
-//        Call<Medication> callMedication = medicationJSONPlaceholder.getMedication(medicatinId);
-//
-//        callMedication.enqueue(new Callback<Medication>() {
-//            @Override
-//            public void onResponse(Call<Medication> call, Response<Medication> response) {
-//                if (!response.isSuccessful()){
-//                    Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                List<Medication> medicationsList = new ArrayList<Medication>();
-//                Medication medicationList = response.body();
-//                medicationsList.add(medicationList);
-////                MedicationAdaptor postAdapter = new MedicationAdaptor(getActivity() , medicationsList);
-////                medicationRecyclerViewItems.setAdapter(postAdapter);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Medication> call, Throwable t) {
-//                Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-//    }
 
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
@@ -265,19 +231,19 @@ public class MedicineFragment extends Fragment implements TimePickerDialog.OnTim
 
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeZone(TimeZone.getTimeZone("Canada/Eastern"));
-        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        calendar.set(Calendar.MINUTE, minute);
-        calendar.set(Calendar.SECOND,0);
-
-        updateTimeText(calendar);
-    }
-    private void updateTimeText(Calendar calendar) {
-        String timeString = " Alarm: ";
-        timeString += DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
-        textView_medicine_setAlarm.setText(timeString);
-    }
+//    @Override
+//    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//        Calendar calendar = Calendar.getInstance();
+////        calendar.setTimeZone(TimeZone.getTimeZone("Canada/Eastern"));
+//        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+//        calendar.set(Calendar.MINUTE, minute);
+//        calendar.set(Calendar.SECOND,0);
+//        Calendar calendar1 = calendar;
+//        updateTimeText(calendar);
+////    }
+//    private void updateTimeText(Calendar calendar) {
+//        String timeString = " Alarm: ";
+//        timeString += DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
+//        textView_medicine_setAlarm.setText(timeString);
+//    }
 }

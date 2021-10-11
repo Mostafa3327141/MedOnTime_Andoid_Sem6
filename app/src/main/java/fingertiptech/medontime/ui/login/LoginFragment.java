@@ -137,28 +137,4 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    public void addPatient(){
-        Patient patient = new Patient(0,0,"Hung1","Chen1","test1@mail.com",new HashingPassword().getHash("admin1","test1@mail.com"),"9993332222",30,null,null,null);
-
-        Call<Patient> call = patientJSONPlaceholder.addPatient(patient);
-
-        call.enqueue(new Callback<Patient>() {
-            @Override
-            public void onResponse(Call<Patient> call, Response<Patient> response) {
-                if (!response.isSuccessful()){
-                    Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                List<Patient> itemList = new ArrayList<>();
-                itemList.add(response.body());
-                Toast.makeText(getActivity(),response.code() + "Response", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(Call<Patient> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    
 }

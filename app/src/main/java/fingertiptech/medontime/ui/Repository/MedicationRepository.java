@@ -2,7 +2,7 @@ package fingertiptech.medontime.ui.Repository;
 
 import androidx.lifecycle.MutableLiveData;
 
-import fingertiptech.medontime.ui.RetrofitService.MedicationRetrofitService;
+import fingertiptech.medontime.ui.RetrofitService.RetrofitService;
 import fingertiptech.medontime.ui.jsonplaceholder.MedicationJSONPlaceholder;
 import fingertiptech.medontime.ui.model.Medication;
 import retrofit2.Call;
@@ -22,7 +22,7 @@ public class MedicationRepository {
     private MedicationJSONPlaceholder medicationJSONPlaceholder;
 
     public MedicationRepository(){
-        medicationJSONPlaceholder = MedicationRetrofitService.cteateService(MedicationJSONPlaceholder.class);
+        medicationJSONPlaceholder = RetrofitService.cteateService(MedicationJSONPlaceholder.class);
     }
 
     public MutableLiveData<Medication> getPatient(String scanQRId){

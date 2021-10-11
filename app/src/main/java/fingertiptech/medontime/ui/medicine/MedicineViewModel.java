@@ -11,25 +11,17 @@ public class MedicineViewModel extends ViewModel {
 
     private MutableLiveData<Medication> medicationMutableLiveData;
     private MedicationRepository medicationRepository;
+
     public void init(String medicationID){
         if (medicationMutableLiveData != null){
             return;
         }
         medicationRepository = MedicationRepository.getInstance();
         medicationMutableLiveData = medicationRepository.getPatient(medicationID);
-
     }
 
     public LiveData<Medication> getMedicationRepository() {
         return medicationMutableLiveData;
     }
 
-//    public MedicineViewModel() {
-//        mText = new MutableLiveData<>();
-//        mText.setValue("This is Medicine fragment");
-//    }
-//
-//    public LiveData<String> getText() {
-//        return mText;
-//    }
 }
