@@ -16,7 +16,7 @@ import fingertiptech.medontime.R;
 
 public class MedicineFragmentStep3 extends Fragment {
 
-    private MedicineFragmentStep3ViewModel mViewModel;
+    private MedicineViewModel medicineViewModel;
 
     public static MedicineFragmentStep3 newInstance() {
         return new MedicineFragmentStep3();
@@ -25,14 +25,21 @@ public class MedicineFragmentStep3 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_medicine_step3_nfc_scan, container, false);
+        medicineViewModel =
+                new ViewModelProvider(this).get(MedicineViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_medicine_step3_nfc_scan, container, false);
+
+        // Sina here is medicationObjectId
+        String medicationObjectId = MedicineFragment.resultQRScan;
+
+        return root;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MedicineFragmentStep3ViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        mViewModel = new ViewModelProvider(this).get(MedicineFragmentStep3ViewModel.class);
+//        // TODO: Use the ViewModel
+//    }
+//
 }

@@ -51,7 +51,6 @@ public class MedicineFragmentStep2 extends Fragment {
 
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
-        String s = MedicineFragment.resultQRScan;
         if(MedicineFragment.resultQRScan != null){
             medicineViewModel.init(MedicineFragment.resultQRScan);
             medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
