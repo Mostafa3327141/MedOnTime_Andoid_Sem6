@@ -12,14 +12,20 @@ public class MedicineViewModel extends ViewModel {
     private MutableLiveData<Medication> medicationMutableLiveData;
     private MedicationRepository medicationRepository;
 
-    public void init(String medicationID){
+    public void initGetMedication(String medicationID){
         if (medicationMutableLiveData != null){
             return;
         }
         medicationRepository = MedicationRepository.getInstance();
         medicationMutableLiveData = medicationRepository.getMedication(medicationID);
     }
-
+    public void initAddMedication(Medication medication){
+        if (medicationMutableLiveData != null){
+            return;
+        }
+        medicationRepository = MedicationRepository.getInstance();
+        medicationMutableLiveData = medicationRepository.addMedication(medication);
+    }
     public LiveData<Medication> getMedicationRepository() {
         return medicationMutableLiveData;
     }

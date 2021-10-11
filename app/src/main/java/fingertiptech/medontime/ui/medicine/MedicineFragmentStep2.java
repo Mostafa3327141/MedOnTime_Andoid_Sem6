@@ -52,7 +52,7 @@ public class MedicineFragmentStep2 extends Fragment {
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
         if(MedicineFragment.resultQRScan != null){
-            medicineViewModel.init(MedicineFragment.resultQRScan);
+            medicineViewModel.initGetMedication(MedicineFragment.resultQRScan);
             medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
                 imageViewMedication.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
             });

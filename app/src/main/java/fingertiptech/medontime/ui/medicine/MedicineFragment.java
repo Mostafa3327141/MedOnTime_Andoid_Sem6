@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -37,12 +37,12 @@ import com.google.zxing.common.HybridBinarizer;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.model.Medication;
+import fingertiptech.medontime.ui.model.Patient;
 
 public class MedicineFragment extends Fragment {
 
@@ -85,6 +85,21 @@ public class MedicineFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // if patient without caretaker they need to add by themself
+                Medication addMedication = new Medication(null, 0,
+                        editText_medicine_name.getText().toString(),null,
+                        editText_unit.getText().toString(),
+                        Integer.valueOf(editText_quantity.getText().toString()),
+                        editText_medicine_condition.getText().toString(),
+                        textView_medicine_setAlarm.getText().toString(),
+                        Integer.valueOf(editText_hoursInBetween.getText().toString()),
+                        frequencySpinner.getSelectedItem().toString(),
+                        null,null);
+                medicineViewModel.initAddMedication(addMedication);
+                medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
+                    resultQRScan = medicationsResponse.getId();
+                    String s = "";
+                });
                 MedicineFragmentStep2 stepTwoAddMedicine = new MedicineFragmentStep2();
                 getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , stepTwoAddMedicine).commit();
             }
@@ -130,8 +145,9 @@ public class MedicineFragment extends Fragment {
     }
 
 
+
     public void writeIntoFeild(){
-        medicineViewModel.init(resultQRScan);
+        medicineViewModel.initGetMedication(resultQRScan);
         medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
             editText_medicine_name.setText(medicationsResponse.getMedicationName());
             // for our unit from api will be "34 g" so we need split number and unit

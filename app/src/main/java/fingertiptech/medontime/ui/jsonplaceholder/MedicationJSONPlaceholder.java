@@ -20,4 +20,7 @@ public interface MedicationJSONPlaceholder {
 
     @POST("MedicationAPI?key=sH5O!2cdOqP1%5E")
     Call<Medication> addMedication(@Body Medication medication);
+
+    @POST("MedicationAPI?key=sH5O!2cdOqP1%5E")
+    Call<Medication> updateMedication(@Body Medication medication);
 }
