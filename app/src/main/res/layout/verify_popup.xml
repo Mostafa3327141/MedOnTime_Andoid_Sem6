@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+    <TableLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="50dp">
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/img_user"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/caretakers">
+
+            </ImageView>
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="80dp"
+                android:text="First time Log in user need set up the new password" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="80dp"
+                android:text="First Name" />
+
+            <EditText
+                android:id="@+id/tvpatientFirstName"
+                android:width="150dp"
+                android:focusable="false"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="80dp"
+                android:text="Last Name" />
+
+            <EditText
+                android:id="@+id/patientLastName"
+                android:width="150dp"
+                android:focusable="false"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="80dp"
+                android:text="Age" />
+
+            <EditText
+                android:id="@+id/patientAge"
+                android:width="150dp"
+                />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="80dp"
+                android:text="PhoneNo" />
+
+            <EditText
+                android:id="@+id/patientNumberNo"
+                android:width="80dp"
+                />
+        </TableRow>
+
+
+        <TableRow>
+
+            <Button
+                style="@style/btnStyle"
+                android:id="@+id/btnVerifyMe"
+                android:text="Verify"
+                />
+            <Button
+                style="@style/btnStyle"
+                android:id="@+id/btnNotMe"
+                android:text="Not Me"
+                android:onClick="cancelAlarm"
+                />
+
+        </TableRow>
+
+    </TableLayout>
+
+
+</LinearLayout>

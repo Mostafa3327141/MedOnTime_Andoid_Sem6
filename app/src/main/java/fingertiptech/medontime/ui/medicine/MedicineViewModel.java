@@ -17,7 +17,7 @@ public class MedicineViewModel extends ViewModel {
             return;
         }
         medicationRepository = MedicationRepository.getInstance();
-        medicationMutableLiveData = medicationRepository.getPatient(medicationID);
+        medicationMutableLiveData = medicationRepository.getMedication(medicationID);
     }
 
     public LiveData<Medication> getMedicationRepository() {

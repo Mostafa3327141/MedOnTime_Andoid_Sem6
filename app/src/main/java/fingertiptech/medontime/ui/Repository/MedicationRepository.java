@@ -25,22 +25,22 @@ public class MedicationRepository {
         medicationJSONPlaceholder = RetrofitService.cteateService(MedicationJSONPlaceholder.class);
     }
 
-    public MutableLiveData<Medication> getPatient(String scanQRId){
-        MutableLiveData<Medication> patientData = new MutableLiveData<>();
+    public MutableLiveData<Medication> getMedication(String scanQRId){
+        MutableLiveData<Medication> medicationData = new MutableLiveData<>();
         medicationJSONPlaceholder.getMedication(scanQRId).enqueue(new Callback<Medication>() {
             @Override
             public void onResponse(Call<Medication> call,
                                    Response<Medication> response) {
                 if (response.isSuccessful()){
-                    patientData.setValue(response.body());
+                    medicationData.setValue(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<Medication> call, Throwable t) {
-                patientData.setValue(null);
+                medicationData.setValue(null);
             }
         });
-        return patientData;
+        return medicationData;
     }
 }
