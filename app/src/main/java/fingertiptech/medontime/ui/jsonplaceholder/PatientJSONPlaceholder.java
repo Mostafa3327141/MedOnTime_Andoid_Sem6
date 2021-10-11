@@ -7,9 +7,11 @@ import fingertiptech.medontime.ui.model.Patient;
 import fingertiptech.medontime.ui.model.TestItem;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -24,7 +26,7 @@ public interface PatientJSONPlaceholder {
     @GET("PatientAPI/{id}?key=sH5O!2cdOqP1%5E")
     Call<Patient> getPatient(@Path("id") String patientObjectId);
 
-    @PATCH("PatientAPI/{id}?key=sH5O!2cdOqP1%5E")
-    Call<Patient> updatePatientPassword(@Path("id") String patientObjectId,@Body Patient patient );
+    @PUT("PatientAPI?key=sH5O!2cdOqP1%5E")
+    Call<Patient> updatePatientPassword(@Body Patient patient );
 
 }

@@ -5,20 +5,20 @@ import org.bson.types.ObjectId;
 
 public class Patient {
     String id;
-    int patientID;
-    int caretakerID;
+    Integer patientID;
+    Integer caretakerID;
     String firstName;
     String lastName;
     String email;
     String password;
     String phoneNum;
-    int age;
+    Integer age;
     Boolean isPasswordTemporary;
     List<Shape> unSelectedShapes;
     List<String> medicationIDs;
     List<String> prescriptionIDs;
 
-    public Patient(String id, int patientID, int caretakerID, String firstName, String lastName, String email, String password, String phoneNum, int age, Boolean isPasswordTemporary, List<Shape> unSelectedShapes, List<String> medicationIDs, List<String> prescriptionIDs) {
+    public Patient(String id, Integer patientID, Integer caretakerID, String firstName, String lastName, String email, String password, String phoneNum, Integer age, Boolean isPasswordTemporary, List<Shape> unSelectedShapes, List<String> medicationIDs, List<String> prescriptionIDs) {
         this.id = id;
         this.patientID = patientID;
         this.caretakerID = caretakerID;
@@ -37,7 +37,7 @@ public class Patient {
 
     // for Add patient no need _id
 
-    public Patient(int patientID, int caretakerID, String firstName, String lastName, String email, String password, String phoneNum, int age,Boolean isPasswordTemporary, List<Shape> unSelectedShapes, List<String> medicationIDs, List<String> prescriptionIDs) {
+    public Patient(Integer patientID, Integer caretakerID, String firstName, String lastName, String email, String password, String phoneNum, Integer age,Boolean isPasswordTemporary, List<Shape> unSelectedShapes, List<String> medicationIDs, List<String> prescriptionIDs) {
         this.patientID = patientID;
         this.caretakerID = caretakerID;
         this.firstName = firstName;
@@ -60,19 +60,19 @@ public class Patient {
         this.id = id;
     }
 
-    public int getPatientID() {
+    public Integer getPatientID() {
         return patientID;
     }
 
-    public void setPatientID(int patientID) {
+    public void setPatientID(Integer patientID) {
         this.patientID = patientID;
     }
 
-    public int getCaretakerID() {
+    public Integer getCaretakerID() {
         return caretakerID;
     }
 
-    public void setCaretakerID(int caretakerID) {
+    public void setCaretakerID(Integer caretakerID) {
         this.caretakerID = caretakerID;
     }
 
@@ -116,11 +116,11 @@ public class Patient {
         this.phoneNum = phoneNum;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

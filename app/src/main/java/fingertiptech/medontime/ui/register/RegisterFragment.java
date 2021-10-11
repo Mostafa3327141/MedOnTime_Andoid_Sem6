@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -30,6 +31,8 @@ import fingertiptech.medontime.ui.jsonplaceholder.MedicationJSONPlaceholder;
 import fingertiptech.medontime.ui.jsonplaceholder.PatientJSONPlaceholder;
 import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
 import fingertiptech.medontime.ui.model.Patient;
+import fingertiptech.medontime.ui.model.TestItem;
+import fingertiptech.medontime.ui.recycleadpoter.ItemAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,24 +67,55 @@ public class RegisterFragment extends Fragment {
         fragmentRegisterBinding.btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // before write patient into api we need to create patientID
-                // patient id will create from the total of patient in db and + 1
-                getAllPatient();
+                if(getSharedPreferencepatient() != null){
+                    // this is for login first time user forward to here
+                    updatePassword(getSharedPreferencepatient(), fragmentRegisterBinding.textviewPasswordRegister.getText().toString());
+                }else{
+                    // before write patient into api we need to create patientID
+                    // patient id will create from the total of patient in db and + 1
+                    getAllPatient();
+                }
             }
         });
 
         // When user login need fill this filed auto
         SharedPreferences sharedPreferencesUserLoginInfo = getActivity().getPreferences(Context.MODE_PRIVATE);
         final Gson gson = new Gson();
-        Patient patientLogin =  gson.fromJson(sharedPreferencesUserLoginInfo.getString("PatientLogInInfo", ""), Patient.class);
-        if(patientLogin != null){
+        Patient patientLogin =  getSharedPreferencepatient();
+        if(getSharedPreferencepatient() != null){
             fragmentRegisterBinding.txtFirstName.setText(patientLogin.getFirstName());
             fragmentRegisterBinding.txtLastName.setText(patientLogin.getLastName());
-            fragmentRegisterBinding.textviewAgeRegister.setText(patientLogin.getAge());
+            fragmentRegisterBinding.textviewAgeRegister.setText(String.valueOf(patientLogin.getAge()));
             fragmentRegisterBinding.textviewPhoneNumber.setText(patientLogin.getPhoneNum());
             fragmentRegisterBinding.textviewEmail.setText(patientLogin.getEmail());
         }
         return view;
+    }
+
+    private void updatePassword(Patient patient, String resetPassword) {
+        Patient updatePatientPass = new Patient(patient.getId(), null,null,null,null,null,
+                new HashingPassword().getHash(
+                        resetPassword,
+                        patient.getEmail().toLowerCase(Locale.ROOT).trim()),null,5, false,null,null,null);
+
+        Call<Patient> updateCall = patientJSONPlaceholder.updatePatientPassword(updatePatientPass);
+        updateCall.enqueue(new Callback<Patient>() {
+            @Override
+            public void onResponse(Call<Patient> call, Response<Patient> response) {
+                if (!response.isSuccessful()){
+                    return;
+                }
+                HomeFragment towardHomeFragment = new HomeFragment();
+                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , towardHomeFragment).commit();
+                Toast.makeText(getActivity(),"Update sucessfully", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<Patient> call, Throwable t) {
+                Toast.makeText(getActivity(), "Update unsucessfully", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void getAllPatient() {
@@ -93,6 +127,7 @@ public class RegisterFragment extends Fragment {
                 if (!response.isSuccessful()){
                     Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
                 }
+
                 List<Patient> patientsList = response.body();
                 // check is email is already register
                 for(Patient patient: patientsList){
@@ -149,6 +184,14 @@ public class RegisterFragment extends Fragment {
                 Toast.makeText(getActivity(), t.getMessage() , Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private Patient getSharedPreferencepatient(){
+        // When user login need fill this filed auto
+        SharedPreferences sharedPreferencesUserLoginInfo = getActivity().getPreferences(Context.MODE_PRIVATE);
+        final Gson gson = new Gson();
+        Patient patientLogin =  gson.fromJson(sharedPreferencesUserLoginInfo.getString("PatientLogInInfo", ""), Patient.class);
+        return patientLogin;
     }
 
     @Override
