@@ -1,6 +1,8 @@
 package fingertiptech.medontime.ui.login;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,7 @@ import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.Hashing.HashingPassword;
 import fingertiptech.medontime.ui.home.HomeFragment;
 import fingertiptech.medontime.ui.jsonplaceholder.PatientJSONPlaceholder;
+import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
 import fingertiptech.medontime.ui.model.Patient;
 import fingertiptech.medontime.ui.register.RegisterFragment;
 import retrofit2.Call;
@@ -132,7 +137,7 @@ public class LoginFragment extends Fragment {
                 for(Patient patient: patientsList){
                     if(hashPassword.equals(patient.getPassword())){
                         // if get temp passwaord is false mean is already update new password
-                        // or it is created by patient withou caretaker
+                        // or it is created by patient without caretaker
                         if(!patient.getPasswordTemporary()){
                             Toast.makeText(getActivity(), "Welcome " +patient.getFirstName(), Toast.LENGTH_LONG).show();
                             HomeFragment forwardToHomePage = new HomeFragment();
@@ -140,10 +145,7 @@ public class LoginFragment extends Fragment {
                             return;
                         }else{
                             creatNewContactDiaglog(
-                                    patient.getFirstName(),
-                                    patient.getLastName(),
-                                    patient.getAge(),
-                                    patient.getPhoneNum());
+                                    patient);
                             return;
                         }
 
@@ -163,14 +165,14 @@ public class LoginFragment extends Fragment {
 
     // this is popup window will show first name and last name
     // and patien need to enter correct age and phone to reset password
-    public void creatNewContactDiaglog(String firstName, String lastName, int age, String phoneNo){
+    public void creatNewContactDiaglog(Patient patient){
         verifyDialogBuilder = new AlertDialog.Builder(getContext());
 
         final View verifyPopupView = getLayoutInflater().inflate(R.layout.verify_popup,null);
         patienFirstName = verifyPopupView.findViewById(R.id.tvpatientFirstName);
-        patienFirstName.setText(firstName);
+        patienFirstName.setText(patient.getFirstName());
         patientLastName = verifyPopupView.findViewById(R.id.patientLastName);
-        patientLastName.setText(lastName);
+        patientLastName.setText(patient.getLastName());
         patientAge = verifyPopupView.findViewById(R.id.patientAge);
         patienPhoneNo = verifyPopupView.findViewById(R.id.patientNumberNo);
         btnVerify = verifyPopupView.findViewById(R.id.btnVerifyMe);
@@ -183,10 +185,19 @@ public class LoginFragment extends Fragment {
         btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Integer.valueOf(patientAge.getText().toString().trim()) == age
-                && phoneNo.equals(patienPhoneNo.getText().toString())){
+                // will veriy user input age and phone number is same as in db
+                if(Integer.valueOf(patientAge.getText().toString().trim()) == patient.getAge()
+                && patient.getPhoneNum().equals(patienPhoneNo.getText().toString())){
+                    SharedPreferences sharedPreferencesLoginUserInformation = getActivity().getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor sharedPreferencesLoginUserInformationEditor = sharedPreferencesLoginUserInformation.edit();
+                    Gson gson = new Gson();
+                    String patientLoginInfo = gson.toJson(patient);
+                    sharedPreferencesLoginUserInformationEditor.putString("PatientLogInInfo", patientLoginInfo);
+                    sharedPreferencesLoginUserInformationEditor.apply();
                     Toast.makeText(getActivity(), "Verify Successfully, Now Reset Password", Toast.LENGTH_LONG).show();
-
+                    RegisterFragment registerFragment = new RegisterFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , registerFragment).commit();
+                    verifyDialog.dismiss();
                 }else{
                     Toast.makeText(getActivity(), "Verify Unsuccessfully, Please Enter Again", Toast.LENGTH_LONG).show();
                 }

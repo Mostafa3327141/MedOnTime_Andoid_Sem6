@@ -1,5 +1,7 @@
 package fingertiptech.medontime;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -8,6 +10,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -56,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        // erase Login account info sharedpreference first, since we keep use the same simulator for testing
+        SharedPreferences sharedPreferencesLoginUserInformation = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesLoginUserInformationEditor = sharedPreferencesLoginUserInformation.edit();
+        sharedPreferencesLoginUserInformationEditor.putString("PatientLogInInfo", "");
+        sharedPreferencesLoginUserInformationEditor.apply();
     }
 
     @Override

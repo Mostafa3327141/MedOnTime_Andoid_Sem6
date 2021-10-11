@@ -25,6 +25,6 @@ public interface PatientJSONPlaceholder {
     Call<Patient> getPatient(@Path("id") String patientObjectId);
 
     @PATCH("PatientAPI/{id}?key=sH5O!2cdOqP1%5E")
-    Call<Patient> patchPatient(@Path("id") String patientObjectId,@Body Patient patient );
+    Call<Patient> updatePatientPassword(@Path("id") String patientObjectId,@Body Patient patient );
 
 }

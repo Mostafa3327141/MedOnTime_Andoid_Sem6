@@ -87,7 +87,6 @@ public class MedicineFragment extends Fragment {
             public void onClick(View v) {
                 MedicineFragmentStep2 stepTwoAddMedicine = new MedicineFragmentStep2();
                 getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , stepTwoAddMedicine).commit();
-
             }
         });
 
@@ -145,7 +144,6 @@ public class MedicineFragment extends Fragment {
             setSpinner(medicationsResponse.getFrequency(), frequencySpinner);
             editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
             textView_medicine_setAlarm.setText(medicationsResponse.getFirstDoseTime());
-            List<String> s = medicationsResponse.getTimes();
         });
 
     }

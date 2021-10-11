@@ -2,6 +2,8 @@ package fingertiptech.medontime.ui.register;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +69,18 @@ public class RegisterFragment extends Fragment {
                 getAllPatient();
             }
         });
+
+        // When user login need fill this filed auto
+        SharedPreferences sharedPreferencesUserLoginInfo = getActivity().getPreferences(Context.MODE_PRIVATE);
+        final Gson gson = new Gson();
+        Patient patientLogin =  gson.fromJson(sharedPreferencesUserLoginInfo.getString("PatientLogInInfo", ""), Patient.class);
+        if(patientLogin != null){
+            fragmentRegisterBinding.txtFirstName.setText(patientLogin.getFirstName());
+            fragmentRegisterBinding.txtLastName.setText(patientLogin.getLastName());
+            fragmentRegisterBinding.textviewAgeRegister.setText(patientLogin.getAge());
+            fragmentRegisterBinding.textviewPhoneNumber.setText(patientLogin.getPhoneNum());
+            fragmentRegisterBinding.textviewEmail.setText(patientLogin.getEmail());
+        }
         return view;
     }
 
