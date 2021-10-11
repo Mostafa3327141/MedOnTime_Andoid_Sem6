@@ -109,6 +109,7 @@ public class RegisterFragment extends Fragment {
                 fragmentRegisterBinding.textviewEmail.getText().toString().toLowerCase(Locale.ROOT).trim()),
                 fragmentRegisterBinding.textviewPhoneNumber.getText().toString(),
                 Integer.valueOf(fragmentRegisterBinding.textviewAgeRegister.getText().toString()),
+                false,
                 null,null,null);
 
         Call<Patient> call = patientJSONPlaceholder.addPatient(patient);

@@ -10,6 +10,7 @@ public class Medication {
     String medicationImage;
     String unit;
     int quantity;
+    String condition;
     String firstDoseTime;
     int hoursBetween;
     String frequency;
@@ -17,7 +18,7 @@ public class Medication {
     List<String> times;
 
     // this constructor is for retrive from db
-    public Medication(String id, String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String firstDoseTime, int hoursBetween, String frequency, String shape, List<String> times) {
+    public Medication(String id, String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String condition, String firstDoseTime, int hoursBetween, String frequency, String shape, List<String> times) {
         this.id = id;
         this.caretakerID = caretakerID;
         this.patientID = patientID;
@@ -25,6 +26,7 @@ public class Medication {
         this.medicationImage = medicationImage;
         this.unit = unit;
         this.quantity = quantity;
+        this.condition = condition;
         this.firstDoseTime = firstDoseTime;
         this.hoursBetween = hoursBetween;
         this.frequency = frequency;
@@ -32,18 +34,27 @@ public class Medication {
         this.times = times;
     }
     // this constructor is for add to db
-    public Medication(String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String firstDoseTime, int hoursBetween, String frequency, String shape, List<String> times) {
+    public Medication(String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String condition, String firstDoseTime, int hoursBetween, String frequency, String shape, List<String> times) {
         this.caretakerID = caretakerID;
         this.patientID = patientID;
         this.medicationName = medicationName;
         this.medicationImage = medicationImage;
         this.unit = unit;
         this.quantity = quantity;
+        this.condition = condition;
         this.firstDoseTime = firstDoseTime;
         this.hoursBetween = hoursBetween;
         this.frequency = frequency;
         this.shape = shape;
         this.times = times;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
     public String getId() {
         return id;

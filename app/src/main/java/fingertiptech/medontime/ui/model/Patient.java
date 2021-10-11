@@ -13,11 +13,12 @@ public class Patient {
     String password;
     String phoneNum;
     int age;
+    Boolean isPasswordTemporary;
     List<Shape> unSelectedShapes;
     List<String> medicationIDs;
     List<String> prescriptionIDs;
 
-    public Patient(String id, int patientID, int caretakerID, String firstName, String lastName, String email, String password, String phoneNum, int age, List<Shape> unSelectedShapes, List<String> medicationIDs, List<String> prescriptionIDs) {
+    public Patient(String id, int patientID, int caretakerID, String firstName, String lastName, String email, String password, String phoneNum, int age, Boolean isPasswordTemporary, List<Shape> unSelectedShapes, List<String> medicationIDs, List<String> prescriptionIDs) {
         this.id = id;
         this.patientID = patientID;
         this.caretakerID = caretakerID;
@@ -27,6 +28,7 @@ public class Patient {
         this.password = password;
         this.phoneNum = phoneNum;
         this.age = age;
+        this.isPasswordTemporary = isPasswordTemporary;
         this.unSelectedShapes = unSelectedShapes;
         this.medicationIDs = medicationIDs;
         this.prescriptionIDs = prescriptionIDs;
@@ -35,7 +37,7 @@ public class Patient {
 
     // for Add patient no need _id
 
-    public Patient(int patientID, int caretakerID, String firstName, String lastName, String email, String password, String phoneNum, int age, List<Shape> unSelectedShapes, List<String> medicationIDs, List<String> prescriptionIDs) {
+    public Patient(int patientID, int caretakerID, String firstName, String lastName, String email, String password, String phoneNum, int age,Boolean isPasswordTemporary, List<Shape> unSelectedShapes, List<String> medicationIDs, List<String> prescriptionIDs) {
         this.patientID = patientID;
         this.caretakerID = caretakerID;
         this.firstName = firstName;
@@ -44,6 +46,7 @@ public class Patient {
         this.password = password;
         this.phoneNum = phoneNum;
         this.age = age;
+        this.isPasswordTemporary = isPasswordTemporary;
         this.unSelectedShapes = unSelectedShapes;
         this.medicationIDs = medicationIDs;
         this.prescriptionIDs = prescriptionIDs;
@@ -119,6 +122,14 @@ public class Patient {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Boolean getPasswordTemporary() {
+        return isPasswordTemporary;
+    }
+
+    public void setPasswordTemporary(Boolean passwordTemporary) {
+        isPasswordTemporary = passwordTemporary;
     }
 
     public List<Shape> getUnSelectedShapes() {
