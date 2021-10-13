@@ -19,6 +19,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.jsonplaceholder.LogJSONPlaceholder;
+import fingertiptech.medontime.ui.jsonplaceholder.PatientJSONPlaceholder;
+import fingertiptech.medontime.ui.model.Log;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class HomeFragment extends Fragment {
@@ -26,6 +31,8 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     public static final int PICK_IMAGE = 1;
     private RecyclerView medicationRecyclerViewItems;
+
+    LogJSONPlaceholder logJSONPlaceholder;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,6 +62,13 @@ public class HomeFragment extends Fragment {
                         .setAction("Action", null).show();
             }
         });
+
+        //--------------------Test Log API-----------------
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://medontime-api.herokuapp.com/API/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        logJSONPlaceholder= retrofit.create(LogJSONPlaceholder.class);
 
         return root;
     }
