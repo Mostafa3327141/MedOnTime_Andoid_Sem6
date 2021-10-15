@@ -3,14 +3,18 @@ package fingertiptech.medontime.ui.recycleadpoter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.Layout;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.medicine.MedicineFragment;
+import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
 import fingertiptech.medontime.ui.model.Medication;
 
 public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.MedicationViewHolder>  {
@@ -44,8 +50,16 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
         holder.name.setText("Name : " + medicationItem.getMedicationName());
         holder.time.setText("Time : " + medicationItem.getFirstDoseTime());
         holder.dosage.setText("Dosage :" + medicationItem.getUnit());
-        holder.quantity.setText("Quantity :" + medicationItem.getQuantity());        holder.name.setText("Name : " + medicationItem.getMedicationName());
+        holder.quantity.setText("Quantity :" + medicationItem.getQuantity());
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                MedicineFragment towardmedicationfragment = new MedicineFragment();
+                Fragment prev = ((AppCompatActivity)context).getSupportFragmentManager().findFragmentById(R.id.fragment_home);
+                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().remove(prev).replace(R.id.nav_host_fragment , towardmedicationfragment).commit();
+            }
+        });
     }
 
     @Override
@@ -57,6 +71,7 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
     public class MedicationViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
         TextView name , time , dosage , quantity;
+        View layout;
         public MedicationViewHolder(@NonNull View medicationItem){
             super(medicationItem);
             image = medicationItem.findViewById(R.id.image_view_medicine);
@@ -64,6 +79,7 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
             time = medicationItem.findViewById(R.id.textView_Medication_time);
             dosage = medicationItem.findViewById(R.id.textView_Medication_dosage);
             quantity = medicationItem.findViewById(R.id.textView_Medication_quantity);
+            layout = medicationItem.findViewById(R.id.layout);
         }
 
     }

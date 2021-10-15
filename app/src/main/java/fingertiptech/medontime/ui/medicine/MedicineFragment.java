@@ -104,10 +104,8 @@ public class MedicineFragment extends Fragment {
                 medicineViewModel.initAddMedication(addMedication);
                 medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
                     resultQRScan = medicationsResponse.getId();
-                    String s = "";
                 });
-                MedicineFragmentStep2 stepTwoAddMedicine = new MedicineFragmentStep2();
-                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , stepTwoAddMedicine).commit();
+
             }
         });
 
@@ -167,7 +165,7 @@ public class MedicineFragment extends Fragment {
             setSpinner(medicationsResponse.getUnit().replaceAll("[0-9]", ""),unitTypeSpinner);
             editText_quantity.setText(String.valueOf(medicationsResponse.getQuantity()));
 
-            editText_medicine_condition.setText("null yet");
+            editText_medicine_condition.setText(medicationsResponse.getCondition());
             setSpinner(medicationsResponse.getFrequency(), frequencySpinner);
             editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
             textView_medicine_setAlarm.setText(medicationsResponse.getFirstDoseTime());

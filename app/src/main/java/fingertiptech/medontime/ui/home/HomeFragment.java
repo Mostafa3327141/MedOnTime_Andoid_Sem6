@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -21,13 +20,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.medicine.MedicineFragment;
 import fingertiptech.medontime.ui.model.Medication;
-import fingertiptech.medontime.ui.model.TestItem;
-import fingertiptech.medontime.ui.recycleadpoter.ItemAdapter;
 import fingertiptech.medontime.ui.recycleadpoter.MedicationAdaptor;
 
 
@@ -69,11 +65,19 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 // just filiter one same as patient id in sharedpreferce
-                ArrayList<Medication> testresutl = patientAllMedication;
-                MedicationAdaptor medicationAdaptor = new MedicationAdaptor(getActivity() , testresutl);
+                ArrayList<Medication> medicationList = patientAllMedication;
+                MedicationAdaptor medicationAdaptor = new MedicationAdaptor(getActivity() , medicationList);
                 medicationRecyclerViewItems.setAdapter(medicationAdaptor);
             });
         }
+
+        medicationRecyclerViewItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MedicineFragment stepToAddMedicine = new MedicineFragment();
+                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , stepToAddMedicine).commit();
+            }
+        });
 
 
 
