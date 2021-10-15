@@ -52,9 +52,43 @@ public class MedicineFragmentStep2 extends Fragment {
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
         if(MedicineFragment.resultQRScan != null){
-            medicineViewModel.initGetMedication(MedicineFragment.resultQRScan);
+            medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
             medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
                 imageViewMedication.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
+//                // we need to write medication into sharedpreference to store in order to show in recycle view
+//                // 1. we need to retrive the one have been store in sharedpreference first
+//                SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
+//                final Gson gson = new Gson();
+//                String[] medicationIdList = sharedPreferencesMedicationId.getString("MedicationStored", "").split(",");
+//                Log.wtf("Nancy test sharedPreferencesMedicationId.getString 01" , sharedPreferencesMedicationId.getString("MedicationStored", ""));
+//                ArrayList<String> medicationArrayList = new ArrayList<>(Arrays.asList(medicationIdList));
+//                ArrayList<Medication> covertStringtoMedicationList = new ArrayList<>();
+//                // need to read into medicaion model json format, and save as arraylist<medication>
+//                for (String medictionList: medicationArrayList) {
+//                    if(!"".equals(medictionList)){
+//                        covertStringtoMedicationList.add(gson.fromJson(medictionList, Medication.class));
+//                    }
+//                }
+//                Log.wtf("Nancy test covertStringtoMedicationList.size", String.valueOf(covertStringtoMedicationList.size()));
+//                // 2. after we retrive then we need to add new medicaion we need to store the medicaon we just scan
+//                // check if already in the list if not append, otherwise skip
+//                SharedPreferences.Editor sharedPreferencesMedicationIdEditor = getActivity().getPreferences(Context.MODE_PRIVATE).edit();
+//                StringBuilder sb = new StringBuilder();
+//                for (int i = 0; i < covertStringtoMedicationList.size(); i++) {
+//                    if(MedicineFragment.resultQRScan.equals(covertStringtoMedicationList.get(i).getId())){
+//                        HomeFragment forwardHomefragment = new HomeFragment();
+//                        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardHomefragment).commit();
+//                        Toast.makeText(getActivity(), "Already scan this QR code", Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
+//                }
+//                covertStringtoMedicationList.add(medicationsResponse);
+//                String covertStringtoMedicationListToString = gson.toJson(covertStringtoMedicationList);
+//
+//                sharedPreferencesMedicationIdEditor.putString("MedicationStored", covertStringtoMedicationListToString);
+//                sharedPreferencesMedicationIdEditor.apply();
+//                Log.wtf("Nancy test sharedPreferencesMedicationId.getString 02" , sharedPreferencesMedicationId.getString("MedicationStored", ""));
+
             });
         }
 

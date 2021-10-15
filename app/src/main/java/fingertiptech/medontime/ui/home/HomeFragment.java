@@ -1,6 +1,8 @@
 package fingertiptech.medontime.ui.home;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.model.Medication;
+import fingertiptech.medontime.ui.model.TestItem;
+import fingertiptech.medontime.ui.recycleadpoter.ItemAdapter;
+import fingertiptech.medontime.ui.recycleadpoter.MedicationAdaptor;
 
 
 public class HomeFragment extends Fragment {
@@ -34,10 +44,37 @@ public class HomeFragment extends Fragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         Button btnAddMed = root.findViewById(R.id.btnAddMed);
+        // we need to write medication id into sharedpreference to store in order to show in recycle view
+        // 1. we need to retrive the one have been store in sharedpreference first
 
+
+        // in this homefragment will show all the patient medicaion list
+        // 1 . Already got the patient id when scan qr code, so will retrive all data from api
+        SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String patientId = sharedPreferencesMedicationId.getString("PatientId", "");
+        ArrayList<Medication> patientAllMedication = new ArrayList<>();
+//        ArrayList<String> medicationIdArrayList = new ArrayList<>(Arrays.asList(medicationIdList));
+        // 2. get medication list match the patient id
+        // 3. store in arraylist <medication> and populate to recycle view
         medicationRecyclerViewItems =root.findViewById(R.id.recycleView_medicine);
         medicationRecyclerViewItems.setHasFixedSize(true);
         medicationRecyclerViewItems.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        if(!"".equals(patientId)){
+            homeViewModel.initGetMedication();
+            homeViewModel.getMedicationListRepository().observe(getViewLifecycleOwner(), medicationsListResponse -> {
+                for (Medication medication: medicationsListResponse) {
+                    if(patientId.equals(String.valueOf(medication.getPatientID()))){
+                        patientAllMedication.add(medication);
+                    }
+                }
+                // just filiter one same as patient id in sharedpreferce
+                ArrayList<Medication> testresutl = patientAllMedication;
+                MedicationAdaptor medicationAdaptor = new MedicationAdaptor(getActivity() , testresutl);
+                medicationRecyclerViewItems.setAdapter(medicationAdaptor);
+            });
+        }
+
 
 
         btnAddMed.setOnClickListener(new View.OnClickListener() {

@@ -12,8 +12,8 @@ import retrofit2.http.Path;
 
 public interface MedicationJSONPlaceholder {
 
-    @GET("MedicationAPI/{id}?key=sH5O!2cdOqP1%5E")
-    Call<List<Medication>> getMedicationList(@Path("id") String medicationId);
+    @GET("MedicationAPI?key=sH5O!2cdOqP1%5E")
+    Call<List<Medication>> getMedicationList();
 
     @GET("MedicationAPI/{id}?key=sH5O!2cdOqP1%5E")
     Call<Medication> getMedication(@Path("id") String medicationId);
