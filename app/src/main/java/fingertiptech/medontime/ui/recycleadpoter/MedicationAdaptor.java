@@ -54,10 +54,9 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                
                 MedicineFragment towardmedicationfragment = new MedicineFragment();
-                Fragment prev = ((AppCompatActivity)context).getSupportFragmentManager().findFragmentById(R.id.fragment_home);
-                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().remove(prev).replace(R.id.nav_host_fragment , towardmedicationfragment).commit();
+                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , towardmedicationfragment).commit();
             }
         });
     }
