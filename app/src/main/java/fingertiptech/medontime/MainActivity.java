@@ -1,6 +1,8 @@
 package fingertiptech.medontime;
 
 import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,6 +39,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import fingertiptech.medontime.ui.home.HomeFragment;
 import fingertiptech.medontime.ui.medicine.MedicineFragmentStep3;
 
 public class MainActivity extends AppCompatActivity implements MedicineFragmentStep3.OnDataPass {
@@ -107,7 +110,16 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         });
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
-            Toast.makeText(this, "This device does not support NFC", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("This page is for setting up confirmation for taking a medication with NFC scanning, though this device does not support NFC. Please use QR code scanning for confirming pill intake instead. \n\nMedication's been added! Head back to the homepage or use the app later when notified.")
+                    .setCancelable(false)
+                    .setNeutralButton("Close", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
 //            finish();
         }
         readFromIntent(getIntent());
