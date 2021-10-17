@@ -21,6 +21,13 @@
             android:text="@string/add_medicine"
             android:onClick="nextIntent"/>
 
+        <!--<Button
+            style="@style/btnStyle"
+            android:id="@+id/btnLogTest"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Log Test"/>-->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView_medicine"
             android:layout_width="match_parent"

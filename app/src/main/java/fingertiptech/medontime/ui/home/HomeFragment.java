@@ -18,7 +18,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 
+import java.util.Date;
+
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.jsonplaceholder.LogJSONPlaceholder;
+import fingertiptech.medontime.ui.jsonplaceholder.PatientJSONPlaceholder;
+import fingertiptech.medontime.ui.model.Log;
+import fingertiptech.medontime.ui.model.Patient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class HomeFragment extends Fragment {
@@ -26,6 +37,8 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     public static final int PICK_IMAGE = 1;
     private RecyclerView medicationRecyclerViewItems;
+
+    LogJSONPlaceholder logJSONPlaceholder;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -56,10 +69,43 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //--------------------Test Log API-----------------
+//
+//        Button btnLogTest = root.findViewById(R.id.btnLogTest);
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("https://medontime-api.herokuapp.com/API/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        logJSONPlaceholder= retrofit.create(LogJSONPlaceholder.class);
+//
+//        btnLogTest.setOnClickListener(v -> {
+//            logTest();
+//        });
+
         return root;
     }
 
+//    private void logTest() {
+//        android.util.Log.i("test", "logTest()");
+//        Call<Log> createCall = logJSONPlaceholder.addLog(new Log(null, "test", "some med id", "some med name"));
+//        createCall.enqueue(new Callback<Log>() {
+//            @Override
+//            public void onResponse(Call<Log> call, Response<Log> response) {
+//                if (!response.isSuccessful()){
+//                    android.util.Log.i("testLog", "logTest() unsuccess" + response.code());
+//                    return;
+//                }
+//                android.util.Log.i("testLog", "logTest() success" + response.code());
+//                Toast.makeText(getActivity(),"Log added", Toast.LENGTH_LONG).show();
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Log> call, Throwable t) {
+//                Toast.makeText(getActivity(), "Log not added", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
-
-    }
+}
 
