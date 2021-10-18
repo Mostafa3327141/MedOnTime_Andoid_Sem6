@@ -16,6 +16,7 @@ public class Medication {
     String frequency;
     String shape;
     List<String> times;
+    
 
     // this constructor is for retrive from db
     public Medication(String id, String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String condition, String firstDoseTime, int hoursBetween, String frequency, String shape, List<String> times) {

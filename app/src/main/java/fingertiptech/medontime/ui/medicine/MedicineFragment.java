@@ -105,6 +105,8 @@ public class MedicineFragment extends Fragment {
                 medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
                     resultQRScan = medicationsResponse.getId();
                 });
+                MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
+                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();
 
             }
         });
