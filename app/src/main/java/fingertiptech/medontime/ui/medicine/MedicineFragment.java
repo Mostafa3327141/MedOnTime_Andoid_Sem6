@@ -91,20 +91,30 @@ public class MedicineFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // if patient without caretaker they need to add by themself
-                Medication addMedication = new Medication(null, 0,
-                        editText_medicine_name.getText().toString(),null,
-                        editText_unit.getText().toString(),
-                        Integer.valueOf(editText_quantity.getText().toString()),
-                        editText_medicine_condition.getText().toString(),
-                        textView_medicine_setAlarm.getText().toString(),
-                        Integer.valueOf(editText_hoursInBetween.getText().toString()),
-                        frequencySpinner.getSelectedItem().toString(),
-                        null,null);
-                medicineViewModel.initAddMedication(addMedication);
-                medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
-                    resultQRScan = medicationsResponse.getId();
-                });
+                // if filed is blank still can forward to next page without curshing
+                // but just don't need to save to db
+                String s = editText_medicine_name.getText().toString();
+                if("".equals(editText_medicine_name.getText().toString())){
+                    MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
+                    getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();
+                }else{
+                    // if patient without caretaker they need to add by themself
+                    Medication addMedication = new Medication(null, 0,
+                            editText_medicine_name.getText().toString(),null,
+                            editText_unit.getText().toString(),
+                            Integer.valueOf(editText_quantity.getText().toString()),
+                            editText_medicine_condition.getText().toString(),
+                            textView_medicine_setAlarm.getText().toString(),
+                            Integer.valueOf(editText_hoursInBetween.getText().toString()),
+                            frequencySpinner.getSelectedItem().toString(),
+                            null,null);
+                    medicineViewModel.initAddMedication(addMedication);
+                    medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
+                        resultQRScan = medicationsResponse.getId();
+                    });
+                }
+
+
                 MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
                 getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();
 
