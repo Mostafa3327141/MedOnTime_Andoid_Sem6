@@ -121,21 +121,24 @@ public class MedicineFragment extends Fragment {
                             ("".equals(editText_hoursInBetween.getText().toString())) ? 0 : Integer.valueOf(editText_hoursInBetween.getText().toString()),
                             frequencySpinner.getSelectedItem().toString(),
                             null);
-                    medicineViewModel.initAddMedication(addMedication);
 
-                    medicineViewModel.getMedicationRepositoryWhenAdd().observe(getViewLifecycleOwner(), medicationsResponse -> {
-                        resultQRScan = medicationsResponse.getId();
-                    });
+                    SharedPreferences sharedPreferencesMedicationAdd = getActivity().getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor sharedPreferencesMedicationAddEditor = sharedPreferencesMedicationAdd.edit();
+                    Gson gson = new Gson();
+                    String medicationAddInfo = gson.toJson(addMedication);
+                    sharedPreferencesMedicationAddEditor.putString("MedicationAdd", medicationAddInfo);
+                    sharedPreferencesMedicationAddEditor.apply();
+
+//                    medicineViewModel.initAddMedication(addMedication);
+//
+//                    medicineViewModel.getMedicationRepositoryWhenAdd().observe(getViewLifecycleOwner(), medicationsResponse -> {
+//                        resultQRScan = medicationsResponse.getId();
+//                    });
 
 
                 }else{
-                    medicineViewModel.initGetMedicationByMedicationId(resultQRScan);
-                    medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
-
-                        
-
-                    });
-
+                    MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
+                    getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();
 
                 }
                 Handler handler = new Handler();
@@ -144,9 +147,6 @@ public class MedicineFragment extends Fragment {
                         MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
                         getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();                    }
                 }, 2000);
-
-
-
 
             }
         });
@@ -284,10 +284,10 @@ public class MedicineFragment extends Fragment {
                     StringBuilder sb = new StringBuilder();
                     for (int i = 0; i < medicationIdArrayList.size(); i++) {
                         if(resultQRScan.equals(medicationIdArrayList.get(i))){
-                            HomeFragment forwardHomefragment = new HomeFragment();
-                            getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardHomefragment).commit();
-                            Toast.makeText(getActivity(), "Already scan this QR code", Toast.LENGTH_LONG).show();
-                            return;
+//                            HomeFragment forwardHomefragment = new HomeFragment();
+//                            getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardHomefragment).commit();
+//                            Toast.makeText(getActivity(), "Already scan this QR code", Toast.LENGTH_LONG).show();
+//                            return;
                         }
                     }
                     medicationIdArrayList.add(resultQRScan);

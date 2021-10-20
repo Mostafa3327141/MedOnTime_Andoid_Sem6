@@ -25,10 +25,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.ByteArrayOutputStream;
 
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.model.Medication;
+import fingertiptech.medontime.ui.model.Patient;
 
 public class MedicineFragmentStep2 extends Fragment {
 
@@ -85,7 +88,7 @@ public class MedicineFragmentStep2 extends Fragment {
             public void onClick(View v) {
                 MedicineFragmentStep3 stepThreeAddMedicine = new MedicineFragmentStep3();
                 getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , stepThreeAddMedicine).commit();
-
+                MedicineFragment.resultQRScan = null;
             }
         });
 
@@ -98,16 +101,24 @@ public class MedicineFragmentStep2 extends Fragment {
             if (resultCode == RESULT_OK) {
                 Bitmap bp = (Bitmap) data.getExtras().get("data");
                 imageViewMedication.setImageBitmap(bp);
-                medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
-                medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
-                    // in here has 2 senerio one is patient already medicaion so it will has image bitmap already so i just display
-                    // another one is patient need to add their own, so they add basic in frag1 in frag2 is retrive medcaion object create by fragment1
-                    // and need to add image in fragment 2, of course when retrive theri own medecion id won't have image bitmap at first
-                    Medication medication = medicationsResponse;
-                    medication.setMedicationImage(BitMapToString(bp));
-                    medicineViewModel.initAddMedication(medication);
-
-                });
+                SharedPreferences sharedPreferencesAddMedication = getActivity().getPreferences(Context.MODE_PRIVATE);
+                final Gson gson = new Gson();
+                Medication medicationAdd =  gson.fromJson(sharedPreferencesAddMedication.getString("MedicationAdd", ""), Medication.class);
+                medicationAdd.setMedicationImage(BitMapToString(bp));
+                medicineViewModel.initUpdateMedication(medicationAdd);
+//                medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
+//                medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
+//                    // in here has 2 senerio one is patient already medicaion so it will has image bitmap already so i just display
+//                    // another one is patient need to add their own, so they add basic in frag1 in frag2 is retrive medcaion object create by fragment1
+//                    // and need to add image in fragment 2, of course when retrive theri own medecion id won't have image bitmap at first
+//                    Medication medication = medicationsResponse;
+//                    medication.setMedicationImage(BitMapToString(bp));
+//                    medicineViewModel.initUpdateMedication(medication);
+//                    medicineViewModel.getMedicationRepositoryWhenUpdate().observe(getViewLifecycleOwner(), medicationsResponse1 -> {
+//
+//                    });
+//
+//                });
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
             }

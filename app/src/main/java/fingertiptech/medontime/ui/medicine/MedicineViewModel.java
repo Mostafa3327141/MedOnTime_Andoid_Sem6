@@ -13,7 +13,9 @@ public class MedicineViewModel extends ViewModel {
 
     private MutableLiveData<Medication> medicationMutableLiveDataWhenAdd;
     private MutableLiveData<Medication> medicationMutableLiveDataWhenGet;
-//    private MutableLiveData<List<Medication>> medicationMutableLiveDataList;
+    private MutableLiveData<Medication> medicationMutableLiveDataWhenUpdate;
+
+    //    private MutableLiveData<List<Medication>> medicationMutableLiveDataList;
     private MedicationRepository medicationRepository;
 
     public void initGetMedicationByMedicationId(String medicationID){
@@ -37,12 +39,21 @@ public class MedicineViewModel extends ViewModel {
         medicationRepository = MedicationRepository.getInstance();
         medicationMutableLiveDataWhenAdd = medicationRepository.addMedication(medication);
     }
-
+    public void initUpdateMedication(Medication medication){
+        if (medicationMutableLiveDataWhenUpdate != null){
+            return;
+        }
+        medicationRepository = MedicationRepository.getInstance();
+        medicationMutableLiveDataWhenUpdate = medicationRepository.updateMedication(medication);
+    }
     public LiveData<Medication> getMedicationRepositoryWhenAdd() {
         return medicationMutableLiveDataWhenAdd;
     }
     public LiveData<Medication> getMedicationRepositoryWhenGet() {
         return medicationMutableLiveDataWhenGet;
+    }
+    public LiveData<Medication> getMedicationRepositoryWhenUpdate() {
+        return medicationMutableLiveDataWhenUpdate;
     }
 //    public LiveData<List<Medication>> getMedicationListRepository() {
 //        return medicationMutableLiveDataList;
