@@ -15,11 +15,10 @@ public class Medication {
     int hoursBetween;
     String frequency;
     String shape;
-    List<String> times;
-    
+
 
     // this constructor is for retrive from db
-    public Medication(String id, String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String condition, String firstDoseTime, int hoursBetween, String frequency, String shape, List<String> times) {
+    public Medication(String id, String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String condition, String firstDoseTime, int hoursBetween, String frequency, String shape) {
         this.id = id;
         this.caretakerID = caretakerID;
         this.patientID = patientID;
@@ -32,10 +31,9 @@ public class Medication {
         this.hoursBetween = hoursBetween;
         this.frequency = frequency;
         this.shape = shape;
-        this.times = times;
     }
     // this constructor is for add to db
-    public Medication(String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String condition, String firstDoseTime, int hoursBetween, String frequency, String shape, List<String> times) {
+    public Medication(String caretakerID, int patientID, String medicationName, String medicationImage, String unit, int quantity, String condition, String firstDoseTime, int hoursBetween, String frequency, String shape) {
         this.caretakerID = caretakerID;
         this.patientID = patientID;
         this.medicationName = medicationName;
@@ -47,7 +45,6 @@ public class Medication {
         this.hoursBetween = hoursBetween;
         this.frequency = frequency;
         this.shape = shape;
-        this.times = times;
     }
 
     public String getCondition() {
@@ -145,12 +142,6 @@ public class Medication {
         this.shape = shape;
     }
 
-    public List<String> getTimes() {
-        return times;
-    }
 
-    public void setTimes(List<String> times) {
-        this.times = times;
-    }
 }
 

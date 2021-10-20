@@ -11,16 +11,17 @@ import fingertiptech.medontime.ui.model.Medication;
 
 public class MedicineViewModel extends ViewModel {
 
-    private MutableLiveData<Medication> medicationMutableLiveData;
+    private MutableLiveData<Medication> medicationMutableLiveDataWhenAdd;
+    private MutableLiveData<Medication> medicationMutableLiveDataWhenGet;
 //    private MutableLiveData<List<Medication>> medicationMutableLiveDataList;
     private MedicationRepository medicationRepository;
 
     public void initGetMedicationByMedicationId(String medicationID){
-        if (medicationMutableLiveData != null){
+        if (medicationMutableLiveDataWhenGet != null){
             return;
         }
         medicationRepository = MedicationRepository.getInstance();
-        medicationMutableLiveData = medicationRepository.getMedicationById(medicationID);
+        medicationMutableLiveDataWhenGet = medicationRepository.getMedicationById(medicationID);
     }
 //    public void initGetMedication(){
 //        if (medicationMutableLiveData != null){
@@ -30,14 +31,18 @@ public class MedicineViewModel extends ViewModel {
 //        medicationMutableLiveDataList = medicationRepository.getMedicationById();
 //    }
     public void initAddMedication(Medication medication){
-        if (medicationMutableLiveData != null){
+        if (medicationMutableLiveDataWhenAdd != null){
             return;
         }
         medicationRepository = MedicationRepository.getInstance();
-        medicationMutableLiveData = medicationRepository.addMedication(medication);
+        medicationMutableLiveDataWhenAdd = medicationRepository.addMedication(medication);
     }
-    public LiveData<Medication> getMedicationRepository() {
-        return medicationMutableLiveData;
+
+    public LiveData<Medication> getMedicationRepositoryWhenAdd() {
+        return medicationMutableLiveDataWhenAdd;
+    }
+    public LiveData<Medication> getMedicationRepositoryWhenGet() {
+        return medicationMutableLiveDataWhenGet;
     }
 //    public LiveData<List<Medication>> getMedicationListRepository() {
 //        return medicationMutableLiveDataList;

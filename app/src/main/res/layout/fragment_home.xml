@@ -19,7 +19,7 @@
             android:id="@+id/btnAddMed"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_medicine"
+            android:text=""
             android:onClick="nextIntent"/>
 
         <androidx.recyclerview.widget.RecyclerView

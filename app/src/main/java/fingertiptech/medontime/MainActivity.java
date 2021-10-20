@@ -41,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        // erase Login account info sharedpreference first, since we keep use the same simulator for testing
+        SharedPreferences sharedPreferencesLoginUserInformation = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesLoginUserInformationEditor = sharedPreferencesLoginUserInformation.edit();
+        sharedPreferencesLoginUserInformationEditor.putString("PatientId", "");
+        sharedPreferencesLoginUserInformationEditor.apply();
+        SharedPreferences sharedPreferencesLoginUserPatientObjectId = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesLoginUserPatientObjectIdEditor = sharedPreferencesLoginUserPatientObjectId.edit();
+        sharedPreferencesLoginUserPatientObjectIdEditor.putString("PatientObjectId", "");
+        sharedPreferencesLoginUserPatientObjectIdEditor.apply();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -59,11 +68,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        // erase Login account info sharedpreference first, since we keep use the same simulator for testing
-        SharedPreferences sharedPreferencesLoginUserInformation = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPreferencesLoginUserInformationEditor = sharedPreferencesLoginUserInformation.edit();
-        sharedPreferencesLoginUserInformationEditor.putString("PatientLogInInfo", "");
-        sharedPreferencesLoginUserInformationEditor.apply();
+
     }
 
     @Override

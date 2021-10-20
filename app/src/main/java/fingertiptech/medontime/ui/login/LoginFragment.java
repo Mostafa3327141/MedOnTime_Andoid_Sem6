@@ -139,9 +139,18 @@ public class LoginFragment extends Fragment {
                         // if get temp passwaord is false mean is already update new password
                         // or it is created by patient without caretaker
                         if(!patient.getPasswordTemporary()){
+                            SharedPreferences sharedPreferencesLoginUserInformation = getActivity().getPreferences(Context.MODE_PRIVATE);
+                            SharedPreferences.Editor sharedPreferencesLoginUserInformationEditor = sharedPreferencesLoginUserInformation.edit();
+                            sharedPreferencesLoginUserInformationEditor.putString("PatientId", patient.getPatientID().toString());
+                            sharedPreferencesLoginUserInformationEditor.apply();
+                            SharedPreferences sharedPreferencesLoginUserPatientObjectId = getActivity().getPreferences(Context.MODE_PRIVATE);
+                            SharedPreferences.Editor sharedPreferencesLoginUserPatientObjectIdEditor = sharedPreferencesLoginUserPatientObjectId.edit();
+                            sharedPreferencesLoginUserPatientObjectIdEditor.putString("PatientObjectId", patient.getId());
+                            sharedPreferencesLoginUserPatientObjectIdEditor.apply();
                             Toast.makeText(getActivity(), "Welcome " +patient.getFirstName(), Toast.LENGTH_LONG).show();
                             HomeFragment forwardToHomePage = new HomeFragment();
                             getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardToHomePage).commit();
+
                             return;
                         }else{
                             creatNewContactDiaglog(

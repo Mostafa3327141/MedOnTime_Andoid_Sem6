@@ -5,7 +5,9 @@ import static android.app.Activity.RESULT_OK;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -23,7 +25,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.model.Medication;
 
 public class MedicineFragmentStep2 extends Fragment {
 
@@ -48,47 +53,20 @@ public class MedicineFragmentStep2 extends Fragment {
         btnNext2 = root.findViewById(R.id.btnNext2);
         btnCamera = root.findViewById(R.id.btnOpenCamera);
         imageViewMedication = root.findViewById(R.id.imageMedicationView);
+//        SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
+//        String medicationId = sharedPreferencesMedicationId.getString("addMedicationToDBGenerateIdRetrive", "");
 
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
         if(MedicineFragment.resultQRScan != null){
             medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
-            medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
-                imageViewMedication.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
-//                // we need to write medication into sharedpreference to store in order to show in recycle view
-//                // 1. we need to retrive the one have been store in sharedpreference first
-//                SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
-//                final Gson gson = new Gson();
-//                String[] medicationIdList = sharedPreferencesMedicationId.getString("MedicationStored", "").split(",");
-//                Log.wtf("Nancy test sharedPreferencesMedicationId.getString 01" , sharedPreferencesMedicationId.getString("MedicationStored", ""));
-//                ArrayList<String> medicationArrayList = new ArrayList<>(Arrays.asList(medicationIdList));
-//                ArrayList<Medication> covertStringtoMedicationList = new ArrayList<>();
-//                // need to read into medicaion model json format, and save as arraylist<medication>
-//                for (String medictionList: medicationArrayList) {
-//                    if(!"".equals(medictionList)){
-//                        covertStringtoMedicationList.add(gson.fromJson(medictionList, Medication.class));
-//                    }
-//                }
-//                Log.wtf("Nancy test covertStringtoMedicationList.size", String.valueOf(covertStringtoMedicationList.size()));
-//                // 2. after we retrive then we need to add new medicaion we need to store the medicaon we just scan
-//                // check if already in the list if not append, otherwise skip
-//                SharedPreferences.Editor sharedPreferencesMedicationIdEditor = getActivity().getPreferences(Context.MODE_PRIVATE).edit();
-//                StringBuilder sb = new StringBuilder();
-//                for (int i = 0; i < covertStringtoMedicationList.size(); i++) {
-//                    if(MedicineFragment.resultQRScan.equals(covertStringtoMedicationList.get(i).getId())){
-//                        HomeFragment forwardHomefragment = new HomeFragment();
-//                        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardHomefragment).commit();
-//                        Toast.makeText(getActivity(), "Already scan this QR code", Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
-//                }
-//                covertStringtoMedicationList.add(medicationsResponse);
-//                String covertStringtoMedicationListToString = gson.toJson(covertStringtoMedicationList);
-//
-//                sharedPreferencesMedicationIdEditor.putString("MedicationStored", covertStringtoMedicationListToString);
-//                sharedPreferencesMedicationIdEditor.apply();
-//                Log.wtf("Nancy test sharedPreferencesMedicationId.getString 02" , sharedPreferencesMedicationId.getString("MedicationStored", ""));
-
+            medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
+                // in here has 2 senerio one is patient already medicaion so it will has image bitmap already so i just display
+                // another one is patient need to add their own, so they add basic in frag1 in frag2 is retrive medcaion object create by fragment1
+                // and need to add image in fragment 2, of course when retrive theri own medecion id won't have image bitmap at first
+                if(null != medicationsResponse.getMedicationImage()){
+                    imageViewMedication.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
+                }
             });
         }
 
@@ -120,6 +98,16 @@ public class MedicineFragmentStep2 extends Fragment {
             if (resultCode == RESULT_OK) {
                 Bitmap bp = (Bitmap) data.getExtras().get("data");
                 imageViewMedication.setImageBitmap(bp);
+                medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
+                medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
+                    // in here has 2 senerio one is patient already medicaion so it will has image bitmap already so i just display
+                    // another one is patient need to add their own, so they add basic in frag1 in frag2 is retrive medcaion object create by fragment1
+                    // and need to add image in fragment 2, of course when retrive theri own medecion id won't have image bitmap at first
+                    Medication medication = medicationsResponse;
+                    medication.setMedicationImage(BitMapToString(bp));
+                    medicineViewModel.initAddMedication(medication);
+
+                });
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
             }
@@ -130,7 +118,13 @@ public class MedicineFragmentStep2 extends Fragment {
         byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
-
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
 //    @Override
 //    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 //        super.onActivityCreated(savedInstanceState);

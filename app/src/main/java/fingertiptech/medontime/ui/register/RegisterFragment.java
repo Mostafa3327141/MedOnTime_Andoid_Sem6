@@ -99,7 +99,7 @@ public class RegisterFragment extends Fragment {
                         resetPassword,
                         patient.getEmail().toLowerCase(Locale.ROOT).trim()),
                 patient.getPhoneNum(),patient.getAge(), false,
-                patient.getUnSelectedShapes(),patient.getMedicationIDs(),patient.getPrescriptionIDs());
+                patient.getUnSelectedShapes());
 
         Call<Patient> updateCall = patientJSONPlaceholder.updatePatientPassword(updatePatientPass);
         updateCall.enqueue(new Callback<Patient>() {
@@ -164,7 +164,7 @@ public class RegisterFragment extends Fragment {
                 fragmentRegisterBinding.textviewPhoneNumber.getText().toString(),
                 Integer.valueOf(fragmentRegisterBinding.textviewAgeRegister.getText().toString()),
                 false,
-                null,null,null);
+                null);
 
         Call<Patient> call = patientJSONPlaceholder.addPatient(patient);
 

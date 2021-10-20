@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.gson.Gson;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
@@ -91,32 +93,60 @@ public class MedicineFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
+                String patientId = sharedPreferencesMedicationId.getString("PatientId", "");
+                // if user not login cannot add medicine because no patient cannot save to db and generate patinet id
+                if ("".equals(patientId)){
+                    HomeFragment forwardToHomeFrag = new HomeFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardToHomeFrag).commit();
+                    Toast.makeText(getActivity(), "Please login or create an account first before create medication", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 // if filed is blank still can forward to next page without curshing
                 // but just don't need to save to db
-                String s = editText_medicine_name.getText().toString();
-                if("".equals(editText_medicine_name.getText().toString())){
+                if("".equals(editText_medicine_name.getText().toString())
+                        && "".equals(editText_medicine_condition.getText().toString())){
                     MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
                     getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();
-                }else{
+                    return;
+                }else if (null == resultQRScan) {
                     // if patient without caretaker they need to add by themself
-                    Medication addMedication = new Medication(null, 0,
-                            editText_medicine_name.getText().toString(),null,
+                    Medication addMedication = new Medication(null, Integer.parseInt(patientId),
+                            editText_medicine_name.getText().toString(), null,
                             editText_unit.getText().toString(),
-                            Integer.valueOf(editText_quantity.getText().toString()),
+                            ("".equals(editText_quantity.getText().toString())) ? 0 : Integer.valueOf(editText_quantity.getText().toString()),
                             editText_medicine_condition.getText().toString(),
                             textView_medicine_setAlarm.getText().toString(),
-                            Integer.valueOf(editText_hoursInBetween.getText().toString()),
+                            ("".equals(editText_hoursInBetween.getText().toString())) ? 0 : Integer.valueOf(editText_hoursInBetween.getText().toString()),
                             frequencySpinner.getSelectedItem().toString(),
-                            null,null);
+                            null);
                     medicineViewModel.initAddMedication(addMedication);
-                    medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
+
+                    medicineViewModel.getMedicationRepositoryWhenAdd().observe(getViewLifecycleOwner(), medicationsResponse -> {
                         resultQRScan = medicationsResponse.getId();
                     });
+
+
+                }else{
+                    medicineViewModel.initGetMedicationByMedicationId(resultQRScan);
+                    medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
+
+                        
+
+                    });
+
+
                 }
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
+                        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();                    }
+                }, 2000);
 
 
-                MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
-                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();
+
 
             }
         });
@@ -164,7 +194,7 @@ public class MedicineFragment extends Fragment {
 
     public void writeIntoFeild(){
         medicineViewModel.initGetMedicationByMedicationId(resultQRScan);
-        medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
+        medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
             editText_medicine_name.setText(medicationsResponse.getMedicationName());
             // get patient id and fetch medicaion info put into recycleview
             SharedPreferences sharedPreferencesPatientId = getActivity().getPreferences(Context.MODE_PRIVATE);
