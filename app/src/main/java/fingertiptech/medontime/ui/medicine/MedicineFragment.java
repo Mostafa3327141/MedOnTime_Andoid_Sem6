@@ -4,12 +4,17 @@ import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +28,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.gson.Gson;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
@@ -37,12 +42,14 @@ import com.google.zxing.common.HybridBinarizer;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.home.HomeFragment;
+import fingertiptech.medontime.ui.model.Medication;
 
 public class MedicineFragment extends Fragment {
 
@@ -61,6 +68,7 @@ public class MedicineFragment extends Fragment {
     Button btnScanQR;
     Button btnNext;
     Button btnSetAlarm;
+    Medication test;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -85,8 +93,61 @@ public class MedicineFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MedicineFragmentStep2 stepTwoAddMedicine = new MedicineFragmentStep2();
-                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , stepTwoAddMedicine).commit();
+
+                SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
+                String patientId = sharedPreferencesMedicationId.getString("PatientId", "");
+                // if user not login cannot add medicine because no patient cannot save to db and generate patinet id
+                if ("".equals(patientId)){
+                    HomeFragment forwardToHomeFrag = new HomeFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardToHomeFrag).commit();
+                    Toast.makeText(getActivity(), "Please login or create an account first before create medication", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                // if filed is blank still can forward to next page without curshing
+                // but just don't need to save to db
+                if("".equals(editText_medicine_name.getText().toString())
+                        && "".equals(editText_medicine_condition.getText().toString())){
+                    MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
+                    getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();
+                    return;
+                }else if (null == resultQRScan) {
+                    // if patient without caretaker they need to add by themself
+                    Medication addMedication = new Medication(null, Integer.parseInt(patientId),
+                            editText_medicine_name.getText().toString(), null,
+                            editText_unit.getText().toString() + unitTypeSpinner.getSelectedItem().toString(),
+                            ("".equals(editText_quantity.getText().toString())) ? 0 : Integer.valueOf(editText_quantity.getText().toString()),
+                            editText_medicine_condition.getText().toString(),
+                            textView_medicine_setAlarm.getText().toString(),
+                            ("".equals(editText_hoursInBetween.getText().toString())) ? 0 : Integer.valueOf(editText_hoursInBetween.getText().toString()),
+                            frequencySpinner.getSelectedItem().toString(),
+                            null);
+
+                    SharedPreferences sharedPreferencesMedicationAdd = getActivity().getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor sharedPreferencesMedicationAddEditor = sharedPreferencesMedicationAdd.edit();
+                    Gson gson = new Gson();
+                    String medicationAddInfo = gson.toJson(addMedication);
+                    sharedPreferencesMedicationAddEditor.putString("MedicationAdd", medicationAddInfo);
+                    sharedPreferencesMedicationAddEditor.apply();
+
+//                    medicineViewModel.initAddMedication(addMedication);
+//
+//                    medicineViewModel.getMedicationRepositoryWhenAdd().observe(getViewLifecycleOwner(), medicationsResponse -> {
+//                        resultQRScan = medicationsResponse.getId();
+//                    });
+
+
+                }else{
+                    MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
+                    getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();
+
+                }
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
+                        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();                    }
+                }, 2000);
+
             }
         });
 
@@ -130,17 +191,23 @@ public class MedicineFragment extends Fragment {
     }
 
 
+
     public void writeIntoFeild(){
-        medicineViewModel.init(resultQRScan);
-        medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
+        medicineViewModel.initGetMedicationByMedicationId(resultQRScan);
+        medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
             editText_medicine_name.setText(medicationsResponse.getMedicationName());
+            // get patient id and fetch medicaion info put into recycleview
+            SharedPreferences sharedPreferencesPatientId = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor sharedPreferencesPatientIdEditor = sharedPreferencesPatientId.edit();
+            sharedPreferencesPatientIdEditor.putString("PatientId",String.valueOf(medicationsResponse.getPatientID()));
+            sharedPreferencesPatientIdEditor.apply();
             // for our unit from api will be "34 g" so we need split number and unit
             // number will be input the textfield and unit will be in spinner
             editText_unit.setText(medicationsResponse.getUnit().replaceAll("[^0-9]", ""));
             setSpinner(medicationsResponse.getUnit().replaceAll("[0-9]", ""),unitTypeSpinner);
             editText_quantity.setText(String.valueOf(medicationsResponse.getQuantity()));
 
-            editText_medicine_condition.setText("null yet");
+            editText_medicine_condition.setText(medicationsResponse.getCondition());
             setSpinner(medicationsResponse.getFrequency(), frequencySpinner);
             editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
             textView_medicine_setAlarm.setText(medicationsResponse.getFirstDoseTime());
@@ -199,6 +266,35 @@ public class MedicineFragment extends Fragment {
 
                     resultQRScan = result.getText();
 
+                    // we need to write medication id into sharedpreference to store in order to show in recycle view
+                    // 1. we need to retrive the one have been store in sharedpreference first
+                    SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
+                    String[] medicationIdList = sharedPreferencesMedicationId.getString("MedicationIdStored", "").split(",");
+
+//                    List<String> medicationIdArrayList = new ArrayList<String>();
+                    ArrayList<String> medicationIdArrayList = new ArrayList<>();
+                    if(!"".equals(medicationIdList[0])){
+                        medicationIdArrayList = new ArrayList<>(Arrays.asList(medicationIdList));
+                    }
+
+//                    medicationIdArrayList = Arrays.asList(medicationIdList);
+                    // 2. after we retrive then we need to add new medicaion id we jsut scan
+                    // check if already in the list if not append, otherwise skip
+                    SharedPreferences.Editor sharedPreferencesMedicationIdEditor = getActivity().getPreferences(Context.MODE_PRIVATE).edit();
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < medicationIdArrayList.size(); i++) {
+                        if(resultQRScan.equals(medicationIdArrayList.get(i))){
+//                            HomeFragment forwardHomefragment = new HomeFragment();
+//                            getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardHomefragment).commit();
+//                            Toast.makeText(getActivity(), "Already scan this QR code", Toast.LENGTH_LONG).show();
+//                            return;
+                        }
+                    }
+                    medicationIdArrayList.add(resultQRScan);
+                    String covertArrayListtoString = TextUtils.join(", ", medicationIdArrayList);
+                    sharedPreferencesMedicationIdEditor.putString("MedicationIdStored", covertArrayListtoString);
+                    sharedPreferencesMedicationIdEditor.apply();
+                    Log.wtf("nancy test medicationIdArrayList",String.valueOf(covertArrayListtoString));
 
                     Toast.makeText(getActivity(),resultQRScan,Toast.LENGTH_LONG).show();
                     writeIntoFeild();

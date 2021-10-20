@@ -38,6 +38,7 @@ public class MedicineFragmentStep3 extends Fragment {
         dataPasser.onDataPass(data, view);
     }
 
+
     public static MedicineFragmentStep3 newInstance() {
         return new MedicineFragmentStep3();
     }
@@ -52,8 +53,8 @@ public class MedicineFragmentStep3 extends Fragment {
                 new ViewModelProvider(this).get(MedicineViewModel.class);
 
         if(MedicineFragment.resultQRScan != null){
-            medicineViewModel.init(MedicineFragment.resultQRScan);
-            medicineViewModel.getMedicationRepository().observe(getViewLifecycleOwner(), medicationsResponse -> {
+            medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
+            medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
                 System.out.println(medicationsResponse.getId());
                 //imageViewMedication.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
             });
@@ -63,6 +64,14 @@ public class MedicineFragmentStep3 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_medicine_step3_nfc_scan, container, false);
         passData("NFC Fragment Active", view);
         return view;
+
     }
 
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        mViewModel = new ViewModelProvider(this).get(MedicineFragmentStep3ViewModel.class);
+//        // TODO: Use the ViewModel
+//    }
+//
 }

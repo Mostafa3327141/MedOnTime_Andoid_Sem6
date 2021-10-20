@@ -15,10 +15,9 @@ public class Patient {
     Integer age;
     Boolean isPasswordTemporary;
     List<Shape> unSelectedShapes;
-    List<String> medicationIDs;
-    List<String> prescriptionIDs;
 
-    public Patient(String id, Integer patientID, Integer caretakerID, String firstName, String lastName, String email, String password, String phoneNum, Integer age, Boolean isPasswordTemporary, List<Shape> unSelectedShapes, List<String> medicationIDs, List<String> prescriptionIDs) {
+
+    public Patient(String id, Integer patientID, Integer caretakerID, String firstName, String lastName, String email, String password, String phoneNum, Integer age, Boolean isPasswordTemporary, List<Shape> unSelectedShapes) {
         this.id = id;
         this.patientID = patientID;
         this.caretakerID = caretakerID;
@@ -30,14 +29,13 @@ public class Patient {
         this.age = age;
         this.isPasswordTemporary = isPasswordTemporary;
         this.unSelectedShapes = unSelectedShapes;
-        this.medicationIDs = medicationIDs;
-        this.prescriptionIDs = prescriptionIDs;
+
     }
 
 
     // for Add patient no need _id
 
-    public Patient(Integer patientID, Integer caretakerID, String firstName, String lastName, String email, String password, String phoneNum, Integer age,Boolean isPasswordTemporary, List<Shape> unSelectedShapes, List<String> medicationIDs, List<String> prescriptionIDs) {
+    public Patient(Integer patientID, Integer caretakerID, String firstName, String lastName, String email, String password, String phoneNum, Integer age,Boolean isPasswordTemporary, List<Shape> unSelectedShapes) {
         this.patientID = patientID;
         this.caretakerID = caretakerID;
         this.firstName = firstName;
@@ -48,8 +46,7 @@ public class Patient {
         this.age = age;
         this.isPasswordTemporary = isPasswordTemporary;
         this.unSelectedShapes = unSelectedShapes;
-        this.medicationIDs = medicationIDs;
-        this.prescriptionIDs = prescriptionIDs;
+
     }
 
     public String getId() {
@@ -140,19 +137,10 @@ public class Patient {
         this.unSelectedShapes = unSelectedShapes;
     }
 
-    public List<String> getMedicationIDs() {
-        return medicationIDs;
-    }
 
-    public void setMedicationIDs(List<String> medicationIDs) {
-        this.medicationIDs = medicationIDs;
-    }
 
-    public List<String> getPrescriptionIDs() {
-        return prescriptionIDs;
-    }
 
-    public void setPrescriptionIDs(List<String> prescriptionIDs) {
-        this.prescriptionIDs = prescriptionIDs;
-    }
+
+
+
 }
