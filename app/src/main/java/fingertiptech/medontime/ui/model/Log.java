@@ -1,16 +1,18 @@
 package fingertiptech.medontime.ui.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Log {
     private String id, patientID, medicationID, medicationName;
-    private Date timeTake;
+    private String timeTake;
 
     public Log(String id, String patientID, String medicationID, String medicationName) {
         this.id = id;
         this.patientID = patientID;
         this.medicationID = medicationID;
         this.medicationName = medicationName;
+        this.timeTake = new Date().toString();
     }
 
     public String getId() {

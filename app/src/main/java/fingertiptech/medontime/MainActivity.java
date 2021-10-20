@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
 //    https://medontime-api.herokuapp.com/api/caretakerapi?key=sH5O!2cdOqP1%5E
 //    https://medontime-api.herokuapp.com/API/MedicationAPI?key=sH5O!2cdOqP1%5E
 //    https://medontime-api.herokuapp.com/API/PatientAPI?key=sH5O!2cdOqP1%5E
+    //https://medontime-api.herokuapp.com/api/logapi?key=sH5O!2cdOqP1%5E
 
     // adding messages for NFC tagging
     public static final String Error_Detected = "No NFC Tag Detected";

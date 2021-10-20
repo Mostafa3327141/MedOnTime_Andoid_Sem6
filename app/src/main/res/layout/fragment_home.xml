@@ -22,12 +22,12 @@
             android:text=""
             android:onClick="nextIntent"/>
 
-        <!--<Button
+        <Button
             style="@style/btnStyle"
             android:id="@+id/btnLogTest"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Log Test"/>-->
+            android:text="Log Test"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView_medicine"
