@@ -114,7 +114,7 @@ public class MedicineFragment extends Fragment {
                     // if patient without caretaker they need to add by themself
                     Medication addMedication = new Medication(null, Integer.parseInt(patientId),
                             editText_medicine_name.getText().toString(), null,
-                            editText_unit.getText().toString(),
+                            editText_unit.getText().toString() + unitTypeSpinner.getSelectedItem().toString(),
                             ("".equals(editText_quantity.getText().toString())) ? 0 : Integer.valueOf(editText_quantity.getText().toString()),
                             editText_medicine_condition.getText().toString(),
                             textView_medicine_setAlarm.getText().toString(),
