@@ -34,20 +34,20 @@
         <TableRow>
             <TextView />
 
-            <CheckBox
-                android:id="@+id/chkRememberPassword"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:text="Remember Password" />
+<!--            <CheckBox-->
+<!--                android:id="@+id/chkRememberPassword"-->
+<!--                android:layout_width="fill_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="Remember Password" />-->
         </TableRow>
 
         <TableRow>
             <TextView />
 
-            <Button
-                android:id="@+id/btnForgotPassword"
-                android:layout_height="34dp"
-                android:text="Forgot Password?" />
+<!--            <Button-->
+<!--                android:id="@+id/btnForgotPassword"-->
+<!--                android:layout_height="34dp"-->
+<!--                android:text="Forgot Password?" />-->
         </TableRow>
 
     </TableLayout>

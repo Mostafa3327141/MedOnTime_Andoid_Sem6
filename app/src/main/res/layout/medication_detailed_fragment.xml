@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context=".ui.medicationDetail.MedicationDetailedFragment">
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="165dp"
+                android:text="Medication Name" />
+
+            <EditText
+                android:id="@+id/editText_medNameDetailed"
+                android:layout_span="2"
+                android:width="150dp"
+                android:hint="Enter name here"
+                android:maxLength="30" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="80dp"
+                android:text="unit" />
+
+            <EditText
+                android:id="@+id/unitDetailed"
+                android:width="150dp"
+                android:hint="Enter unit here"
+                android:inputType="number" />
+
+            <Spinner
+                android:id="@+id/unitTypeSpinner"
+                android:layout_height="wrap_content"
+                android:width="80dp"
+                android:entries="@array/UnitTypeList"
+                android:prompt="@string/unitTypePrompt" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="165dp"
+                android:text="Quantity" />
+
+            <EditText
+                android:id="@+id/editText_quantityDetailed"
+                android:layout_span="2"
+                android:width="150dp"
+                android:hint="Quantity?"
+                android:inputType="number" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:layout_width="165dp"
+                android:text="Condition" />
+
+            <EditText
+                android:id="@+id/editText_conditionDetailed"
+                android:layout_span="2"
+                android:width="150dp"
+                android:hint="What are you taking this medication for?" />
+        </TableRow>
+
+
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:text="Frequency" />
+
+            <Spinner
+                android:id="@+id/frequencySpinnerDetailed"
+                android:layout_height="wrap_content"
+                android:width="80dp"
+                android:entries="@array/FrequencyList" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:text="Interval" />
+
+            <EditText
+                android:id="@+id/editText_hoursInBetweenDetailed"
+                android:layout_span="2"
+                android:width="150dp"
+                android:hint="Hours between each dose"
+                android:inputType="number" />
+        </TableRow>
+
+        <!--        <TableRow>-->
+        <!--            <TextView-->
+        <!--                style="@style/CustomText"-->
+        <!--                android:text="Alarm?"/>-->
+        <!--            <ToggleButton-->
+        <!--                android:id="@+id/toggle_button"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Toggle"-->
+        <!--            android:textOff="OFF"-->
+        <!--            android:textOn="ON" />-->
+        <!--        </TableRow>-->
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:text="First dose time" />
+
+            <TextView
+                android:id="@+id/textView_displaySettingTimeDetailed"
+                style="@style/CustomText"
+                android:text="" />
+
+        </TableRow>
+
+
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:text="Picture" />
+
+            <ImageView
+                android:id="@+id/imageMedicationViewDetailed"
+                android:layout_width="180dp"
+                android:layout_height="150dp"
+                />
+        </TableRow>
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:text="Need Alarm?" />
+
+            <Switch
+                android:id="@+id/switch1Detailed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btnNextDetailed"
+        style="@style/btnStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Next" />
+    <!--        android:onClick="volleyPost"-->
+
+
+</LinearLayout>
