@@ -9,8 +9,12 @@
         android:id="@+id/nav_home"
         android:name="fingertiptech.medontime.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+    <action
+        android:id="@+id/action_medicationListFragment_to_medicaionFragmentDetailFragment1"
+        app:destination="@id/nav_medicine" />
 
+</fragment>
     <fragment
         android:id="@+id/nav_profile"
         android:name="fingertiptech.medontime.ui.profile.ProfileFragment"
@@ -21,17 +25,50 @@
         android:id="@+id/nav_medicine"
         android:name="fingertiptech.medontime.ui.medicine.MedicineFragment"
         android:label="@string/menu_medicine"
-        tools:layout="@layout/fragment_medicine" />
+        tools:layout="@layout/fragment_medicine_step1_info" >
+        <argument
+            android:name="medication_id"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_caretaker"
         android:name="fingertiptech.medontime.ui.caretaker.CaretakerFragment"
         android:label="@string/menu_caretaker"
         tools:layout="@layout/fragment_caretaker" />
-
+    <fragment
+        android:id="@+id/nav_scanQR"
+        android:name="fingertiptech.medontime.ui.scanQRcode.ScanQRCodeFragment"
+        android:label="@string/menu_ScanQR"
+        tools:layout="@layout/fragment_scan_qr_code" />
     <fragment
         android:id="@+id/nav_login"
         android:name="fingertiptech.medontime.ui.login.LoginFragment"
         android:label="@string/menu_LogIn"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/nav_testmockapi"
+        android:name="fingertiptech.medontime.ui.testmockapiGET.TestMockApiGetFragment"
+        android:label="test/mock/api"
+        tools:layout="@layout/test_mock_api_get_fragment" />
+    <fragment
+        android:id="@+id/nav_testmockapiquery"
+        android:name="fingertiptech.medontime.ui.testmockapiGETQuery.TestMockApiQueryFragment"
+        android:label="test/mock/api"
+        tools:layout="@layout/test_mock_api_query_fragment" />
+    <fragment
+        android:id="@+id/nav_testmockapipost"
+        android:name="fingertiptech.medontime.ui.testmockapiPost.TestMockApiPostFragment"
+        android:label="test/mock/api"
+        tools:layout="@layout/test_mock_api_post_fragment" />
+    <fragment
+        android:id="@+id/nav_testmockapiputpatch"
+        android:name="fingertiptech.medontime.ui.testmockapiputpost.TestMockApiPutPatchFragment"
+        android:label="test/mock/api"
+        tools:layout="@layout/test_mock_api_put_patch_fragment" />
+    <fragment
+        android:id="@+id/nav_testmockapidelete"
+        android:name="fingertiptech.medontime.ui.testmockapidelete.TestMockApiDelete"
+        android:label="test/mock/api"
+        tools:layout="@layout/test_mock_api_delete_fragment" />
 </navigation>

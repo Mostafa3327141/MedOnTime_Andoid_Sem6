@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+    <TableLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="15dp">
+
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+
+                android:layout_width="202dp"
+                android:layout_height="48dp"
+                android:text="Upload Picture" />
+
+            <Button
+                style="@style/btnStyle"
+                android:id="@+id/btnOpenCamera"
+                android:layout_span="2"
+                android:text="Open Camera"
+                />
+
+        </TableRow>
+        <TableRow>
+
+            <TextView
+                style="@style/CustomText"
+                android:text="Picture" />
+
+            <ImageView
+                android:id="@+id/imageMedicationView"
+                android:layout_width="180dp"
+                android:layout_height="150dp"
+                />
+        </TableRow>
+
+    </TableLayout>
+    <Button
+        style="@style/btnStyle"
+        android:id="@+id/btnNext2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Next" />
+</LinearLayout>
