@@ -5,6 +5,7 @@ import static fingertiptech.medontime.NotificationAndAlarm.NOTIFICATION_CHANNEL_
 
 import android.Manifest;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,6 +53,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 
+import fingertiptech.medontime.MainActivity;
+import fingertiptech.medontime.NotificationReceiver;
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.home.HomeFragment;
 import fingertiptech.medontime.ui.model.Medication;
@@ -354,12 +358,24 @@ public class MedicineFragment extends Fragment {
     }
 
     public void sendNotifiation(View v){
+
+        Intent activityIntent = new Intent(getContext(), MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, activityIntent, 0);
+
+        Intent broadcastIntent = new Intent(getContext(), NotificationReceiver.class);
+        broadcastIntent.putExtra("toastMessage", "Medication is taken");
+        PendingIntent actionIntent = PendingIntent.getBroadcast(getContext(), 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         Notification notification = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.icon)
                 .setContentTitle("Medication Reminder")
                 .setContentText("It is time to take your medication!")
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setColor(Color.BLUE)
+                .setContentIntent(contentIntent)
+                .setAutoCancel(true)
+                .addAction(R.drawable.icon, "Confirm", actionIntent)
                 .build();
 
         notificationManagerCompat.notify(1, notification);
