@@ -21,11 +21,16 @@
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/test_mock_api_query_fragment.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/verify_popup.xml" value="0.22" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/Documents/MedOnTime_Andoid_Sem6/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/ASUS/Documents/MedOnTime_Andoid_Sem6/app/src/main/res/layout/content_main.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/ASUS/Documents/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step3_nfc_scan.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/ASUS/Documents/MedOnTime_Andoid_Sem6/app/src/main/res/layout/scan_nfc_tag_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/Documents/MedOnTime_Andoid_Sem6/app/src/main/res/menu/activity_main_drawer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/Documents/MedOnTime_Andoid_Sem6/app/src/main/res/menu/main.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

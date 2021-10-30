@@ -19,23 +19,23 @@ public class MedicineFragmentStep3 extends Fragment {
 
     private MedicineViewModel medicineViewModel;
 
-    MedicineFragmentStep3.OnDataPass dataPasser;
+    OnObjectIdPassToNFC objectIdPasser;
 
     // for passing data to activity
-    public interface OnDataPass {
-        public void onDataPass(String data, View view);
+    public interface OnObjectIdPassToNFC {
+        public void onObjectIdPassToNFC(boolean isVisible, String objectId);
     }
 
     // connecting the containing class' implementation of the interface to the fragment in the onAttach method
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        dataPasser = (OnDataPass) context;
+        objectIdPasser = (OnObjectIdPassToNFC) context;
     }
 
     // for when you need to handle the passing of data in this fragment
-    public void passData(String data, View view) {
-        dataPasser.onDataPass(data, view);
+    public void passData(boolean isVisible, String objectId) {
+        objectIdPasser.onObjectIdPassToNFC(isVisible, objectId);
     }
 
 
@@ -47,24 +47,31 @@ public class MedicineFragmentStep3 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        System.out.println("See me??");
-        System.out.println(MedicineFragment.resultQRScan);
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
 
-        if(MedicineFragment.resultQRScan != null){
-            medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
-            medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
-                System.out.println(medicationsResponse.getId());
-                //imageViewMedication.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
-            });
-        }
+        // Sina here is medicationObjectId
+        String medicationObjectId = MedicineFragment.resultQRScan;
+        System.out.println(medicationObjectId);
+
+//        if(medicationObjectId != null){
+//            medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
+//            medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
+//                System.out.println(medicationObjectId);
+//                //imageViewMedication.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
+//            });
+//        }
 
 
         View view = inflater.inflate(R.layout.fragment_medicine_step3_nfc_scan, container, false);
-        passData("NFC Fragment Active", view);
+        passData(true, MedicineFragment.resultQRScan);
         return view;
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        passData(false, ""); // to hide NFC contents in the activity
     }
 
 //    @Override

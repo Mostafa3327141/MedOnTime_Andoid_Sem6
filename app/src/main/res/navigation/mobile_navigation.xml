@@ -42,6 +42,11 @@
         android:label="@string/menu_ScanQR"
         tools:layout="@layout/fragment_scan_qr_code" />
     <fragment
+        android:id="@+id/nav_scanNFC"
+        android:name="fingertiptech.medontime.ui.scanNFCtag.ScanNFCTagFragment"
+        android:label="@string/menu_scan_NFC_tag"
+        tools:layout="@layout/scan_nfc_tag_fragment" />
+    <fragment
         android:id="@+id/nav_login"
         android:name="fingertiptech.medontime.ui.login.LoginFragment"
         android:label="@string/menu_LogIn"
