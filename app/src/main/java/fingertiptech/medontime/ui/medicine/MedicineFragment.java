@@ -1,8 +1,10 @@
 package fingertiptech.medontime.ui.medicine;
 
 import static android.app.Activity.RESULT_OK;
+import static fingertiptech.medontime.NotificationAndAlarm.NOTIFICATION_CHANNEL_ID;
 
 import android.Manifest;
+import android.app.Notification;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +29,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -53,6 +57,8 @@ import fingertiptech.medontime.ui.model.Medication;
 
 public class MedicineFragment extends Fragment {
 
+    private NotificationManagerCompat notificationManagerCompat;
+
     private MedicineViewModel medicineViewModel;
     public static final int PICK_IMAGE = 1;
     public static String resultQRScan;
@@ -67,13 +73,17 @@ public class MedicineFragment extends Fragment {
     TextView textView_medicine_setAlarm;
     Button btnScanQR;
     Button btnNext;
-    Button btnSetAlarm;
+    Button btnSetTime;
+    Button btnSendNotification;
+    Button btnSendAlarm;
     Medication test;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_medicine_step1_info, container, false);
+
+        notificationManagerCompat = NotificationManagerCompat.from(getContext());
 
         editText_medicine_name = root.findViewById(R.id.editText_medName);
         editText_unit = root.findViewById(R.id.unit);
@@ -85,7 +95,10 @@ public class MedicineFragment extends Fragment {
         editText_hoursInBetween = root.findViewById(R.id.editText_hoursInBetween);
         btnNext = root.findViewById(R.id.btnNext);
         btnScanQR = root.findViewById(R.id.useQRbtn);
-        btnSetAlarm = root.findViewById(R.id.btnSetAlarm);
+        btnSetTime = root.findViewById(R.id.btnSetTime);
+        btnSendNotification = root.findViewById(R.id.btnSendNotification);
+        btnSendAlarm = root.findViewById(R.id.btnSendAlarm);
+
 
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
@@ -167,25 +180,40 @@ public class MedicineFragment extends Fragment {
             }
         });
 
-        btnSetAlarm.setOnClickListener(new View.OnClickListener() {
+        btnSetTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                Calendar currentTime = Calendar.getInstance();
+                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = currentTime.get(Calendar.MINUTE);
+                TimePickerDialog timePicker;
+                timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         textView_medicine_setAlarm.setText( selectedHour + ":" + selectedMinute);
-
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+                timePicker.setTitle("Select Time");
+                timePicker.show();
             }
         });
+
+        btnSendNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendNotifiation(v);
+            }
+
+        });
+
+        btnSendAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+
+        });
+
 
         return root;
     }
@@ -325,19 +353,16 @@ public class MedicineFragment extends Fragment {
 
     }
 
-//    @Override
-//    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//        Calendar calendar = Calendar.getInstance();
-////        calendar.setTimeZone(TimeZone.getTimeZone("Canada/Eastern"));
-//        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-//        calendar.set(Calendar.MINUTE, minute);
-//        calendar.set(Calendar.SECOND,0);
-//        Calendar calendar1 = calendar;
-//        updateTimeText(calendar);
-////    }
-//    private void updateTimeText(Calendar calendar) {
-//        String timeString = " Alarm: ";
-//        timeString += DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
-//        textView_medicine_setAlarm.setText(timeString);
-//    }
+    public void sendNotifiation(View v){
+        Notification notification = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(R.drawable.icon)
+                .setContentTitle("Medication Reminder")
+                .setContentText("It is time to take your medication!")
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .build();
+
+        notificationManagerCompat.notify(1, notification);
+    }
+
 }

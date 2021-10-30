@@ -125,7 +125,7 @@
                 android:text="First dose time" />
 
             <Button
-                android:id="@+id/btnSetAlarm"
+                android:id="@+id/btnSetTime"
                 style="@style/btnStyle"
                 android:layout_span="2"
                 android:onClick="setTime"
@@ -161,6 +161,20 @@
         </TableRow>
 
     </TableLayout>
+
+    <Button
+        android:id="@+id/btnSendNotification"
+        style="@style/btnStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Send Notification" />
+
+    <Button
+        android:id="@+id/btnSendAlarm"
+        style="@style/btnStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Send Alarm" />
 
     <Button
         android:id="@+id/btnNext"

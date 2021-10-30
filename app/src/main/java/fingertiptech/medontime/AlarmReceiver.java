@@ -8,7 +8,7 @@ import android.content.Intent;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import static fingertiptech.medontime.NotificationAndAlarm.ALARM_ID;
+import static fingertiptech.medontime.NotificationAndAlarm.ALARM_CHANNEL_ID;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
@@ -17,7 +17,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, activityIntent, 0);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ALARM_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ALARM_CHANNEL_ID)
                 .setSmallIcon(R.drawable.icon)
                 .setContentTitle("Medication Reminder")
                 .setContentText("It is time to take your medicine")
