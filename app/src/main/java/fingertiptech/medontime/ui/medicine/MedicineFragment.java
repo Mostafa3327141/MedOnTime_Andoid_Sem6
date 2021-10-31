@@ -37,6 +37,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.google.gson.Gson;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
@@ -62,6 +64,8 @@ import fingertiptech.medontime.ui.model.Medication;
 public class MedicineFragment extends Fragment {
 
     private NotificationManagerCompat notificationManagerCompat;
+    private MaterialTimePicker timePicker;
+    Calendar firstDoseTime;
 
     private MedicineViewModel medicineViewModel;
     public static final int PICK_IMAGE = 1;
@@ -187,18 +191,19 @@ public class MedicineFragment extends Fragment {
         btnSetTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar currentTime = Calendar.getInstance();
-                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = currentTime.get(Calendar.MINUTE);
-                TimePickerDialog timePicker;
-                timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        textView_medicine_setAlarm.setText( selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                timePicker.setTitle("Select Time");
-                timePicker.show();
+                showTimePicker();
+//                Calendar currentTime = Calendar.getInstance();
+//                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+//                int minute = currentTime.get(Calendar.MINUTE);
+//                TimePickerDialog timePicker;
+//                timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                        textView_medicine_setAlarm.setText( selectedHour + ":" + selectedMinute);
+//                    }
+//                }, hour, minute, true);//Yes 24 hour time
+//                timePicker.setTitle("Select Time");
+//                timePicker.show();
             }
         });
 
@@ -213,7 +218,7 @@ public class MedicineFragment extends Fragment {
         btnSendAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                setAlarm();
             }
 
         });
@@ -222,6 +227,39 @@ public class MedicineFragment extends Fragment {
         return root;
     }
 
+    private void setAlarm() {
+
+    }
+
+    private void showTimePicker() {
+        Calendar currentTime = Calendar.getInstance();
+        int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = currentTime.get(Calendar.MINUTE);
+        timePicker = new MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(currentHour)
+                .setMinute(currentMinute)
+                .setTitleText("Select your first dose time")
+                .build();
+
+        timePicker.show(getParentFragmentManager(), "MedOnTime");
+        timePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(timePicker.getHour() > 12){
+                    textView_medicine_setAlarm.setText( timePicker.getHour() - 12  + " : " + timePicker.getMinute() + " PM");
+                }else {
+                    textView_medicine_setAlarm.setText( timePicker.getHour() + " : " + timePicker.getMinute() + " AM");
+                }
+
+                firstDoseTime = Calendar.getInstance();
+                firstDoseTime.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
+                firstDoseTime.set(Calendar.MINUTE, timePicker.getMinute());
+                firstDoseTime.set(Calendar.SECOND, 0);
+                firstDoseTime.set(Calendar.MILLISECOND, 0);
+            }
+        });
+    }
 
 
     public void writeIntoFeild(){
