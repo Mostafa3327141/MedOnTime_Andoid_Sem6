@@ -1,8 +1,10 @@
 package fingertiptech.medontime.ui.recycleadpoter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.text.Layout;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,8 +25,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.home.HomeFragmentDirections;
+import fingertiptech.medontime.ui.medicationDetail.MedicationDetailedFragment;
 import fingertiptech.medontime.ui.medicine.MedicineFragment;
 import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
+import fingertiptech.medontime.ui.medicine.MedicineFragmentStep3;
 import fingertiptech.medontime.ui.model.Medication;
 
 public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.MedicationViewHolder>  {
@@ -54,11 +60,15 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
-                MedicineFragment towardmedicationfragment = new MedicineFragment();
-                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , towardmedicationfragment).commit();
+                MedicationDetailedFragment towardMedicationDetailedFragmentfragment = new MedicationDetailedFragment();
+                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , towardMedicationDetailedFragmentfragment).commit();
+                SharedPreferences sharedPreferencesClickListMedicationId = ((AppCompatActivity)context).getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor sharedPreferencesClickListMedicationIdEditor = sharedPreferencesClickListMedicationId.edit();
+                sharedPreferencesClickListMedicationIdEditor.putString("MedicaitonListClickId", medicationItem.getId());
+                sharedPreferencesClickListMedicationIdEditor.apply();
             }
         });
+
     }
 
     @Override

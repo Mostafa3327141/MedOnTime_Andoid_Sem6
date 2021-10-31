@@ -73,8 +73,8 @@ public class LoginFragment extends Fragment {
         getEditText_password = root.findViewById(R.id.editText_Password);
         btn_signIn = root.findViewById(R.id.btnSignIn);
         btn_register = root.findViewById(R.id.btnRegister);
-        btn_forgotPass = root.findViewById(R.id.btnForgotPassword);
-        checkBox_rmbPass = root.findViewById(R.id.chkRememberPassword);
+//        btn_forgotPass = root.findViewById(R.id.btnForgotPassword);
+//        checkBox_rmbPass = root.findViewById(R.id.chkRememberPassword);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://medontime-api.herokuapp.com/API/")
@@ -90,11 +90,11 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 String username = editText_username.getText().toString();
                 String password = getEditText_password.getText().toString();
-                boolean passRemember = checkBox_rmbPass.isChecked();
+//                boolean passRemember = checkBox_rmbPass.isChecked();
                 Log.wtf("Username: ", username+"\n");
                 Log.wtf("Password: ", password+"\n");
 
-                if(passRemember){Log.wtf("Remember password?", "Yes");}
+//                if(passRemember){Log.wtf("Remember password?", "Yes");}
 
                 // Hashing password
                 String hashPassword = new HashingPassword().getHash(password,username);
@@ -112,12 +112,12 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        btn_forgotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.wtf("Forgot password!", "Forgot password is clicked");
-            }
-        });
+//        btn_forgotPass.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.wtf("Forgot password!", "Forgot password is clicked");
+//            }
+//        });
 
         return root;
     }

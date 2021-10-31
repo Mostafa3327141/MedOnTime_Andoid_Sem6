@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/parentLayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.medicationDetail.MedicationDetailedFragment">
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -20,7 +21,7 @@
                 android:text="Medication Name" />
 
             <EditText
-                android:id="@+id/editText_medName"
+                android:id="@+id/editText_medNameDetailed"
                 android:layout_span="2"
                 android:width="150dp"
                 android:hint="Enter name here"
@@ -35,7 +36,7 @@
                 android:text="unit" />
 
             <EditText
-                android:id="@+id/unit"
+                android:id="@+id/unitDetailed"
                 android:width="150dp"
                 android:hint="Enter unit here"
                 android:inputType="number" />
@@ -56,7 +57,7 @@
                 android:text="Quantity" />
 
             <EditText
-                android:id="@+id/editText_quantity"
+                android:id="@+id/editText_quantityDetailed"
                 android:layout_span="2"
                 android:width="150dp"
                 android:hint="Quantity?"
@@ -71,7 +72,7 @@
                 android:text="Condition" />
 
             <EditText
-                android:id="@+id/editText_condition"
+                android:id="@+id/editText_conditionDetailed"
                 android:layout_span="2"
                 android:width="150dp"
                 android:hint="What are you taking this medication for?" />
@@ -85,7 +86,7 @@
                 android:text="Frequency" />
 
             <Spinner
-                android:id="@+id/frequencySpinner"
+                android:id="@+id/frequencySpinnerDetailed"
                 android:layout_height="wrap_content"
                 android:width="80dp"
                 android:entries="@array/FrequencyList" />
@@ -98,7 +99,7 @@
                 android:text="Interval" />
 
             <EditText
-                android:id="@+id/editText_hoursInBetween"
+                android:id="@+id/editText_hoursInBetweenDetailed"
                 android:layout_span="2"
                 android:width="150dp"
                 android:hint="Hours between each dose"
@@ -123,30 +124,26 @@
                 style="@style/CustomText"
                 android:text="First dose time" />
 
-            <Button
-                android:id="@+id/btnSetTime"
-                style="@style/btnStyle"
-                android:layout_span="2"
-                android:onClick="setTime"
-                android:text="Set Time" />
+            <TextView
+                android:id="@+id/textView_displaySettingTimeDetailed"
+                style="@style/CustomText"
+                android:text="" />
 
         </TableRow>
+
 
         <TableRow>
 
             <TextView
-                android:id="@+id/textView_displaySettingTime"
                 style="@style/CustomText"
-                android:text="" />
+                android:text="Picture" />
 
-            <Button
-                android:id="@+id/btnCancelAlarm"
-                style="@style/btnStyle"
-                android:layout_span="2"
-                android:onClick="cancelAlarm"
-                android:text="Cancel Alarm" />
+            <ImageView
+                android:id="@+id/imageMedicationViewDetailed"
+                android:layout_width="180dp"
+                android:layout_height="150dp"
+                />
         </TableRow>
-
         <TableRow>
 
             <TextView
@@ -154,7 +151,7 @@
                 android:text="Need Alarm?" />
 
             <Switch
-                android:id="@+id/switch1"
+                android:id="@+id/switch1Detailed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </TableRow>
@@ -162,27 +159,12 @@
     </TableLayout>
 
     <Button
-        android:id="@+id/btnSendNotification"
-        style="@style/btnStyle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Send Notification" />
-
-    <Button
-        android:id="@+id/btnNext"
+        android:id="@+id/btnNextDetailed"
         style="@style/btnStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Next" />
     <!--        android:onClick="volleyPost"-->
 
-
-    <Button
-        android:id="@+id/useQRbtn"
-        style="@style/btnStyle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:onClick="ScanQRCode"
-        android:text="Scan QR code" />
 
 </LinearLayout>

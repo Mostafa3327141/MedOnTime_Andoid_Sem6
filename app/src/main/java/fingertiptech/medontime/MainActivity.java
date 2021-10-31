@@ -154,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         SharedPreferences.Editor sharedPreferencesLoginUserPatientObjectIdEditor = sharedPreferencesLoginUserPatientObjectId.edit();
         sharedPreferencesLoginUserPatientObjectIdEditor.putString("PatientObjectId", "");
         sharedPreferencesLoginUserPatientObjectIdEditor.apply();
+        SharedPreferences sharedPreferencesPatientLogInInfo = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesPatientLogInInfoEditor = sharedPreferencesPatientLogInInfo.edit();
+        sharedPreferencesLoginUserInformationEditor.putString("PatientLogInInfo", "");
+        sharedPreferencesLoginUserInformationEditor.apply();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -161,12 +165,7 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_profile, R.id.nav_medicine, R.id.nav_caretaker,
                 R.id.nav_scanQR,
-                R.id.nav_login,
-                R.id.nav_testmockapi,
-                R.id.nav_testmockapiquery,
-                R.id.nav_testmockapipost,
-                R.id.nav_testmockapiputpatch,
-                R.id.nav_testmockapidelete)
+                R.id.nav_login)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

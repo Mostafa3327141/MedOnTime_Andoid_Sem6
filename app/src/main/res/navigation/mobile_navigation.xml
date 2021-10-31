@@ -10,17 +10,28 @@
         android:name="fingertiptech.medontime.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
-    <action
-        android:id="@+id/action_medicationListFragment_to_medicaionFragmentDetailFragment1"
-        app:destination="@id/nav_medicine" />
 
-</fragment>
+        <action
+            android:id="@+id/action_homeRecycle_to_medicationDetailFragment"
+            app:destination="@id/nav_medicineDetailed" />
+    </fragment>
+
     <fragment
         android:id="@+id/nav_profile"
         android:name="fingertiptech.medontime.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
-
+    <fragment
+        android:id="@+id/nav_medicineDetailed"
+        android:name="fingertiptech.medontime.ui.medicationDetail.MedicationDetailedFragment"
+        android:label="Medication Detailed"
+        tools:layout="@layout/medication_detailed_fragment" >
+        <argument
+            android:name="MedicationObjectId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+    </fragment>
     <fragment
         android:id="@+id/nav_medicine"
         android:name="fingertiptech.medontime.ui.medicine.MedicineFragment"
@@ -46,29 +57,29 @@
         android:name="fingertiptech.medontime.ui.login.LoginFragment"
         android:label="@string/menu_LogIn"
         tools:layout="@layout/fragment_login" />
-    <fragment
-        android:id="@+id/nav_testmockapi"
-        android:name="fingertiptech.medontime.ui.testmockapiGET.TestMockApiGetFragment"
-        android:label="test/mock/api"
-        tools:layout="@layout/test_mock_api_get_fragment" />
-    <fragment
-        android:id="@+id/nav_testmockapiquery"
-        android:name="fingertiptech.medontime.ui.testmockapiGETQuery.TestMockApiQueryFragment"
-        android:label="test/mock/api"
-        tools:layout="@layout/test_mock_api_query_fragment" />
-    <fragment
-        android:id="@+id/nav_testmockapipost"
-        android:name="fingertiptech.medontime.ui.testmockapiPost.TestMockApiPostFragment"
-        android:label="test/mock/api"
-        tools:layout="@layout/test_mock_api_post_fragment" />
-    <fragment
-        android:id="@+id/nav_testmockapiputpatch"
-        android:name="fingertiptech.medontime.ui.testmockapiputpost.TestMockApiPutPatchFragment"
-        android:label="test/mock/api"
-        tools:layout="@layout/test_mock_api_put_patch_fragment" />
-    <fragment
-        android:id="@+id/nav_testmockapidelete"
-        android:name="fingertiptech.medontime.ui.testmockapidelete.TestMockApiDelete"
-        android:label="test/mock/api"
-        tools:layout="@layout/test_mock_api_delete_fragment" />
+<!--    <fragment-->
+<!--        android:id="@+id/nav_testmockapi"-->
+<!--        android:name="fingertiptech.medontime.ui.testmockapiGET.TestMockApiGetFragment"-->
+<!--        android:label="test/mock/api"-->
+<!--        tools:layout="@layout/test_mock_api_get_fragment" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/nav_testmockapiquery"-->
+<!--        android:name="fingertiptech.medontime.ui.testmockapiGETQuery.TestMockApiQueryFragment"-->
+<!--        android:label="test/mock/api"-->
+<!--        tools:layout="@layout/test_mock_api_query_fragment" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/nav_testmockapipost"-->
+<!--        android:name="fingertiptech.medontime.ui.testmockapiPost.TestMockApiPostFragment"-->
+<!--        android:label="test/mock/api"-->
+<!--        tools:layout="@layout/test_mock_api_post_fragment" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/nav_testmockapiputpatch"-->
+<!--        android:name="fingertiptech.medontime.ui.testmockapiputpost.TestMockApiPutPatchFragment"-->
+<!--        android:label="test/mock/api"-->
+<!--        tools:layout="@layout/test_mock_api_put_patch_fragment" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/nav_testmockapidelete"-->
+<!--        android:name="fingertiptech.medontime.ui.testmockapidelete.TestMockApiDelete"-->
+<!--        android:label="test/mock/api"-->
+<!--        tools:layout="@layout/test_mock_api_delete_fragment" />-->
 </navigation>
