@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_caretaker.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_home.xml" value="0.3333333333333333" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_login.xml" value="0.22" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine.xml" value="0.22" />
@@ -11,6 +13,7 @@
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step2.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step2_camera_image.xml" value="0.16666666666666666" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step3.xml" value="0.10104166666666667" />
+        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step3_nfc_scan.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_register.xml" value="0.22" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_scan_qr_code.xml" value="0.3333333333333333" />
