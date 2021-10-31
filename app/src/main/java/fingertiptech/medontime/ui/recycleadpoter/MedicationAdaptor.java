@@ -64,7 +64,7 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
                 ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , towardMedicationDetailedFragmentfragment).commit();
                 SharedPreferences sharedPreferencesClickListMedicationId = ((AppCompatActivity)context).getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor sharedPreferencesClickListMedicationIdEditor = sharedPreferencesClickListMedicationId.edit();
-                sharedPreferencesClickListMedicationIdEditor.putString("MedicaitonId", medicationItem.getId());
+                sharedPreferencesClickListMedicationIdEditor.putString("MedicaitonListClickId", medicationItem.getId());
                 sharedPreferencesClickListMedicationIdEditor.apply();
             }
         });
