@@ -170,13 +170,6 @@
         android:text="Send Notification" />
 
     <Button
-        android:id="@+id/btnSendAlarm"
-        style="@style/btnStyle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Send Alarm" />
-
-    <Button
         android:id="@+id/btnNext"
         style="@style/btnStyle"
         android:layout_width="fill_parent"

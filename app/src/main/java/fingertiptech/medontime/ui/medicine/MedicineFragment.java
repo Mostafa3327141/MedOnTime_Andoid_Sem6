@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 import static fingertiptech.medontime.NotificationAndAlarm.NOTIFICATION_CHANNEL_ID;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -55,6 +56,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 
+import fingertiptech.medontime.AlarmReceiver;
 import fingertiptech.medontime.MainActivity;
 import fingertiptech.medontime.NotificationReceiver;
 import fingertiptech.medontime.R;
@@ -66,6 +68,8 @@ public class MedicineFragment extends Fragment {
     private NotificationManagerCompat notificationManagerCompat;
     private MaterialTimePicker timePicker;
     Calendar firstDoseTime;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
     private MedicineViewModel medicineViewModel;
     public static final int PICK_IMAGE = 1;
@@ -83,7 +87,6 @@ public class MedicineFragment extends Fragment {
     Button btnNext;
     Button btnSetTime;
     Button btnSendNotification;
-    Button btnSendAlarm;
     Medication test;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -105,7 +108,6 @@ public class MedicineFragment extends Fragment {
         btnScanQR = root.findViewById(R.id.useQRbtn);
         btnSetTime = root.findViewById(R.id.btnSetTime);
         btnSendNotification = root.findViewById(R.id.btnSendNotification);
-        btnSendAlarm = root.findViewById(R.id.btnSendAlarm);
 
 
         medicineViewModel =
@@ -215,20 +217,16 @@ public class MedicineFragment extends Fragment {
 
         });
 
-        btnSendAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setAlarm();
-            }
-
-        });
-
 
         return root;
     }
 
     private void setAlarm() {
-
+        alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, firstDoseTime.getTimeInMillis(), pendingIntent);
+        Toast.makeText(getContext(), "Alarm is set successfully", Toast.LENGTH_LONG).show();
     }
 
     private void showTimePicker() {
@@ -257,6 +255,8 @@ public class MedicineFragment extends Fragment {
                 firstDoseTime.set(Calendar.MINUTE, timePicker.getMinute());
                 firstDoseTime.set(Calendar.SECOND, 0);
                 firstDoseTime.set(Calendar.MILLISECOND, 0);
+
+                setAlarm();
             }
         });
     }
