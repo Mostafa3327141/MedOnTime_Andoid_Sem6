@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +29,7 @@ import fingertiptech.medontime.ui.jsonplaceholder.LogJSONPlaceholder;
 
 import java.util.ArrayList;
 
+import fingertiptech.medontime.ui.medicationDetail.MedicationDetailedFragmentArgs;
 import fingertiptech.medontime.ui.medicine.MedicineFragment;
 import fingertiptech.medontime.ui.model.Medication;
 import fingertiptech.medontime.ui.recycleadpoter.MedicationAdaptor;
@@ -106,8 +108,11 @@ public class HomeFragment extends Fragment {
                 medicationRecyclerViewItems.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MedicineFragment stepToAddMedicine = new MedicineFragment();
-                        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , stepToAddMedicine).commit();
+                        String a = "";
+                        HomeFragmentDirections.ActionHomeRecycleToMedicationDetailFragment action =
+                                HomeFragmentDirections.actionHomeRecycleToMedicationDetailFragment();
+                        action.setMedicationObjectId("0");
+                        Navigation.findNavController(v).navigate(action);
                     }
                 });
             }

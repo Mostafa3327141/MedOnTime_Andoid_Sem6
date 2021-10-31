@@ -156,8 +156,6 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         sharedPreferencesLoginUserPatientObjectIdEditor.apply();
         SharedPreferences sharedPreferencesPatientLogInInfo = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedPreferencesPatientLogInInfoEditor = sharedPreferencesPatientLogInInfo.edit();
-//        Gson gson = new Gson();
-//        String patientLoginInfo = gson.toJson(patient);
         sharedPreferencesLoginUserInformationEditor.putString("PatientLogInInfo", "");
         sharedPreferencesLoginUserInformationEditor.apply();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
