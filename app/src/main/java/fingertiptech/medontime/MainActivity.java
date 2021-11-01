@@ -22,6 +22,8 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout;
+import fingertiptech.medontime.ui.scanNFCtag.ScanNFCTagFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -42,7 +44,7 @@ import java.io.UnsupportedEncodingException;
 import fingertiptech.medontime.ui.home.HomeFragment;
 import fingertiptech.medontime.ui.medicine.MedicineFragmentStep3;
 
-public class MainActivity extends AppCompatActivity implements MedicineFragmentStep3.OnDataPass {
+public class MainActivity extends AppCompatActivity implements MedicineFragmentStep3.OnObjectIdPassToNFC, ScanNFCTagFragment.OnDataPass {
 
     private AppBarConfiguration mAppBarConfiguration;
 //    https://medontime.herokuapp.com/
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
 
     // adding messages for NFC tagging
     public static final String Error_Detected = "No NFC Tag Detected";
-    public static final String Write_Success = "Text Written Successfully";
+    public static final String Write_Success = "You're all set! \n\nPlease attach the NFC tag to the pillbox & scan to confirm when a notification appears.";
     public static final String Write_Error = "Error during Writing";
 
     NfcAdapter nfcAdapter;
@@ -63,72 +65,121 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
     Tag myTag;
     Context context;
 
-    TextView edit_message;
+//    TextView edit_message;
     TextView nfc_contents;
     Button ActivateButton;
+    LinearLayout toggle_nfc_ui; // this property controls visibility of the NFC widgets in the activity layout.
 
-    // setting up NFC reading and writing for ScanNFCTagFragment View
     @Override
-    public void onDataPass(String data, View view) {
-        // setting up NFC Writing
+    public void onObjectIdPassToNFC(boolean isVisible, String objectId) {
+        System.out.println(objectId);
 
-        edit_message = view.findViewById(R.id.edit_message);
-        nfc_contents = view.findViewById(R.id.nfc_contents);
+        if (isVisible) {
+            // setting up NFC Writing
 
-        ActivateButton = view.findViewById(R.id.ActivateButton);
+            toggle_nfc_ui = (LinearLayout) findViewById(R.id.toggle_nfc_ui);
+            toggle_nfc_ui.setVisibility(View.VISIBLE);
 
-        context = this;
+//            edit_message = (TextView) findViewById(R.id.edit_message);
+            nfc_contents = (TextView) findViewById(R.id.nfc_contents);
 
-        ActivateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            ActivateButton = (Button) findViewById(R.id.ActivateButton);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("NFC tag cannot be written")
-                        .setCancelable(false)
-                        .setNeutralButton("Close", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-                try {
-                    if (myTag == null) {
-                        Toast.makeText(context, Error_Detected, Toast.LENGTH_LONG).show();
+            context = this;
+
+            ActivateButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (nfcAdapter == null) {
+                        setupPopupDialog("NFC tag cannot be written");
                     } else {
-                        write("PlainText|"+edit_message.getText().toString(), myTag);
-                        Toast.makeText(context, Write_Success, Toast.LENGTH_LONG).show();
-                    }
-                } catch (IOException e) {
-                    Toast.makeText(context, Write_Error, Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                } catch (FormatException e) {
-                    Toast.makeText(context, Write_Error, Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-        });
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if (nfcAdapter == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("This page is for setting up confirmation for taking a medication with NFC scanning, though this device does not support NFC. Please use QR code scanning for confirming pill intake instead. \n\nMedication's been added! Head back to the homepage or use the app later when notified.")
-                    .setCancelable(false)
-                    .setNeutralButton("Close", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
+                        try {
+                            if (myTag == null) {
+                                Toast.makeText(context, Error_Detected, Toast.LENGTH_LONG).show();
+                            } else {
+                                write(objectId, myTag);
+                                setupPopupDialog(Write_Success);
+                                Toast.makeText(context, Write_Success, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (IOException e) {
+                            setupPopupDialog(Write_Error);
+                            Toast.makeText(context, Write_Error, Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        } catch (FormatException e) {
+                            setupPopupDialog(Write_Error);
+                            Toast.makeText(context, Write_Error, Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
                         }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-//            finish();
-        }
-        readFromIntent(getIntent());
-        pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+                    }
+                }
+            });
+            nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+            if (nfcAdapter == null) {
+                setupPopupDialog("This page is for setting up confirmation for taking a medication with NFC scanning, though this device does not support NFC. Please use QR code scanning for confirming pill intake instead. \n\nMedication's been added! Head back to the homepage or use the app later when notified.");
+            } else {
+                setupPopupDialog("Please place your phone to your empty NFC tag and click the Scan Here button to write medication data into the tag.");
 
-        tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
-        writingTagFilters = new IntentFilter[] { tagDetected };
+                //readFromIntent(getIntent());
+                pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+                IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+
+                tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
+                writingTagFilters = new IntentFilter[]{tagDetected};
+            }
+        } else {
+            toggle_nfc_ui = (LinearLayout) findViewById(R.id.toggle_nfc_ui);
+            toggle_nfc_ui.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    // setting up NFC reading only to confirm the medication was taken from ScanNFCTagFragment
+    @Override
+    public void onDataPass(boolean isVisible) {
+        if (isVisible) {
+            // setting up NFC Writing
+
+            toggle_nfc_ui = (LinearLayout) findViewById(R.id.toggle_nfc_ui);
+            toggle_nfc_ui.setVisibility(View.VISIBLE);
+
+//            edit_message = (TextView) findViewById(R.id.edit_message);
+            nfc_contents = (TextView) findViewById(R.id.nfc_contents);
+
+            context = this;
+
+            nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+            if (nfcAdapter == null) {
+                setupPopupDialog("Unfortunately, your device is incompatable for NFC scanning. \n\nPlease go to the QR code section of the app for scanning to confirm pill intake.");
+            } else {
+                setupPopupDialog("Please put your phone to the NFC tag attached to the pillbox and hold it steady to where the Scan Here frame is to confirm pill intake.");
+
+                readFromIntent(getIntent());
+                pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+                IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+
+                tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
+                writingTagFilters = new IntentFilter[]{tagDetected};
+            }
+        } else {
+            toggle_nfc_ui = (LinearLayout) findViewById(R.id.toggle_nfc_ui);
+            toggle_nfc_ui.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    /**
+     * To be reused for NFC reading and writing confirmation.
+     */
+    private void setupPopupDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setNeutralButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
@@ -231,16 +282,19 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
     }
 
     // enabling NFC writing
-    // TODO: Figure out how to stop crashing bug with enabling foreground dispatch for the pending intent.
     private void WriteModeOn() {
-        writeMode = true;
-//        nfcAdapter.enableForegroundDispatch(this, pendingIntent, writingTagFilters, null);
+        if (nfcAdapter != null) {
+            writeMode = true;
+            nfcAdapter.enableForegroundDispatch(this, pendingIntent, writingTagFilters, null);
+        }
     }
 
     // disabling NFC writing
     private void WriteModeOff() {
-        writeMode = false;
-//        nfcAdapter.disableForegroundDispatch(this);
+        if (nfcAdapter != null) {
+            writeMode = false;
+            nfcAdapter.disableForegroundDispatch(this);
+        }
     }
 
     // for NFC tag reading
@@ -275,6 +329,7 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         text = new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1);
 
         nfc_contents.setText("NFC Content: " + text);
+        setupPopupDialog("Pill intake confirmed for medication ID: \n" + text);
     }
 
     @Override
@@ -291,8 +346,4 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
                 || super.onSupportNavigateUp();
     }
 
-//    public void displayToast(CharSequence text){
-//        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-//        toast.show();
-//    }
 }

@@ -88,7 +88,7 @@ public class MedicineFragmentStep2 extends Fragment {
             public void onClick(View v) {
                 MedicineFragmentStep3 stepThreeAddMedicine = new MedicineFragmentStep3();
                 getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , stepThreeAddMedicine).commit();
-                MedicineFragment.resultQRScan = null;
+//                MedicineFragment.resultQRScan = null;
             }
         });
 

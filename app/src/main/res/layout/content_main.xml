@@ -17,4 +17,64 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation" />
+
+    <!-- NFC Tag Testing Here -->
+    <LinearLayout
+        android:id="@+id/toggle_nfc_ui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70sp"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- for writing a custom message to NFC tag, replacing with object ID & will delete soon. -->
+            <!--        <EditText-->
+            <!--            android:id="@+id/edit_message"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_weight="2"-->
+            <!--            android:hint="Type something..."-->
+            <!--            android:minHeight="48dp"/>-->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:id="@+id/ActivateButton"
+                android:padding="32sp"
+                android:text="Scan Here"
+                android:textSize="30dp"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/nfc_contents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textview_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fit the tag in the frame above"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="20dp"/>
+        <!-- NFC Tag Testing End -->
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
