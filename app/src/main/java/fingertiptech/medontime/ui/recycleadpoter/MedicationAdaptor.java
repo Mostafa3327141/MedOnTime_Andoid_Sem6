@@ -61,7 +61,7 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
             @Override
             public void onClick(View v) {
                 MedicationDetailedFragment towardMedicationDetailedFragmentfragment = new MedicationDetailedFragment();
-                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , towardMedicationDetailedFragmentfragment).commit();
+                ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , towardMedicationDetailedFragmentfragment).addToBackStack(null).commit();
                 SharedPreferences sharedPreferencesClickListMedicationId = ((AppCompatActivity)context).getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor sharedPreferencesClickListMedicationIdEditor = sharedPreferencesClickListMedicationId.edit();
                 sharedPreferencesClickListMedicationIdEditor.putString("MedicaitonListClickId", medicationItem.getId());

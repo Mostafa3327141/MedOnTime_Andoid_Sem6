@@ -111,6 +111,14 @@ public class MedicineFragment extends Fragment {
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
 
+        // this is for home fram recycle onclick -> detail -> edit
+        SharedPreferences sharedPreferencesMedicationIdListOnclick = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String medicationListIdOnClick = sharedPreferencesMedicationIdListOnclick.getString("MedicationIdListClick", "");
+        if (!"".equals(medicationListIdOnClick)){
+            resultQRScan = medicationListIdOnClick;
+            writeIntoFeild();
+        }
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,24 +158,17 @@ public class MedicineFragment extends Fragment {
                     sharedPreferencesMedicationAddEditor.putString("MedicationAdd", medicationAddInfo);
                     sharedPreferencesMedicationAddEditor.apply();
 
-//                    medicineViewModel.initAddMedication(addMedication);
-//
-//                    medicineViewModel.getMedicationRepositoryWhenAdd().observe(getViewLifecycleOwner(), medicationsResponse -> {
-//                        resultQRScan = medicationsResponse.getId();
-//                    });
-
-
                 }else{
                     MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
                     getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();
 
                 }
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
-                        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();                    }
-                }, 2000);
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    public void run() {
+//                        MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
+//                        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();                    }
+//                }, 2000);
 
             }
         });

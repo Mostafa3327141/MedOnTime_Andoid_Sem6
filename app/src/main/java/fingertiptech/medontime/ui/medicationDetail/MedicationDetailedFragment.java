@@ -18,12 +18,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+
 import java.util.Locale;
 
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.databinding.MedicationDetailedFragmentBinding;
+import fingertiptech.medontime.ui.home.HomeFragment;
 import fingertiptech.medontime.ui.jsonplaceholder.MedicationJSONPlaceholder;
 import fingertiptech.medontime.ui.jsonplaceholder.PatientJSONPlaceholder;
+import fingertiptech.medontime.ui.medicine.MedicineFragment;
+import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
 
 public class MedicationDetailedFragment extends Fragment {
 
@@ -56,7 +61,25 @@ public class MedicationDetailedFragment extends Fragment {
             medicationDetailedFragmentBinding.editTextHoursInBetweenDetailed.setText(String.valueOf(medicationsResponse.getHoursBetween()));
             medicationDetailedFragmentBinding.textViewDisplaySettingTimeDetailed.setText(medicationsResponse.getFirstDoseTime());
             medicationDetailedFragmentBinding.imageMedicationViewDetailed.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
+//            MedicineFragment.resultQRScan = medicationsResponse.getId();
+            SharedPreferences sharedPreferencesMedicationIdWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor sharedPreferencesharedPreferencesMedicationIdWriteEditor = sharedPreferencesMedicationIdWrite.edit();
+            sharedPreferencesharedPreferencesMedicationIdWriteEditor.putString("MedicationIdListClick", medicationsResponse.getId());
+            sharedPreferencesharedPreferencesMedicationIdWriteEditor.apply();
+        });
 
+        medicationDetailedFragmentBinding.btnBackDetailed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeFragment backToHomeFrag = new HomeFragment();
+                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , backToHomeFrag).commit();            }
+        });
+        medicationDetailedFragmentBinding.btnEditDetailed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MedicineFragment forwardMedicationFrag1 = new MedicineFragment();
+                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicationFrag1).commit();
+            }
         });
         return view;
     }
