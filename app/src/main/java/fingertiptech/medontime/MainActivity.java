@@ -209,6 +209,10 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         SharedPreferences.Editor sharedPreferencesPatientLogInInfoEditor = sharedPreferencesPatientLogInInfo.edit();
         sharedPreferencesLoginUserInformationEditor.putString("PatientLogInInfo", "");
         sharedPreferencesLoginUserInformationEditor.apply();
+        SharedPreferences sharedPreferencesMedicationIdWrite = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesharedPreferencesMedicationIdWriteEditor = sharedPreferencesMedicationIdWrite.edit();
+        sharedPreferencesharedPreferencesMedicationIdWriteEditor.putString("MedicationIdListClick", "");
+        sharedPreferencesharedPreferencesMedicationIdWriteEditor.apply();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
