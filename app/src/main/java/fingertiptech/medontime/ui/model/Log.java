@@ -2,6 +2,7 @@ package fingertiptech.medontime.ui.model;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Log {
     private String id, patientID, medicationID, medicationName;
@@ -12,6 +13,7 @@ public class Log {
         this.patientID = patientID;
         this.medicationID = medicationID;
         this.medicationName = medicationName;
+        TimeZone.getTimeZone("America/Montreal");
         this.timeTake = new Date().toString();
     }
 
