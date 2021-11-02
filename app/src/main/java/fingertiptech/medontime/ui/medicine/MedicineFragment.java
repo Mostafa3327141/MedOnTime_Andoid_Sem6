@@ -55,6 +55,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import fingertiptech.medontime.AlarmReceiver;
+import fingertiptech.medontime.ConfirmActivity;
 import fingertiptech.medontime.MainActivity;
 import fingertiptech.medontime.NotificationReceiver;
 import fingertiptech.medontime.R;
@@ -93,6 +94,7 @@ public class MedicineFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_medicine_step1_info, container, false);
 
         notificationManagerCompat = NotificationManagerCompat.from(getContext());
+        firstDoseTime = Calendar.getInstance();
 
         editText_medicine_name = root.findViewById(R.id.editText_medName);
         editText_unit = root.findViewById(R.id.unit);
@@ -224,7 +226,7 @@ public class MedicineFragment extends Fragment {
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, firstDoseTime.getTimeInMillis(), pendingIntent);
-        Toast.makeText(getContext(), "Alarm is set successfully", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Alarm is set for: " + firstDoseTime.getTime(), Toast.LENGTH_LONG).show();
     }
 
     private void showTimePicker() {
@@ -248,7 +250,6 @@ public class MedicineFragment extends Fragment {
                     textView_medicine_setAlarm.setText( timePicker.getHour() + " : " + timePicker.getMinute() + " AM");
                 }
 
-                firstDoseTime = Calendar.getInstance();
                 firstDoseTime.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
                 firstDoseTime.set(Calendar.MINUTE, timePicker.getMinute());
                 firstDoseTime.set(Calendar.SECOND, 0);
@@ -279,6 +280,22 @@ public class MedicineFragment extends Fragment {
             setSpinner(medicationsResponse.getFrequency(), frequencySpinner);
             editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
             textView_medicine_setAlarm.setText(medicationsResponse.getFirstDoseTime());
+
+            String strFirstDoseTime = medicationsResponse.getFirstDoseTime();
+            int firstDoseTimeHour = Integer.parseInt(strFirstDoseTime.substring(0, 2));
+            int firstDoseTimeMinute = Integer.parseInt(strFirstDoseTime.substring(3, 5));
+            String firstDoseTimeAM_PM = strFirstDoseTime.substring(6, 8);
+
+            if(firstDoseTimeAM_PM.equals("PM")){
+                firstDoseTimeHour += 12;
+            }
+            firstDoseTime.set(Calendar.HOUR_OF_DAY, firstDoseTimeHour);
+            firstDoseTime.set(Calendar.MINUTE, firstDoseTimeMinute);
+            firstDoseTime.set(Calendar.SECOND, 0);
+            firstDoseTime.set(Calendar.MILLISECOND, 0);
+            Toast.makeText(getActivity(), "Hour is" + firstDoseTimeHour,Toast.LENGTH_LONG).show();
+            setAlarm();
+
         });
 
     }
@@ -395,7 +412,7 @@ public class MedicineFragment extends Fragment {
 
     public void sendNotifiation(View v){
 
-        Intent activityIntent = new Intent(getContext(), MainActivity.class);
+        Intent activityIntent = new Intent(getContext(), ConfirmActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, activityIntent, 0);
 
         Intent broadcastIntent = new Intent(getContext(), NotificationReceiver.class);
