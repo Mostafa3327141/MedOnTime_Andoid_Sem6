@@ -29,8 +29,10 @@ import fingertiptech.medontime.ui.jsonplaceholder.LogJSONPlaceholder;
 
 import java.util.ArrayList;
 
+import fingertiptech.medontime.ui.login.LoginFragment;
 import fingertiptech.medontime.ui.medicationDetail.MedicationDetailedFragmentArgs;
 import fingertiptech.medontime.ui.medicine.MedicineFragment;
+import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
 import fingertiptech.medontime.ui.model.Medication;
 import fingertiptech.medontime.ui.recycleadpoter.MedicationAdaptor;
 import retrofit2.Call;
@@ -132,8 +134,11 @@ public class HomeFragment extends Fragment {
 //                // Commit the transaction
 //                transaction.commit();
 
-                Snackbar.make(view, "Add Medicine", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Add Medicine", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                LoginFragment loginFrag = new LoginFragment();
+                getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , loginFrag).commit();
             }
         });
 
