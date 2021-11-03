@@ -294,7 +294,6 @@ public class MedicineFragment extends Fragment {
             firstDoseTime.set(Calendar.MINUTE, firstDoseTimeMinute);
             firstDoseTime.set(Calendar.SECOND, 0);
             firstDoseTime.set(Calendar.MILLISECOND, 0);
-            Toast.makeText(getActivity(), "Hour is" + firstDoseTimeHour,Toast.LENGTH_LONG).show();
             setAlarm();
 
         });

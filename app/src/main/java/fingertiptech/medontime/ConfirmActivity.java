@@ -48,9 +48,11 @@ public class ConfirmActivity extends AppCompatActivity {
                         return;
                     }
                     android.util.Log.i("can find medication", "medication unsuccess" + response.code());
-                    Toast.makeText(getApplicationContext(),"Get Medication", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"Get Medication", Toast.LENGTH_LONG).show();
                     Medication medication = response.body();
                     logTest(String.valueOf(medication.getPatientID()), medication.getId(), medication.getMedicationName());
+
+                    Toast.makeText(getApplicationContext(), "Medicine is taken!", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
