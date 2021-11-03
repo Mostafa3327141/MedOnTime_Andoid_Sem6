@@ -139,16 +139,16 @@ public class HomeFragment extends Fragment {
 
         //--------------------Test Log API-----------------
 //
-        Button btnLogTest = root.findViewById(R.id.btnLogTest);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://medontime-api.herokuapp.com/API/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        logJSONPlaceholder= retrofit.create(LogJSONPlaceholder.class);
-
-        btnLogTest.setOnClickListener(v -> {
-            logTest();
-        });
+//        Button btnLogTest = root.findViewById(R.id.btnLogTest);
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("https://medontime-api.herokuapp.com/API/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        logJSONPlaceholder= retrofit.create(LogJSONPlaceholder.class);
+//
+//        btnLogTest.setOnClickListener(v -> {
+//            logTest();
+//        });
 
         return root;
     }
