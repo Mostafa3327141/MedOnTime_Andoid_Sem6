@@ -103,7 +103,7 @@ public class MedicineFragment extends Fragment {
         editText_medicine_condition = root.findViewById(R.id.editText_condition);
         textView_medicine_setAlarm = root.findViewById(R.id.textView_displaySettingTime);
         frequencySpinner = root.findViewById(R.id.frequencySpinner);
-        editText_hoursInBetween = root.findViewById(R.id.editText_hoursInBetween);
+        editText_hoursInBetween = root.findViewById(R.id.editText_interval);
         btnNext = root.findViewById(R.id.btnNext);
         btnScanQR = root.findViewById(R.id.useQRbtn);
         btnSetTime = root.findViewById(R.id.btnSetTime);
@@ -194,18 +194,6 @@ public class MedicineFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showTimePicker();
-//                Calendar currentTime = Calendar.getInstance();
-//                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-//                int minute = currentTime.get(Calendar.MINUTE);
-//                TimePickerDialog timePicker;
-//                timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-//                        textView_medicine_setAlarm.setText( selectedHour + ":" + selectedMinute);
-//                    }
-//                }, hour, minute, true);//Yes 24 hour time
-//                timePicker.setTitle("Select Time");
-//                timePicker.show();
             }
         });
 
@@ -222,10 +210,12 @@ public class MedicineFragment extends Fragment {
     }
 
     private void setAlarm() {
+        int hoursInBetween = Integer.parseInt(editText_hoursInBetween.getText().toString());
+        long intervalInMillis = hoursInBetween  * 60 * 60 *1000;
         alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, firstDoseTime.getTimeInMillis(), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, firstDoseTime.getTimeInMillis(), intervalInMillis,pendingIntent);
         Toast.makeText(getContext(), "Alarm is set for: " + firstDoseTime.getTime(), Toast.LENGTH_LONG).show();
     }
 

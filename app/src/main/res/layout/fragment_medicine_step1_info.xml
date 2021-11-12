@@ -99,7 +99,7 @@
                 android:text="Interval" />
 
             <EditText
-                android:id="@+id/editText_hoursInBetween"
+                android:id="@+id/editText_interval"
                 android:layout_span="2"
                 android:width="150dp"
                 android:hint="Hours between each dose"
@@ -148,17 +148,17 @@
                 android:text="Cancel Alarm" />
         </TableRow>
 
-        <TableRow>
+<!--        <TableRow>-->
 
-            <TextView
-                style="@style/CustomText"
-                android:text="Need Alarm?" />
+<!--            <TextView-->
+<!--                style="@style/CustomText"-->
+<!--                android:text="Need Alarm?" />-->
 
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
+<!--            <Switch-->
+<!--                android:id="@+id/switch1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content" />-->
+<!--        </TableRow>-->
 
     </TableLayout>
 
