@@ -33,6 +33,10 @@
             android:id="@+id/nav_login"
             android:icon="@drawable/account"
             android:title="Login / Register" />
+        <item
+            android:id="@+id/nav_scanQRCamera"
+            android:icon="@drawable/qrcode"
+            android:title="Scan QR Code" />
 
 <!--        <item-->
 <!--            android:id="@+id/nav_testmockapi"-->

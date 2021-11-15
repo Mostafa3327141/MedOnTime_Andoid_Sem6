@@ -220,7 +220,8 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_profile, R.id.nav_medicine, R.id.nav_caretaker,
                 R.id.nav_scanQR,
-                R.id.nav_login)
+                R.id.nav_login,
+                R.id.nav_scanQRCamera)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

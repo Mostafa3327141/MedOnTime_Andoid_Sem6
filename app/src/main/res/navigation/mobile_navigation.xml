@@ -62,6 +62,11 @@
         android:name="fingertiptech.medontime.ui.login.LoginFragment"
         android:label="@string/menu_LogIn"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/nav_scanQRCamera"
+        android:name="fingertiptech.medontime.ui.scanQRCodeCamera.ScanQRCodeCameraFragment"
+        android:label="@string/menu_ScanQR"
+        tools:layout="@layout/scan_q_r_code_camera_fragment" />
 <!--    <fragment-->
 <!--        android:id="@+id/nav_testmockapi"-->
 <!--        android:name="fingertiptech.medontime.ui.testmockapiGET.TestMockApiGetFragment"-->
