@@ -6,8 +6,10 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -29,7 +31,6 @@ import com.google.zxing.Result;
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.medicine.MedicineFragment;
 import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
-import fingertiptech.medontime.ui.scanQRcode.ScanQRCodeFragment;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanQRCodeCameraFragment extends Fragment implements ZXingScannerView.ResultHandler {
@@ -74,7 +75,10 @@ public class ScanQRCodeCameraFragment extends Fragment implements ZXingScannerVi
 
         MedicineFragment forwardMedicaion = new MedicineFragment();
         getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaion).commit();
-
+        SharedPreferences sharedPreferencesMedicationIdWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesharedPreferencesMedicationIdWriteEditor = sharedPreferencesMedicationIdWrite.edit();
+        sharedPreferencesharedPreferencesMedicationIdWriteEditor.putString("MedicationIdListClick", rawResult.getBarcodeFormat().toString());
+        sharedPreferencesharedPreferencesMedicationIdWriteEditor.apply();
     }
 
     @Override
