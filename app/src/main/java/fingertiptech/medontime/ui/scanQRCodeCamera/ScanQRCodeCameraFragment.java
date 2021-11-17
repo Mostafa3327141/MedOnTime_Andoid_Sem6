@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.google.zxing.Result;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.medicine.MedicineFragment;
+import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
 import fingertiptech.medontime.ui.scanQRcode.ScanQRCodeFragment;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -57,6 +59,7 @@ public class ScanQRCodeCameraFragment extends Fragment implements ZXingScannerVi
     public void handleResult(Result rawResult) {
         Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
+
         // Note:
         // * Wait 2 seconds to resume the preview.
         // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
@@ -68,6 +71,10 @@ public class ScanQRCodeCameraFragment extends Fragment implements ZXingScannerVi
                 mScannerView.resumeCameraPreview(ScanQRCodeCameraFragment.this);
             }
         }, 2000);
+
+        MedicineFragment forwardMedicaion = new MedicineFragment();
+        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaion).commit();
+
     }
 
     @Override
