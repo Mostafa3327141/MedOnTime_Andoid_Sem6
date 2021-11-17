@@ -22,10 +22,6 @@
             android:icon="@drawable/caretakers"
             android:title="Caretakers" />
         <item
-            android:id="@+id/nav_scanQR"
-            android:icon="@drawable/qrcode"
-            android:title="Scan QR code" />
-        <item
             android:id="@+id/nav_scanNFC"
             android:icon="@drawable/nfc_tag_icon"
             android:title="Scan NFC Tag" />
