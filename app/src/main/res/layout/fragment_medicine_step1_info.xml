@@ -121,34 +121,6 @@
 
         </TableRow>
 
-        <TableRow>
-
-            <TextView
-                style="@style/CustomText"
-                android:text="Upload Picture"/>
-
-            <Button
-                style="@style/btnStyle"
-                android:id="@+id/btnOpenCamera"
-                android:layout_span="2"
-                android:text="Open Camera"/>
-
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                style="@style/CustomText"
-                android:text="Picture" />
-
-            <ImageView
-                android:id="@+id/imageMedicationView"
-                android:layout_span="2"
-                android:layout_width="180dp"
-                android:layout_height="150dp"
-                />
-        </TableRow>
-
 
     </TableLayout>
 
