@@ -1,10 +1,9 @@
 package fingertiptech.medontime.ui.medicine;
 
 import static android.app.Activity.RESULT_OK;
-import static fingertiptech.medontime.NotificationAndAlarm.NOTIFICATION_CHANNEL_ID;
+import static fingertiptech.medontime.Notification.NOTIFICATION_CHANNEL_ID;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,8 +15,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,9 +51,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import fingertiptech.medontime.AlarmReceiver;
-import fingertiptech.medontime.ConfirmActivity;
 import fingertiptech.medontime.MainActivity;
 import fingertiptech.medontime.NotificationReceiver;
 import fingertiptech.medontime.R;
@@ -67,8 +65,6 @@ public class MedicineFragment extends Fragment {
     private NotificationManagerCompat notificationManagerCompat;
     private MaterialTimePicker timePicker;
     Calendar firstDoseTime;
-    private AlarmManager alarmManager;
-    private PendingIntent pendingIntent;
 
     private MedicineViewModel medicineViewModel;
     public static final int PICK_IMAGE = 1;
@@ -81,11 +77,16 @@ public class MedicineFragment extends Fragment {
     EditText editText_medicine_condition;
     Spinner frequencySpinner;
     EditText editText_hoursInBetween;
-    TextView textView_medicine_setAlarm;
     Button btnScanQR;
     Button btnNext;
     Button btnSetTime;
-    Button btnSendNotification;
+    int hoursInBetween =1;
+    Bitmap medicationPic;
+    String medicationId;
+    String medicationName;
+    String patientId;
+
+
     Medication test;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -101,13 +102,12 @@ public class MedicineFragment extends Fragment {
         unitTypeSpinner = root.findViewById(R.id.unitTypeSpinner);
         editText_quantity = root.findViewById(R.id.editText_quantity);
         editText_medicine_condition = root.findViewById(R.id.editText_condition);
-        textView_medicine_setAlarm = root.findViewById(R.id.textView_displaySettingTime);
         frequencySpinner = root.findViewById(R.id.frequencySpinner);
-        editText_hoursInBetween = root.findViewById(R.id.editText_hoursInBetween);
         btnNext = root.findViewById(R.id.btnNext);
         btnScanQR = root.findViewById(R.id.useQRbtn);
         btnSetTime = root.findViewById(R.id.btnSetTime);
-        btnSendNotification = root.findViewById(R.id.btnSendNotification);
+
+        editText_hoursInBetween = root.findViewById(R.id.editText_interval);
 
 
         medicineViewModel =
@@ -148,7 +148,7 @@ public class MedicineFragment extends Fragment {
                             editText_unit.getText().toString() + unitTypeSpinner.getSelectedItem().toString(),
                             ("".equals(editText_quantity.getText().toString())) ? 0 : Integer.valueOf(editText_quantity.getText().toString()),
                             editText_medicine_condition.getText().toString(),
-                            textView_medicine_setAlarm.getText().toString(),
+                            btnSetTime.getText().toString(),
                             ("".equals(editText_hoursInBetween.getText().toString())) ? 0 : Integer.valueOf(editText_hoursInBetween.getText().toString()),
                             frequencySpinner.getSelectedItem().toString(),
                             null);
@@ -194,28 +194,14 @@ public class MedicineFragment extends Fragment {
         btnSetTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePicker();
-//                Calendar currentTime = Calendar.getInstance();
-//                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-//                int minute = currentTime.get(Calendar.MINUTE);
-//                TimePickerDialog timePicker;
-//                timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-//                        textView_medicine_setAlarm.setText( selectedHour + ":" + selectedMinute);
-//                    }
-//                }, hour, minute, true);//Yes 24 hour time
-//                timePicker.setTitle("Select Time");
-//                timePicker.show();
+                if(editText_hoursInBetween.getText().toString().matches("")){
+                    editText_hoursInBetween.setError("Please enter the Interval before setting time!");
+                    //Toast.makeText(getActivity(), "Please enter the Interval before setting time!",Toast.LENGTH_LONG).show();
+                }else {
+                    hoursInBetween = Integer.parseInt(editText_hoursInBetween.getText().toString());
+                    showTimePicker();
+                }
             }
-        });
-
-        btnSendNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendNotifiation(v);
-            }
-
         });
 
 
@@ -223,10 +209,17 @@ public class MedicineFragment extends Fragment {
     }
 
     private void setAlarm() {
-        alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getContext(), AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, firstDoseTime.getTimeInMillis(), pendingIntent);
+        long intervalInMillis = hoursInBetween  * 60 * 60 *1000;
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                //TODO (Nancy) Replace the home icon with the actual medication picture
+                //TODO (Nancy) Add the medication name to the content message
+                sendNotification("Medication Reminder", "It is time to take " + medicationName, medicationPic);
+            }
+        };
+        timer.scheduleAtFixedRate(task, firstDoseTime.getTime(), intervalInMillis);
         Toast.makeText(getContext(), "Alarm is set for: " + firstDoseTime.getTime(), Toast.LENGTH_LONG).show();
     }
 
@@ -246,9 +239,9 @@ public class MedicineFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(timePicker.getHour() > 12){
-                    textView_medicine_setAlarm.setText( timePicker.getHour() - 12  + " : " + timePicker.getMinute() + " PM");
+                    btnSetTime.setText( timePicker.getHour() - 12  + " : " + timePicker.getMinute() + " PM");
                 }else {
-                    textView_medicine_setAlarm.setText( timePicker.getHour() + " : " + timePicker.getMinute() + " AM");
+                    btnSetTime.setText( timePicker.getHour() + " : " + timePicker.getMinute() + " AM");
                 }
 
                 firstDoseTime.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
@@ -265,7 +258,10 @@ public class MedicineFragment extends Fragment {
     public void writeIntoFeild(){
         medicineViewModel.initGetMedicationByMedicationId(resultQRScan);
         medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
+            medicationId = medicationsResponse.getId();
             editText_medicine_name.setText(medicationsResponse.getMedicationName());
+            medicationName = medicationsResponse.getMedicationName();
+            patientId = String.valueOf(medicationsResponse.getPatientID());
             // get patient id and fetch medicaion info put into recycleview
             SharedPreferences sharedPreferencesPatientId = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor sharedPreferencesPatientIdEditor = sharedPreferencesPatientId.edit();
@@ -280,7 +276,9 @@ public class MedicineFragment extends Fragment {
             editText_medicine_condition.setText(medicationsResponse.getCondition());
             setSpinner(medicationsResponse.getFrequency(), frequencySpinner);
             editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
-            textView_medicine_setAlarm.setText(medicationsResponse.getFirstDoseTime());
+            btnSetTime.setText(medicationsResponse.getFirstDoseTime());
+
+            medicationPic = (Bitmap) convertBase64ToBitmap(medicationsResponse.getMedicationImage());
 
             String strFirstDoseTime = medicationsResponse.getFirstDoseTime();
             int firstDoseTimeHour = Integer.parseInt(strFirstDoseTime.substring(0, 2));
@@ -298,6 +296,11 @@ public class MedicineFragment extends Fragment {
 
         });
 
+    }
+
+    private Object convertBase64ToBitmap(String b64) {
+        byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
     public void setSpinner(String s, Spinner spinner){
@@ -410,19 +413,24 @@ public class MedicineFragment extends Fragment {
 
     }
 
-    public void sendNotifiation(View v){
+    public void sendNotification(String title, String content, Bitmap medPic){
 
-        Intent activityIntent = new Intent(getContext(), ConfirmActivity.class);
+        Intent activityIntent = new Intent(getContext(), MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, activityIntent, 0);
 
         Intent broadcastIntent = new Intent(getContext(), NotificationReceiver.class);
         broadcastIntent.putExtra("toastMessage", "Medication is taken");
+        broadcastIntent.putExtra("medicationId", medicationId);
+        broadcastIntent.putExtra("medicationName", medicationName);
+        broadcastIntent.putExtra("patientId", patientId);
+
         PendingIntent actionIntent = PendingIntent.getBroadcast(getContext(), 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.icon)
-                .setContentTitle("Medication Reminder")
-                .setContentText("It is time to take your medication!")
+                .setContentTitle(title)
+                .setContentText(content)
+                .setLargeIcon(medPic)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(Color.BLUE)

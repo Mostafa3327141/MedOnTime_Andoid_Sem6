@@ -99,25 +99,13 @@
                 android:text="Interval" />
 
             <EditText
-                android:id="@+id/editText_hoursInBetween"
+                android:id="@+id/editText_interval"
                 android:layout_span="2"
                 android:width="150dp"
                 android:hint="Hours between each dose"
                 android:inputType="number" />
         </TableRow>
 
-        <!--        <TableRow>-->
-        <!--            <TextView-->
-        <!--                style="@style/CustomText"-->
-        <!--                android:text="Alarm?"/>-->
-        <!--            <ToggleButton-->
-        <!--                android:id="@+id/toggle_button"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="Toggle"-->
-        <!--            android:textOff="OFF"-->
-        <!--            android:textOn="ON" />-->
-        <!--        </TableRow>-->
         <TableRow>
 
             <TextView
@@ -133,41 +121,8 @@
 
         </TableRow>
 
-        <TableRow>
-
-            <TextView
-                android:id="@+id/textView_displaySettingTime"
-                style="@style/CustomText"
-                android:text="" />
-
-            <Button
-                android:id="@+id/btnCancelAlarm"
-                style="@style/btnStyle"
-                android:layout_span="2"
-                android:onClick="cancelAlarm"
-                android:text="Cancel Alarm" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                style="@style/CustomText"
-                android:text="Need Alarm?" />
-
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
 
     </TableLayout>
-
-    <Button
-        android:id="@+id/btnSendNotification"
-        style="@style/btnStyle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Send Notification" />
 
     <Button
         android:id="@+id/btnNext"
