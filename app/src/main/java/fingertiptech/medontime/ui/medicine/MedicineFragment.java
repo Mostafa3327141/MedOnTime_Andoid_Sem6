@@ -190,7 +190,8 @@ public class MedicineFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(editText_hoursInBetween.getText().toString().matches("")){
-                    Toast.makeText(getActivity(), "Please enter the Interval before setting time!",Toast.LENGTH_LONG).show();
+                    editText_hoursInBetween.setError("Please enter the Interval before setting time!");
+                    //Toast.makeText(getActivity(), "Please enter the Interval before setting time!",Toast.LENGTH_LONG).show();
                 }else {
                     hoursInBetween = Integer.parseInt(editText_hoursInBetween.getText().toString());
                     showTimePicker();
@@ -208,8 +209,10 @@ public class MedicineFragment extends Fragment {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                //TODO (Nancy) Replace the home icon with the actual medication picture
+                //TODO (Nancy) Add the medication name to the content message
                 Bitmap medPic = BitmapFactory.decodeResource(getResources(), R.drawable.home);
-                sendNotification("Medication Reminder", "It is time to take your medication!", medPic);
+                sendNotification("Medication Reminder", "It is time to take " + "Advil", medPic);
             }
         };
         timer.scheduleAtFixedRate(task, firstDoseTime.getTime(), intervalInMillis);
@@ -404,6 +407,7 @@ public class MedicineFragment extends Fragment {
 
         Intent broadcastIntent = new Intent(getContext(), NotificationReceiver.class);
         broadcastIntent.putExtra("toastMessage", "Medication is taken");
+        broadcastIntent.putExtra("medicationId", "MedicatioId");
         PendingIntent actionIntent = PendingIntent.getBroadcast(getContext(), 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
