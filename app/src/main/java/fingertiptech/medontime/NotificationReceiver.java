@@ -13,3 +13,4 @@ public class NotificationReceiver extends BroadcastReceiver {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 }
+♂
