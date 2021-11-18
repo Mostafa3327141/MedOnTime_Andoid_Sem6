@@ -79,11 +79,9 @@ public class MedicineFragment extends Fragment {
     EditText editText_medicine_condition;
     Spinner frequencySpinner;
     EditText editText_hoursInBetween;
-    TextView textView_medicine_setAlarm;
     Button btnScanQR;
     Button btnNext;
     Button btnSetTime;
-    Button btnSendNotification;
     Medication test;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -99,13 +97,11 @@ public class MedicineFragment extends Fragment {
         unitTypeSpinner = root.findViewById(R.id.unitTypeSpinner);
         editText_quantity = root.findViewById(R.id.editText_quantity);
         editText_medicine_condition = root.findViewById(R.id.editText_condition);
-        textView_medicine_setAlarm = root.findViewById(R.id.textView_displaySettingTime);
         frequencySpinner = root.findViewById(R.id.frequencySpinner);
         editText_hoursInBetween = root.findViewById(R.id.editText_interval);
         btnNext = root.findViewById(R.id.btnNext);
         btnScanQR = root.findViewById(R.id.useQRbtn);
         btnSetTime = root.findViewById(R.id.btnSetTime);
-        btnSendNotification = root.findViewById(R.id.btnSendNotification);
 
 
         medicineViewModel =
@@ -138,7 +134,7 @@ public class MedicineFragment extends Fragment {
                             editText_unit.getText().toString() + unitTypeSpinner.getSelectedItem().toString(),
                             ("".equals(editText_quantity.getText().toString())) ? 0 : Integer.valueOf(editText_quantity.getText().toString()),
                             editText_medicine_condition.getText().toString(),
-                            textView_medicine_setAlarm.getText().toString(),
+                            btnSetTime.getText().toString(),
                             ("".equals(editText_hoursInBetween.getText().toString())) ? 0 : Integer.valueOf(editText_hoursInBetween.getText().toString()),
                             frequencySpinner.getSelectedItem().toString(),
                             null);
@@ -195,14 +191,6 @@ public class MedicineFragment extends Fragment {
             }
         });
 
-        btnSendNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendNotification();
-            }
-
-        });
-
 
         return root;
     }
@@ -214,7 +202,8 @@ public class MedicineFragment extends Fragment {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                sendNotification();
+                Bitmap medPic = BitmapFactory.decodeResource(getResources(), R.drawable.home);
+                sendNotification("Medication Reminder", "It is time to take your medication!", medPic);
             }
         };
         timer.scheduleAtFixedRate(task, firstDoseTime.getTime(), intervalInMillis);
@@ -237,9 +226,9 @@ public class MedicineFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(timePicker.getHour() > 12){
-                    textView_medicine_setAlarm.setText( timePicker.getHour() - 12  + " : " + timePicker.getMinute() + " PM");
+                    btnSetTime.setText( timePicker.getHour() - 12  + " : " + timePicker.getMinute() + " PM");
                 }else {
-                    textView_medicine_setAlarm.setText( timePicker.getHour() + " : " + timePicker.getMinute() + " AM");
+                    btnSetTime.setText( timePicker.getHour() + " : " + timePicker.getMinute() + " AM");
                 }
 
                 firstDoseTime.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
@@ -271,7 +260,7 @@ public class MedicineFragment extends Fragment {
             editText_medicine_condition.setText(medicationsResponse.getCondition());
             setSpinner(medicationsResponse.getFrequency(), frequencySpinner);
             editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
-            textView_medicine_setAlarm.setText(medicationsResponse.getFirstDoseTime());
+            btnSetTime.setText(medicationsResponse.getFirstDoseTime());
 
             String strFirstDoseTime = medicationsResponse.getFirstDoseTime();
             int firstDoseTimeHour = Integer.parseInt(strFirstDoseTime.substring(0, 2));
@@ -402,7 +391,7 @@ public class MedicineFragment extends Fragment {
 
     }
 
-    public void sendNotification(){
+    public void sendNotification(String title, String content, Bitmap medPic){
 
         Intent activityIntent = new Intent(getContext(), ConfirmActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, activityIntent, 0);
@@ -413,8 +402,9 @@ public class MedicineFragment extends Fragment {
 
         Notification notification = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.icon)
-                .setContentTitle("Medication Reminder")
-                .setContentText("It is time to take your medication!")
+                .setContentTitle(title)
+                .setContentText(content)
+                .setLargeIcon(medPic)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(Color.BLUE)

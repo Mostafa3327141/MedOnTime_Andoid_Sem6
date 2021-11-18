@@ -106,18 +106,6 @@
                 android:inputType="number" />
         </TableRow>
 
-        <!--        <TableRow>-->
-        <!--            <TextView-->
-        <!--                style="@style/CustomText"-->
-        <!--                android:text="Alarm?"/>-->
-        <!--            <ToggleButton-->
-        <!--                android:id="@+id/toggle_button"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="Toggle"-->
-        <!--            android:textOff="OFF"-->
-        <!--            android:textOn="ON" />-->
-        <!--        </TableRow>-->
         <TableRow>
 
             <TextView
@@ -136,38 +124,33 @@
         <TableRow>
 
             <TextView
-                android:id="@+id/textView_displaySettingTime"
                 style="@style/CustomText"
-                android:text="" />
+                android:text="Upload Picture"/>
 
             <Button
-                android:id="@+id/btnCancelAlarm"
                 style="@style/btnStyle"
+                android:id="@+id/btnOpenCamera"
                 android:layout_span="2"
-                android:onClick="cancelAlarm"
-                android:text="Cancel Alarm" />
+                android:text="Open Camera"/>
+
         </TableRow>
 
-<!--        <TableRow>-->
+        <TableRow>
 
-<!--            <TextView-->
-<!--                style="@style/CustomText"-->
-<!--                android:text="Need Alarm?" />-->
+            <TextView
+                style="@style/CustomText"
+                android:text="Picture" />
 
-<!--            <Switch-->
-<!--                android:id="@+id/switch1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content" />-->
-<!--        </TableRow>-->
+            <ImageView
+                android:id="@+id/imageMedicationView"
+                android:layout_span="2"
+                android:layout_width="180dp"
+                android:layout_height="150dp"
+                />
+        </TableRow>
+
 
     </TableLayout>
-
-    <Button
-        android:id="@+id/btnSendNotification"
-        style="@style/btnStyle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Send Notification" />
 
     <Button
         android:id="@+id/btnNext"
