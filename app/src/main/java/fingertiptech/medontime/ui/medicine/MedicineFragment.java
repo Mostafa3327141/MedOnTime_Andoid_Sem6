@@ -4,7 +4,6 @@ import static android.app.Activity.RESULT_OK;
 import static fingertiptech.medontime.Notification.NOTIFICATION_CHANNEL_ID;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,7 +15,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -26,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -57,7 +54,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import fingertiptech.medontime.ConfirmActivity;
+import fingertiptech.medontime.MainActivity;
 import fingertiptech.medontime.NotificationReceiver;
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.home.HomeFragment;
@@ -418,7 +415,7 @@ public class MedicineFragment extends Fragment {
 
     public void sendNotification(String title, String content, Bitmap medPic){
 
-        Intent activityIntent = new Intent(getContext(), ConfirmActivity.class);
+        Intent activityIntent = new Intent(getContext(), MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, activityIntent, 0);
 
         Intent broadcastIntent = new Intent(getContext(), NotificationReceiver.class);
