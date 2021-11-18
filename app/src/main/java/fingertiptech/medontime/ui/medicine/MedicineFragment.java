@@ -1,7 +1,7 @@
 package fingertiptech.medontime.ui.medicine;
 
 import static android.app.Activity.RESULT_OK;
-import static fingertiptech.medontime.NotificationAndAlarm.NOTIFICATION_CHANNEL_ID;
+import static fingertiptech.medontime.Notification.NOTIFICATION_CHANNEL_ID;
 
 import android.Manifest;
 import android.app.AlarmManager;
@@ -53,10 +53,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import fingertiptech.medontime.AlarmReceiver;
 import fingertiptech.medontime.ConfirmActivity;
-import fingertiptech.medontime.MainActivity;
 import fingertiptech.medontime.NotificationReceiver;
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.home.HomeFragment;
@@ -67,8 +67,6 @@ public class MedicineFragment extends Fragment {
     private NotificationManagerCompat notificationManagerCompat;
     private MaterialTimePicker timePicker;
     Calendar firstDoseTime;
-    private AlarmManager alarmManager;
-    private PendingIntent pendingIntent;
 
     private MedicineViewModel medicineViewModel;
     public static final int PICK_IMAGE = 1;
@@ -200,7 +198,7 @@ public class MedicineFragment extends Fragment {
         btnSendNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendNotifiation(v);
+                sendNotification();
             }
 
         });
@@ -212,10 +210,14 @@ public class MedicineFragment extends Fragment {
     private void setAlarm() {
         int hoursInBetween = Integer.parseInt(editText_hoursInBetween.getText().toString());
         long intervalInMillis = hoursInBetween  * 60 * 60 *1000;
-        alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getContext(), AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, firstDoseTime.getTimeInMillis(), intervalInMillis,pendingIntent);
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                sendNotification();
+            }
+        };
+        timer.scheduleAtFixedRate(task, firstDoseTime.getTime(), intervalInMillis);
         Toast.makeText(getContext(), "Alarm is set for: " + firstDoseTime.getTime(), Toast.LENGTH_LONG).show();
     }
 
@@ -400,7 +402,7 @@ public class MedicineFragment extends Fragment {
 
     }
 
-    public void sendNotifiation(View v){
+    public void sendNotification(){
 
         Intent activityIntent = new Intent(getContext(), ConfirmActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, activityIntent, 0);
