@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +83,13 @@ public class MedicineFragment extends Fragment {
     Button btnScanQR;
     Button btnNext;
     Button btnSetTime;
-    int hoursInBetween;
+    int hoursInBetween =1;
+    Bitmap medicationPic;
+    String medicationId;
+    String medicationName;
+    String patientId;
+
+
     Medication test;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -212,8 +219,7 @@ public class MedicineFragment extends Fragment {
             public void run() {
                 //TODO (Nancy) Replace the home icon with the actual medication picture
                 //TODO (Nancy) Add the medication name to the content message
-                Bitmap medPic = BitmapFactory.decodeResource(getResources(), R.drawable.home);
-                sendNotification("Medication Reminder", "It is time to take " + "Advil", medPic);
+                sendNotification("Medication Reminder", "It is time to take " + medicationName, medicationPic);
             }
         };
         timer.scheduleAtFixedRate(task, firstDoseTime.getTime(), intervalInMillis);
@@ -255,7 +261,10 @@ public class MedicineFragment extends Fragment {
     public void writeIntoFeild(){
         medicineViewModel.initGetMedicationByMedicationId(resultQRScan);
         medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
+            medicationId = medicationsResponse.getId();
             editText_medicine_name.setText(medicationsResponse.getMedicationName());
+            medicationName = medicationsResponse.getMedicationName();
+            patientId = String.valueOf(medicationsResponse.getPatientID());
             // get patient id and fetch medicaion info put into recycleview
             SharedPreferences sharedPreferencesPatientId = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor sharedPreferencesPatientIdEditor = sharedPreferencesPatientId.edit();
@@ -271,6 +280,8 @@ public class MedicineFragment extends Fragment {
             setSpinner(medicationsResponse.getFrequency(), frequencySpinner);
             editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
             btnSetTime.setText(medicationsResponse.getFirstDoseTime());
+
+            medicationPic = (Bitmap) convertBase64ToBitmap(medicationsResponse.getMedicationImage());
 
             String strFirstDoseTime = medicationsResponse.getFirstDoseTime();
             int firstDoseTimeHour = Integer.parseInt(strFirstDoseTime.substring(0, 2));
@@ -288,6 +299,11 @@ public class MedicineFragment extends Fragment {
 
         });
 
+    }
+
+    private Object convertBase64ToBitmap(String b64) {
+        byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
     public void setSpinner(String s, Spinner spinner){
@@ -407,7 +423,10 @@ public class MedicineFragment extends Fragment {
 
         Intent broadcastIntent = new Intent(getContext(), NotificationReceiver.class);
         broadcastIntent.putExtra("toastMessage", "Medication is taken");
-        broadcastIntent.putExtra("medicationId", "MedicatioId");
+        broadcastIntent.putExtra("medicationId", medicationId);
+        broadcastIntent.putExtra("medicationName", medicationName);
+        broadcastIntent.putExtra("patientId", patientId);
+
         PendingIntent actionIntent = PendingIntent.getBroadcast(getContext(), 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
