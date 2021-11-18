@@ -60,7 +60,10 @@ public class ScanQRCodeCameraFragment extends Fragment implements ZXingScannerVi
     public void handleResult(Result rawResult) {
         Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
-
+        SharedPreferences sharedPreferencesMedicationIdWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesharedPreferencesMedicationIdWriteEditor = sharedPreferencesMedicationIdWrite.edit();
+        sharedPreferencesharedPreferencesMedicationIdWriteEditor.putString("MedicationIdListClick", rawResult.getBarcodeFormat().toString());
+        sharedPreferencesharedPreferencesMedicationIdWriteEditor.apply();
         // Note:
         // * Wait 2 seconds to resume the preview.
         // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
@@ -75,10 +78,7 @@ public class ScanQRCodeCameraFragment extends Fragment implements ZXingScannerVi
 
         MedicineFragment forwardMedicaion = new MedicineFragment();
         getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaion).commit();
-        SharedPreferences sharedPreferencesMedicationIdWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPreferencesharedPreferencesMedicationIdWriteEditor = sharedPreferencesMedicationIdWrite.edit();
-        sharedPreferencesharedPreferencesMedicationIdWriteEditor.putString("MedicationIdListClick", rawResult.getBarcodeFormat().toString());
-        sharedPreferencesharedPreferencesMedicationIdWriteEditor.apply();
+
     }
 
     @Override
