@@ -82,6 +82,7 @@ public class MedicineFragment extends Fragment {
     Button btnScanQR;
     Button btnNext;
     Button btnSetTime;
+    int hoursInBetween;
     Medication test;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -98,10 +99,11 @@ public class MedicineFragment extends Fragment {
         editText_quantity = root.findViewById(R.id.editText_quantity);
         editText_medicine_condition = root.findViewById(R.id.editText_condition);
         frequencySpinner = root.findViewById(R.id.frequencySpinner);
-        editText_hoursInBetween = root.findViewById(R.id.editText_interval);
         btnNext = root.findViewById(R.id.btnNext);
         btnScanQR = root.findViewById(R.id.useQRbtn);
         btnSetTime = root.findViewById(R.id.btnSetTime);
+
+        editText_hoursInBetween = root.findViewById(R.id.editText_interval);
 
 
         medicineViewModel =
@@ -187,7 +189,12 @@ public class MedicineFragment extends Fragment {
         btnSetTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePicker();
+                if(editText_hoursInBetween.getText().toString().matches("")){
+                    Toast.makeText(getActivity(), "Please enter the Interval before setting time!",Toast.LENGTH_LONG).show();
+                }else {
+                    hoursInBetween = Integer.parseInt(editText_hoursInBetween.getText().toString());
+                    showTimePicker();
+                }
             }
         });
 
@@ -196,7 +203,6 @@ public class MedicineFragment extends Fragment {
     }
 
     private void setAlarm() {
-        int hoursInBetween = Integer.parseInt(editText_hoursInBetween.getText().toString());
         long intervalInMillis = hoursInBetween  * 60 * 60 *1000;
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
