@@ -62,7 +62,7 @@ public class ScanQRCodeCameraFragment extends Fragment implements ZXingScannerVi
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
         SharedPreferences sharedPreferencesMedicationIdWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedPreferencesharedPreferencesMedicationIdWriteEditor = sharedPreferencesMedicationIdWrite.edit();
-        sharedPreferencesharedPreferencesMedicationIdWriteEditor.putString("MedicationIdListClick", rawResult.getBarcodeFormat().toString());
+        sharedPreferencesharedPreferencesMedicationIdWriteEditor.putString("MedicationIdListClick", rawResult.getText());
         sharedPreferencesharedPreferencesMedicationIdWriteEditor.apply();
         // Note:
         // * Wait 2 seconds to resume the preview.

@@ -114,8 +114,10 @@ public class MedicineFragment extends Fragment {
                 new ViewModelProvider(this).get(MedicineViewModel.class);
 
         // this is for home fram recycle onclick -> detail -> edit
+
         SharedPreferences sharedPreferencesMedicationIdListOnclick = getActivity().getPreferences(Context.MODE_PRIVATE);
         String medicationListIdOnClick = sharedPreferencesMedicationIdListOnclick.getString("MedicationIdListClick", "");
+        String test = "";
         if (!"".equals(medicationListIdOnClick)){
             resultQRScan = medicationListIdOnClick;
             writeIntoFeild();
