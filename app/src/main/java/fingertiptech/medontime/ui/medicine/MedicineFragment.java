@@ -54,6 +54,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import fingertiptech.medontime.ConfirmActivity;
 import fingertiptech.medontime.MainActivity;
 import fingertiptech.medontime.NotificationReceiver;
 import fingertiptech.medontime.R;
@@ -415,7 +416,7 @@ public class MedicineFragment extends Fragment {
 
     public void sendNotification(String title, String content, Bitmap medPic){
 
-        Intent activityIntent = new Intent(getContext(), MainActivity.class);
+        Intent activityIntent = new Intent(getContext(), ConfirmActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, activityIntent, 0);
 
         Intent broadcastIntent = new Intent(getContext(), NotificationReceiver.class);
@@ -436,9 +437,8 @@ public class MedicineFragment extends Fragment {
                 .setColor(Color.BLUE)
                 .setContentIntent(contentIntent)
                 .setAutoCancel(true)
-                .addAction(R.drawable.icon, "Confirm", actionIntent)
                 .build();
-
+// .addAction(R.drawable.icon, "Confirm", actionIntent)
         notificationManagerCompat.notify(1, notification);
     }
 

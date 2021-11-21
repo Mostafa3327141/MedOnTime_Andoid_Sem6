@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
     Button ActivateButton;
     LinearLayout toggle_nfc_ui; // this property controls visibility of the NFC widgets in the activity layout.
 
+
     @Override
     public void onObjectIdPassToNFC(boolean isVisible, String objectId) {
         System.out.println(objectId);
