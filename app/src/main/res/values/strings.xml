@@ -40,6 +40,27 @@
         <item>Days Interval</item>
         <item>Birth Control Cycle</item>
     </string-array>
+
+    <string-array name="ShapeList">
+        <item></item>
+        <item>Circle</item>
+        <item>Oval</item>
+        <item>Triangle</item>
+        <item>Heart</item>
+        <item>Pentagon</item>
+        <item>Hexagon</item>
+        <item>Octagon</item>
+        <item>Right Triangle</item>
+        <item>Scalene Triangle</item>
+        <item>Square</item>
+        <item>Rectangle</item>
+        <item>Parallelogram</item>
+        <item>Trapezuim</item>
+        <item>Rhombus</item>
+        <item>4 Pointed Star</item>
+        <item>5 Pointed Star</item>
+        <item>6 Pointed Star</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_confirm">ConfirmActivity</string>

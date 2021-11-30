@@ -10,7 +10,7 @@
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_home.xml" value="0.3333333333333333" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_login.xml" value="0.22" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine.xml" value="0.22" />
-        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step1_info.xml" value="0.1" />
+        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step1_info.xml" value="0.42857142857142855" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step2.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step2_camera_image.xml" value="0.16666666666666666" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step3.xml" value="0.10104166666666667" />
@@ -18,7 +18,7 @@
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_register.xml" value="0.22" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_scan_qr_code.xml" value="0.3333333333333333" />
-        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/medication_detailed_fragment.xml" value="0.1" />
+        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/medication_detailed_fragment.xml" value="0.22" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/medicine_item.xml" value="0.4334038054968288" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/scan_nfc_tag_fragment.xml" value="0.11141304347826086" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/scan_q_r_code_camera_fragment.xml" value="0.22" />
@@ -27,9 +27,10 @@
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/test_mock_api_delete_fragment.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/test_mock_api_get_fragment.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/test_mock_api_post_fragment.xml" value="0.1" />
+        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/test_mock_api_put_patch_fragment.xml" value="0.17552083333333332" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/test_mock_api_query_fragment.xml" value="0.1" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/layout/verify_popup.xml" value="0.22" />
-        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
+        <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/menu/activity_main_drawer.xml" value="0.22" />
         <entry key="..\:/MedOnTime_Andoid_Sem6/app/src/main/res/menu/main.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/Documents/MedOnTime_Andoid_Sem6/app/src/main/res/layout/fragment_medicine_step3_nfc_scan.xml" value="0.1793478260869565" />
       </map>

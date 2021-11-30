@@ -18,16 +18,20 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Locale;
 
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.model.Medication;
@@ -40,6 +44,8 @@ public class MedicineFragmentStep2 extends Fragment {
     Button btnNext2;
     Button btnCamera;
     ImageView imageViewMedication;
+    Spinner spinnerShape;
+    ImageView imageViewShape;
     private MedicineViewModel medicineViewModel;
     private static final int Image_Capture_Code = 1;
 
@@ -55,12 +61,84 @@ public class MedicineFragmentStep2 extends Fragment {
 
         btnNext2 = root.findViewById(R.id.btnNext2);
         btnCamera = root.findViewById(R.id.btnOpenCamera);
+        spinnerShape = root.findViewById(R.id.shapeSpinner);
         imageViewMedication = root.findViewById(R.id.imageMedicationView);
+        imageViewShape = root.findViewById(R.id.imageShapeView);
+
 //        SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
 //        String medicationId = sharedPreferencesMedicationId.getString("addMedicationToDBGenerateIdRetrive", "");
-
+//        spinnerShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+//
+//                String shapeSelected = spinnerShape.getItemAtPosition(position).toString().toLowerCase(Locale.ROOT).trim();
+//
+//                switch (shapeSelected){
+//                    case "circle":
+//                        imageViewShape.setImageResource(R.drawable.circle);
+//                        break;
+//                    case "oval":
+//                        imageViewShape.setImageResource(R.drawable.oval);
+//                        break;
+//                    case "triangle":
+//                        imageViewShape.setImageResource(R.drawable.triangle);
+//                        break;
+//                    case "heart":
+//                        imageViewShape.setImageResource(R.drawable.heart);
+//                        break;
+//                    case "pentagon":
+//                        imageViewShape.setImageResource(R.drawable.pentagon);
+//                        break;
+//                    case "hexagon":
+//                        imageViewShape.setImageResource(R.drawable.hexagon);
+//                        break;
+//                    case "octagon":
+//                        imageViewShape.setImageResource(R.drawable.octagon);
+//                        break;
+//                    case "right triangle":
+//                        imageViewShape.setImageResource(R.drawable.right_triangle);
+//                        break;
+//                    case "scalene triangle":
+//                        imageViewShape.setImageResource(R.drawable.striangle);
+//                        break;
+//                    case "square":
+//                        imageViewShape.setImageResource(R.drawable.square);
+//                        break;
+//                    case "rectangle":
+//                        imageViewShape.setImageResource(R.drawable.rectangle);
+//                        break;
+//                    case "parallelogram":
+//                        imageViewShape.setImageResource(R.drawable.parallelogram);
+//                        break;
+//                    case "trapezuim":
+//                        imageViewShape.setImageResource(R.drawable.trapezium);
+//                        break;
+//                    case "rhombus":
+//                        imageViewShape.setImageResource(R.drawable.rhombus);
+//                        break;
+//                    case "4 pointed star":
+//                        imageViewShape.setImageResource(R.drawable.fourpointstar);
+//                        break;
+//                    case "5 pointed star":
+//                        imageViewShape.setImageResource(R.drawable.star);
+//                        break;
+//                    case "6 pointed star":
+//                        imageViewShape.setImageResource(R.drawable.sixpointstar);
+//                        break;
+//                    default:
+//                        imageViewShape.setImageBitmap(null);
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parentView) {
+//            }
+//
+//        });
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
+
         if(MedicineFragment.resultQRScan != null){
             medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
             medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
@@ -70,8 +148,84 @@ public class MedicineFragmentStep2 extends Fragment {
                 if(null != medicationsResponse.getMedicationImage()){
                     imageViewMedication.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
                 }
+                if(null != medicationsResponse.getShape()){
+                    setShapeSpinner(medicationsResponse.getShape(), spinnerShape);
+                    spinnerShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                        @Override
+                        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                            String shapeSelected = medicationsResponse.getShape();
+//                            setSpinner(medicationsResponse.getShape(), spinnerShape);
+                            switch (shapeSelected){
+                                case "circle":
+                                    imageViewShape.setImageResource(R.drawable.circle);
+                                    break;
+                                case "oval":
+                                    imageViewShape.setImageResource(R.drawable.oval);
+                                    break;
+                                case "triangle":
+                                    imageViewShape.setImageResource(R.drawable.triangle);
+                                    break;
+                                case "heart":
+                                    imageViewShape.setImageResource(R.drawable.heart);
+                                    break;
+                                case "pentagon":
+                                    imageViewShape.setImageResource(R.drawable.pentagon);
+                                    break;
+                                case "hexagon":
+                                    imageViewShape.setImageResource(R.drawable.hexagon);
+                                    break;
+                                case "octagon":
+                                    imageViewShape.setImageResource(R.drawable.octagon);
+                                    break;
+                                case "rightTri":
+                                    imageViewShape.setImageResource(R.drawable.right_triangle);
+                                    break;
+                                case "sTri":
+                                    imageViewShape.setImageResource(R.drawable.striangle);
+                                    break;
+                                case "square":
+                                    imageViewShape.setImageResource(R.drawable.square);
+                                    break;
+                                case "rectangle":
+                                    imageViewShape.setImageResource(R.drawable.rectangle);
+                                    break;
+                                case "parallelogram":
+                                    imageViewShape.setImageResource(R.drawable.parallelogram);
+                                    break;
+                                case "trapezuim":
+                                    imageViewShape.setImageResource(R.drawable.trapezium);
+                                    break;
+                                case "rhombus":
+                                    imageViewShape.setImageResource(R.drawable.rhombus);
+                                    break;
+                                case "4star":
+                                    imageViewShape.setImageResource(R.drawable.fourpointstar);
+                                    break;
+                                case "star":
+                                    imageViewShape.setImageResource(R.drawable.star);
+                                    break;
+                                case "6star":
+                                    imageViewShape.setImageResource(R.drawable.sixpointstar);
+                                    break;
+                                default:
+                                    imageViewShape.setImageBitmap(null);
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parentView) {
+                        }
+
+                    });
+                }
+
             });
         }
+
+
 
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +282,135 @@ public class MedicineFragmentStep2 extends Fragment {
     private Bitmap convertBase64ToBitmap(String b64) {
         byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+    }
+    public void setShapeSpinner(String s, Spinner spinner){
+        String shapeFromApi = "";
+        switch (shapeFromApi){
+            case "circle":
+                spinner.setSelection(1);
+                break;
+            case "oval":
+                spinner.setSelection(2);
+                break;
+            case "triangle":
+                spinner.setSelection(3);
+                break;
+            case "heart":
+                spinner.setSelection(4);
+                break;
+            case "pentagon":
+                spinner.setSelection(5);
+                break;
+            case "hexagon":
+                spinner.setSelection(6);
+                break;
+            case "octagon":
+                spinner.setSelection(7);
+                break;
+            case "rightTri":
+                spinner.setSelection(8);
+                break;
+            case "sTri":
+                spinner.setSelection(9);
+                break;
+            case "square":
+                spinner.setSelection(10);
+                break;
+            case "rectangle":
+                spinner.setSelection(11);
+                break;
+            case "parallelogram":
+                spinner.setSelection(12);
+                break;
+            case "trapezuim":
+                spinner.setSelection(13);
+                break;
+            case "rhombus":
+                spinner.setSelection(14);
+                break;
+            case "4star":
+                spinner.setSelection(15);
+                break;
+            case "star":
+                spinner.setSelection(1);
+                break;
+            case "6star":
+                spinner.setSelection(1);
+                break;
+            default:
+                spinner.setSelection(0);
+                break;
+        }
+
+        spinnerShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                String shapeSelected = s;
+                switch (shapeSelected){
+                    case "circle":
+                        imageViewShape.setImageResource(R.drawable.circle);
+                        break;
+                    case "oval":
+                        imageViewShape.setImageResource(R.drawable.oval);
+                        break;
+                    case "triangle":
+                        imageViewShape.setImageResource(R.drawable.triangle);
+                        break;
+                    case "heart":
+                        imageViewShape.setImageResource(R.drawable.heart);
+                        break;
+                    case "pentagon":
+                        imageViewShape.setImageResource(R.drawable.pentagon);
+                        break;
+                    case "hexagon":
+                        imageViewShape.setImageResource(R.drawable.hexagon);
+                        break;
+                    case "octagon":
+                        imageViewShape.setImageResource(R.drawable.octagon);
+                        break;
+                    case "rightTri":
+                        imageViewShape.setImageResource(R.drawable.right_triangle);
+                        break;
+                    case "sTri":
+                        imageViewShape.setImageResource(R.drawable.striangle);
+                        break;
+                    case "square":
+                        imageViewShape.setImageResource(R.drawable.square);
+                        break;
+                    case "rectangle":
+                        imageViewShape.setImageResource(R.drawable.rectangle);
+                        break;
+                    case "parallelogram":
+                        imageViewShape.setImageResource(R.drawable.parallelogram);
+                        break;
+                    case "trapezuim":
+                        imageViewShape.setImageResource(R.drawable.trapezium);
+                        break;
+                    case "rhombus":
+                        imageViewShape.setImageResource(R.drawable.rhombus);
+                        break;
+                    case "4star":
+                        imageViewShape.setImageResource(R.drawable.fourpointstar);
+                        break;
+                    case "star":
+                        imageViewShape.setImageResource(R.drawable.star);
+                        break;
+                    case "6star":
+                        imageViewShape.setImageResource(R.drawable.sixpointstar);
+                        break;
+                    default:
+                        imageViewShape.setImageBitmap(null);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
     }
     public String BitMapToString(Bitmap bitmap){
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
