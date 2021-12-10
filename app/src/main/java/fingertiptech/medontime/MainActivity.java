@@ -44,6 +44,10 @@ import java.io.UnsupportedEncodingException;
 import fingertiptech.medontime.ui.home.HomeFragment;
 import fingertiptech.medontime.ui.medicine.MedicineFragmentStep3;
 
+/**
+ * Within the MainActivity contains the NFC read & write functionality & the navigation setup for navigating to the
+ * different fragments.
+ */
 public class MainActivity extends AppCompatActivity implements MedicineFragmentStep3.OnObjectIdPassToNFC, ScanNFCTagFragment.OnDataPass {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
     public static final String Write_Success = "You're all set! \n\nPlease attach the NFC tag to the pillbox & scan to confirm when a notification appears.";
     public static final String Write_Error = "Error during Writing";
 
+    // NFC adaptor data members to be used in the read & write methods.
     NfcAdapter nfcAdapter;
     PendingIntent pendingIntent;
     IntentFilter writingTagFilters[];
@@ -79,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
             // setting up NFC Writing
 
             toggle_nfc_ui = (LinearLayout) findViewById(R.id.toggle_nfc_ui);
-            toggle_nfc_ui.setVisibility(View.VISIBLE);
+            //toggle_nfc_ui.setVisibility(View.VISIBLE);
 
 //            edit_message = (TextView) findViewById(R.id.edit_message);
             nfc_contents = (TextView) findViewById(R.id.nfc_contents);
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
             });
             nfcAdapter = NfcAdapter.getDefaultAdapter(this);
             if (nfcAdapter == null) {
-                setupPopupDialog("This page is for setting up confirmation for taking a medication with NFC scanning, though this device does not support NFC. Please use QR code scanning for confirming pill intake instead. \n\nMedication's been added! Head back to the homepage or use the app later when notified.");
+                setupPopupDialog("This page is for setting up confirmation for taking a medication with NFC scanning, though this device does not support NFC. \n\nThe medication has been added to the database either way. Head back to the homepage or use the app later when notified.");
             } else {
                 setupPopupDialog("Please place your phone to your empty NFC tag and click the Scan Here button to write medication data into the tag.");
 
@@ -220,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_profile, R.id.nav_medicine, R.id.nav_caretaker,
-                R.id.nav_scanQR,
+//                R.id.nav_scanQR,
                 R.id.nav_login,
                 R.id.nav_scanQRCamera)
                 .setDrawerLayout(drawer)

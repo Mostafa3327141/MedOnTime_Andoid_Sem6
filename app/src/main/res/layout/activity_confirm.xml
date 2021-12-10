@@ -12,24 +12,84 @@
         android:layout_height="0dp"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="77dp"
         android:text="Do you confirm you take medicine? "
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnLog"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_nfc_ui"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnLog"
-        style="@style/btnStyle"
-        android:layout_width="288dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="304dp"
-        android:text="YES"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <!-- NFC Tag Testing Here -->
+    <LinearLayout
+        android:id="@+id/toggle_nfc_ui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="216dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70sp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- for writing a custom message to NFC tag, replacing with object ID & will delete soon. -->
+            <!--        <EditText-->
+            <!--            android:id="@+id/edit_message"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_weight="2"-->
+            <!--            android:hint="Type something..."-->
+            <!--            android:minHeight="48dp"/>-->
+            <Button
+                android:id="@+id/btnLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="32sp"
+                android:text="Confirm Here"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/nfc_contents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textview_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fit the tag in the frame above"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!-- NFC Tag Testing End -->
+    </LinearLayout>
+    <!--    <Button-->
+<!--        android:id="@+id/btnLog"-->
+<!--        style="@style/btnStyle"-->
+<!--        android:layout_width="288dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="60dp"-->
+<!--        android:layout_marginBottom="304dp"-->
+<!--        android:text="YES"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView2" />-->
 
     <!--
 
