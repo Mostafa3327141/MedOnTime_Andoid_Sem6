@@ -7,11 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import fingertiptech.medontime.ui.jsonplaceholder.LogJSONPlaceholder;
 import fingertiptech.medontime.ui.jsonplaceholder.MedicationJSONPlaceholder;
 import fingertiptech.medontime.ui.medicine.MedicineFragment;
 import fingertiptech.medontime.ui.model.Log;
 import fingertiptech.medontime.ui.model.Medication;
+import fingertiptech.medontime.ui.scanNFCtag.ScanNFCTagFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,6 +25,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     LogJSONPlaceholder logJSONPlaceholder;
     MedicationJSONPlaceholder medicationJSONPlaceholder;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -57,6 +61,10 @@ public class NotificationReceiver extends BroadcastReceiver {
                 Toast.makeText(getApplicationContext(), "Log not added", Toast.LENGTH_SHORT).show();
             }
         });
+
+        Intent i=new Intent(context,ConfirmActivity.class);
+        context.startActivity(i);
+
 
 //        btn_confirm_log.setOnClickListener(v -> {
 //            Call<Medication> createCall = medicationJSONPlaceholder.getMedication(MedicineFragment.resultQRScan);
