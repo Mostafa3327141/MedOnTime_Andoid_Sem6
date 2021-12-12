@@ -39,6 +39,12 @@ public class MedicationDetailedFragment extends Fragment {
         return new MedicationDetailedFragment();
     }
 
+    /**
+     * In Home Page will show all patient's medication in recycle view in list,
+     * when user click one medication will forward to here "MedicationDetailedFragment"
+     * Store "medicationID" in SharedPreferences when user click on list,
+     * In here we get medication from Repository
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -61,7 +67,6 @@ public class MedicationDetailedFragment extends Fragment {
             medicationDetailedFragmentBinding.editTextHoursInBetweenDetailed.setText(String.valueOf(medicationsResponse.getHoursBetween()));
             medicationDetailedFragmentBinding.textViewDisplaySettingTimeDetailed.setText(medicationsResponse.getFirstDoseTime());
             medicationDetailedFragmentBinding.imageMedicationViewDetailed.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
-//            MedicineFragment.resultQRScan = medicationsResponse.getId();
             SharedPreferences sharedPreferencesMedicationIdWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor sharedPreferencesharedPreferencesMedicationIdWriteEditor = sharedPreferencesMedicationIdWrite.edit();
             sharedPreferencesharedPreferencesMedicationIdWriteEditor.putString("MedicationIdListClick", medicationsResponse.getId());
@@ -85,12 +90,13 @@ public class MedicationDetailedFragment extends Fragment {
     }
 
 
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        medicationDetailedViewModel = new ViewModelProvider(this).get(MedicationDetailedViewModel.class);
-//        // TODO: Use the ViewModel
-//    }
+    /**
+     * This function will go to the right spinner position when we fetch data from API
+     * e.g. Our medication is take 'Every day', then when we fetch from our API and populate data
+     * to spinner will go to the correct drop down 'Every day'
+     * @param s This is string we fetch from our medication like 'Every day', 'Specific day, and etc
+     * @param spinner
+     */
     public void setSpinner(String s, Spinner spinner){
         for (int position = 0; position < spinner.getCount(); position++) {
             if(spinner.getItemAtPosition(position).toString().toLowerCase(Locale.ROOT).trim().equals(s.toLowerCase(Locale.ROOT).trim())) {
@@ -99,7 +105,13 @@ public class MedicationDetailedFragment extends Fragment {
             }
         }
     }
-    //this is covert base 64 store from web app to image to app imageview
+
+    /**
+     * In database we store image as base64, this function is covert base 64 string
+     * to Bitmap to show imageView
+     * @param b64 is the image base 64 string
+     * @return
+     */
     private Bitmap convertBase64ToBitmap(String b64) {
         byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
