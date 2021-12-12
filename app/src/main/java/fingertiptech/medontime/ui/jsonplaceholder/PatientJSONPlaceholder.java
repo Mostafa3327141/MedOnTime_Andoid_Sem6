@@ -14,7 +14,10 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-
+/**
+ * Here is interface for calling patient API
+ * For all action to our API, and include the encrypt code to access
+ */
 public interface PatientJSONPlaceholder {
 
     @GET("PatientAPI?key=sH5O!2cdOqP1%5E")

@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment {
     LogJSONPlaceholder logJSONPlaceholder;
 
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -126,59 +127,18 @@ public class HomeFragment extends Fragment {
         btnAddMed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                //https://stackoverflow.com/questions/5658675/replacing-a-fragment-with-another-fragment-inside-activity-group
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.setReorderingAllowed(true);
-//                // Replace whatever is in the fragment_container view with this fragment
-//                transaction.replace(R.id.fragment_container, ExampleFragment.class, null);
-//                // Commit the transaction
-//                transaction.commit();
-
-//                Snackbar.make(view, "Add Medicine", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
 
                 LoginFragment loginFrag = new LoginFragment();
                 getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , loginFrag).commit();
             }
         });
 
-        //--------------------Test Log API-----------------
-//
-//        Button btnLogTest = root.findViewById(R.id.btnLogTest);
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("https://medontime-api.herokuapp.com/API/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        logJSONPlaceholder= retrofit.create(LogJSONPlaceholder.class);
-//
-//        btnLogTest.setOnClickListener(v -> {
-//            logTest();
-//        });
+
 
         return root;
     }
 
-    private void logTest() {
-        android.util.Log.i("test", "logTest()");
-        Call<Log> createCall = logJSONPlaceholder.addLog(new Log(null, "test", "some med id", "some med name"));
-        createCall.enqueue(new Callback<Log>() {
-            @Override
-            public void onResponse(Call<Log> call, Response<Log> response) {
-                if (!response.isSuccessful()){
-                    android.util.Log.i("testLog", "logTest() unsuccess" + response.code());
-                    return;
-                }
-                android.util.Log.i("testLog", "logTest() success" + response.code());
-                Toast.makeText(getActivity(),"Log added", Toast.LENGTH_LONG).show();
 
-            }
-
-            @Override
-            public void onFailure(Call<Log> call, Throwable t) {
-                Toast.makeText(getActivity(), "Log not added", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
 }
 

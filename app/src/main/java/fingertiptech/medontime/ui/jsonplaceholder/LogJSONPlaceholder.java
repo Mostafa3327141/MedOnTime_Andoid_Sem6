@@ -8,7 +8,10 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-
+/**
+ * Here is interface for calling log API
+ * For all action to our API, and include the encrypt code to access
+ */
 public interface LogJSONPlaceholder {
 
     @GET("LogAPI?key=sH5O!2cdOqP1%5E")

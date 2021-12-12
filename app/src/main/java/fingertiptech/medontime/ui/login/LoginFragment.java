@@ -38,15 +38,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginFragment extends Fragment {
 
-    // User without caretaker isTemporyPassrword(false)
-    // 1. User enter email and password
-    // 2. Hashing password
-    // 3. Get all patient data
-    // 4. Find Equal password
-    // User with caretaker -> isTemporyPassrod(true) first time
-    // 1. when enter temp password will pop up window
-    // 2. in Pop up window will have filed to enter their age and phone
-    // 3. If correct will forward to reset password and update
+    /**
+     *      User without caretaker isTemporyPassrword(false)
+     *      1. User enter email and password
+     *      2. Hashing password
+     *      3. Get all patient data
+     *      4. Find Equal password
+     *      User with caretaker -> isTemporyPassrod(true) first time
+     *      1. when enter temp password will pop up window
+     *      2. in Pop up window will have filed to enter their age and phone
+     *      3. If correct will forward to reset password and update
+     */
+
     private LoginViewModel loginViewModel;
     EditText editText_username;
     EditText getEditText_password;
@@ -62,6 +65,18 @@ public class LoginFragment extends Fragment {
     private AlertDialog verifyDialog;
     private EditText patienFirstName, patientLastName, patientAge, patienPhoneNo;
     private Button btnVerify, btnNotMe;
+
+    /**
+     *  Here is LoginFragment
+     *  User will enter their email and password in the text filed
+     *  In here we call the HashingPassword.getHash function
+     *  to get the encrypted password first.
+     *
+     *  After we have email and encrypted password, we verify a patient's email and password
+     *  by calling verifyPatient() function is matching to our database or not.
+     *
+     *
+     */
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -83,8 +98,6 @@ public class LoginFragment extends Fragment {
         patientJSONPlaceholder = retrofit.create(PatientJSONPlaceholder.class);
 
 
-
-
         btn_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,8 +106,6 @@ public class LoginFragment extends Fragment {
 //                boolean passRemember = checkBox_rmbPass.isChecked();
                 Log.wtf("Username: ", username+"\n");
                 Log.wtf("Password: ", password+"\n");
-
-//                if(passRemember){Log.wtf("Remember password?", "Yes");}
 
                 // Hashing password
                 String hashPassword = new HashingPassword().getHash(password,username);
@@ -124,6 +135,17 @@ public class LoginFragment extends Fragment {
     // sample test :
     // email:test@mail.com
     // password: admin
+
+    /**
+     * When user enter their email and password in first place then click login button,
+     * this function will be called.
+     * We use Retrofit to call API, first it will
+     * First, it will verify weather is first time login or not.
+     * If it is first time will call creatNewContactDiaglog() function
+     * otherwise, it will @GET patient's from API, if match will forward to HomeFragment
+     * @param email
+     * @param hashPassword
+     */
     private void verifyPatient(String email, String hashPassword) {
         Call<List<Patient>> callPatient = patientJSONPlaceholder.getAllPatients();
         ArrayList<Patient> allPatients = new ArrayList<>();
@@ -174,6 +196,20 @@ public class LoginFragment extends Fragment {
 
     // this is popup window will show first name and last name
     // and patien need to enter correct age and phone to reset password
+
+    /**
+     * This is pop up dialog, when user login with their email and password first time
+     * which is given by their caretaker, then it will pop up dialog for patient
+     * to reset their own password. (We set boolean true if first time login)
+     *
+     * In dialog will have verify check filed for user to entering their 'age' and 'phone no'
+     * to ensure they are the right user can update their password.
+     *
+     * User enter their age and phone no., then click verify button.
+     * If the information match will forward to update password page to enter their new password,
+     * otherwise will show error message.
+     * @param patient
+     */
     public void creatNewContactDiaglog(Patient patient){
         verifyDialogBuilder = new AlertDialog.Builder(getContext());
 

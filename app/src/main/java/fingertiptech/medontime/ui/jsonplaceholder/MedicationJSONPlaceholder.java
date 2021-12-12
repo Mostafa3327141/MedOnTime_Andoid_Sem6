@@ -10,6 +10,11 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * Here is interface for calling medication API
+ * For all action to our API, and include the encrypt code to access
+ */
+
 public interface MedicationJSONPlaceholder {
 
     @GET("MedicationAPI?key=sH5O!2cdOqP1%5E")

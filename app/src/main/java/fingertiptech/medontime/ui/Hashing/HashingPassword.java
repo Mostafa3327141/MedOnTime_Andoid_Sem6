@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class HashingPassword {
 
     private String password;
@@ -15,6 +16,14 @@ public class HashingPassword {
     public HashingPassword() {
     }
 
+    /**
+     * Return encrypted password string,
+     * Will generate hash encrypted according to user's email and password
+     *
+     * @param password the password user enter
+     * @param email the email user enter
+     * @return string encrypted password
+     */
 
     public String getHash(String password, String email) {
         String contentToBeHashed = password + email.toLowerCase(Locale.ROOT);
