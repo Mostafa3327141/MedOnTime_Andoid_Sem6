@@ -21,15 +21,4 @@ public class Log {
         return id;
     }
 
-    public String getPatientID() {
-        return patientID;
-    }
-
-    public String getMedicationID() {
-        return medicationID;
-    }
-
-    public String getMedicationName() {
-        return medicationName;
-    }
 }

@@ -40,6 +40,9 @@ public class ScanQRCodeCameraFragment extends Fragment implements ZXingScannerVi
     }
     private ZXingScannerView mScannerView;
 
+    /**
+     *  We use the library ZXingScannerView for scan QR code and fetch the data store in QR code
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mScannerView = new ZXingScannerView(getActivity());
@@ -53,15 +56,15 @@ public class ScanQRCodeCameraFragment extends Fragment implements ZXingScannerVi
         mScannerView.startCamera();
     }
 
+    /**
+     * Wait 2 seconds to resume the preview. When camera scan QR code will show ID in bar
+     * @param rawResult
+     */
     @Override
     public void handleResult(Result rawResult) {
         Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 
-        // Note:
-        // * Wait 2 seconds to resume the preview.
-        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
-        // * I don't know why this is the case but I don't have the time to figure out.
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

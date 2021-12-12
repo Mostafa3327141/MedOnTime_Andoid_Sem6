@@ -52,7 +52,12 @@ public class HomeFragment extends Fragment {
     LogJSONPlaceholder logJSONPlaceholder;
 
 
-
+    /**
+     * HomeFragment is the first page when user launch application will show.
+     * If users login to their account, home fragment will show, user name and
+     * all the medication list in recycle view.
+     * User can click recycle view and forward to detailed fragment to see more information
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -74,20 +79,13 @@ public class HomeFragment extends Fragment {
             });
 
         }
-        // we need to write medication id into sharedpreference to store in order to show in recycle view
-        // 1. we need to retrive the one have been store in sharedpreference first
-
-
-
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
                 // in this homefragment will show all the patient medicaion list
                 // 1 . Already got the patient id when scan qr code, so will retrive all data from api
-
                 ArrayList<Medication> patientAllMedication = new ArrayList<>();
-//        ArrayList<String> medicationIdArrayList = new ArrayList<>(Arrays.asList(medicationIdList));
                 // 2. get medication list match the patient id
                 // 3. store in arraylist <medication> and populate to recycle view
                 medicationRecyclerViewItems =root.findViewById(R.id.recycleView_medicine);

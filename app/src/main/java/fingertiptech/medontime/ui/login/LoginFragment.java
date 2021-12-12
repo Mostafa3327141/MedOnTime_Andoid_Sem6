@@ -74,8 +74,6 @@ public class LoginFragment extends Fragment {
      *
      *  After we have email and encrypted password, we verify a patient's email and password
      *  by calling verifyPatient() function is matching to our database or not.
-     *
-     *
      */
 
     public View onCreateView(@NonNull LayoutInflater inflater,

@@ -26,6 +26,7 @@ import java.util.List;
 
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.home.HomeFragmentDirections;
+import fingertiptech.medontime.ui.imageConvert.ImageBase64Convert;
 import fingertiptech.medontime.ui.medicationDetail.MedicationDetailedFragment;
 import fingertiptech.medontime.ui.medicine.MedicineFragment;
 import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
@@ -49,10 +50,13 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
         View view = LayoutInflater.from(context).inflate(R.layout.medicine_item , parent , false);
         return new MedicationViewHolder(view);    }
 
+    /**
+     *
+     */
     @Override
     public void onBindViewHolder(@NonNull @NotNull MedicationAdaptor.MedicationViewHolder holder, int position) {
         Medication medicationItem = medicationsList.get(position);
-        holder.image.setImageBitmap(convertBase64ToBitmap(medicationItem.getMedicationImage()));
+        holder.image.setImageBitmap(ImageBase64Convert.convertBase64ToBitmap(medicationItem.getMedicationImage()));
         holder.name.setText("Name : " + medicationItem.getMedicationName());
         holder.time.setText("Time : " + medicationItem.getFirstDoseTime());
         holder.dosage.setText("Dosage :" + medicationItem.getUnit());
@@ -76,7 +80,9 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
         return medicationsList.size();
     }
 
-
+    /**
+     * In this function, it will bind UI field id to our variable.
+     */
     public class MedicationViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
         TextView name , time , dosage , quantity;
@@ -92,8 +98,5 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
         }
 
     }
-    private Bitmap convertBase64ToBitmap(String b64) {
-        byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
-    }
+
 }

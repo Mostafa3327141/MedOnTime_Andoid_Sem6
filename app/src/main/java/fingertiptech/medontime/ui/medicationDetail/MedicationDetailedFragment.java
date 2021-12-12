@@ -25,6 +25,7 @@ import java.util.Locale;
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.databinding.MedicationDetailedFragmentBinding;
 import fingertiptech.medontime.ui.home.HomeFragment;
+import fingertiptech.medontime.ui.imageConvert.ImageBase64Convert;
 import fingertiptech.medontime.ui.jsonplaceholder.MedicationJSONPlaceholder;
 import fingertiptech.medontime.ui.jsonplaceholder.PatientJSONPlaceholder;
 import fingertiptech.medontime.ui.medicine.MedicineFragment;
@@ -42,8 +43,11 @@ public class MedicationDetailedFragment extends Fragment {
     /**
      * In Home Page will show all patient's medication in recycle view in list,
      * when user click one medication will forward to here "MedicationDetailedFragment"
-     * Store "medicationID" in SharedPreferences when user click on list,
-     * In here we get medication from Repository
+     *
+     * It will store "medicationID" in SharedPreferences when user click on list,
+     * We will get medication as parameter according to medicationID stored in Sharedpreference
+     * and call medication API
+     * Retrieve all medication information and populate to text field.
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -66,7 +70,7 @@ public class MedicationDetailedFragment extends Fragment {
             setSpinner(medicationsResponse.getFrequency(), medicationDetailedFragmentBinding.frequencySpinnerDetailed);
             medicationDetailedFragmentBinding.editTextHoursInBetweenDetailed.setText(String.valueOf(medicationsResponse.getHoursBetween()));
             medicationDetailedFragmentBinding.textViewDisplaySettingTimeDetailed.setText(medicationsResponse.getFirstDoseTime());
-            medicationDetailedFragmentBinding.imageMedicationViewDetailed.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
+            medicationDetailedFragmentBinding.imageMedicationViewDetailed.setImageBitmap(ImageBase64Convert.convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
             SharedPreferences sharedPreferencesMedicationIdWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor sharedPreferencesharedPreferencesMedicationIdWriteEditor = sharedPreferencesMedicationIdWrite.edit();
             sharedPreferencesharedPreferencesMedicationIdWriteEditor.putString("MedicationIdListClick", medicationsResponse.getId());
@@ -106,15 +110,6 @@ public class MedicationDetailedFragment extends Fragment {
         }
     }
 
-    /**
-     * In database we store image as base64, this function is covert base 64 string
-     * to Bitmap to show imageView
-     * @param b64 is the image base 64 string
-     * @return
-     */
-    private Bitmap convertBase64ToBitmap(String b64) {
-        byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
-    }
+
 
 }

@@ -30,12 +30,12 @@ import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 
 import fingertiptech.medontime.R;
+import fingertiptech.medontime.ui.imageConvert.ImageBase64Convert;
 import fingertiptech.medontime.ui.model.Medication;
 import fingertiptech.medontime.ui.model.Patient;
 
 public class MedicineFragmentStep2 extends Fragment {
 
-//    private MedicineFragmentStep2ViewModel mViewModel;
 
     Button btnNext2;
     Button btnCamera;
@@ -48,6 +48,13 @@ public class MedicineFragmentStep2 extends Fragment {
         return new MedicineFragmentStep2();
     }
 
+    /**
+     * If patient scan QR code will forward to MedicineFragment then image will show when forward to fragment 2
+     * Otherwise user will open camera take pill image.
+     * Here is step 2, in step 1 we saved the medication information to our sharedPreference first,
+     * for MedicineFragmentStep2 user open camera to take pill picture.
+     * Image bitmap will convert base64 string to store to database.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -56,11 +63,10 @@ public class MedicineFragmentStep2 extends Fragment {
         btnNext2 = root.findViewById(R.id.btnNext2);
         btnCamera = root.findViewById(R.id.btnOpenCamera);
         imageViewMedication = root.findViewById(R.id.imageMedicationView);
-//        SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
-//        String medicationId = sharedPreferencesMedicationId.getString("addMedicationToDBGenerateIdRetrive", "");
 
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
+
         if(MedicineFragment.resultQRScan != null){
             medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
             medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
@@ -68,11 +74,10 @@ public class MedicineFragmentStep2 extends Fragment {
                 // another one is patient need to add their own, so they add basic in frag1 in frag2 is retrive medcaion object create by fragment1
                 // and need to add image in fragment 2, of course when retrive theri own medecion id won't have image bitmap at first
                 if(null != medicationsResponse.getMedicationImage()){
-                    imageViewMedication.setImageBitmap(convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
+                    imageViewMedication.setImageBitmap(ImageBase64Convert.convertBase64ToBitmap(medicationsResponse.getMedicationImage()));
                 }
             });
         }
-
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,18 +87,21 @@ public class MedicineFragmentStep2 extends Fragment {
             }
         });
 
-
         btnNext2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MedicineFragmentStep3 stepThreeAddMedicine = new MedicineFragmentStep3();
                 getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , stepThreeAddMedicine).commit();
-//                MedicineFragment.resultQRScan = null;
             }
         });
 
         return root;
     }
+
+    /**
+     *  In this is open camera take picture. When user take picture, it will convert to code base 64
+     *  and store to database.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -104,43 +112,14 @@ public class MedicineFragmentStep2 extends Fragment {
                 SharedPreferences sharedPreferencesAddMedication = getActivity().getPreferences(Context.MODE_PRIVATE);
                 final Gson gson = new Gson();
                 Medication medicationAdd =  gson.fromJson(sharedPreferencesAddMedication.getString("MedicationAdd", ""), Medication.class);
-                medicationAdd.setMedicationImage(BitMapToString(bp));
+                medicationAdd.setMedicationImage(ImageBase64Convert.BitMapToString(bp));
                 medicineViewModel.initUpdateMedication(medicationAdd);
-//                medicineViewModel.initGetMedicationByMedicationId(MedicineFragment.resultQRScan);
-//                medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
-//                    // in here has 2 senerio one is patient already medicaion so it will has image bitmap already so i just display
-//                    // another one is patient need to add their own, so they add basic in frag1 in frag2 is retrive medcaion object create by fragment1
-//                    // and need to add image in fragment 2, of course when retrive theri own medecion id won't have image bitmap at first
-//                    Medication medication = medicationsResponse;
-//                    medication.setMedicationImage(BitMapToString(bp));
-//                    medicineViewModel.initUpdateMedication(medication);
-//                    medicineViewModel.getMedicationRepositoryWhenUpdate().observe(getViewLifecycleOwner(), medicationsResponse1 -> {
-//
-//                    });
-//
-//                });
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
             }
         }
     }
-    //this is covert base 64 store from web app to image to app imageview
-    private Bitmap convertBase64ToBitmap(String b64) {
-        byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
-    }
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp=Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        mViewModel = new ViewModelProvider(this).get(MedicineFragmentStep2ViewModel.class);
-//        // TODO: Use the ViewModel
-//    }
+
+
 
 }

@@ -55,10 +55,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import fingertiptech.medontime.ConfirmActivity;
-import fingertiptech.medontime.MainActivity;
 import fingertiptech.medontime.NotificationReceiver;
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.home.HomeFragment;
+import fingertiptech.medontime.ui.imageConvert.ImageBase64Convert;
 import fingertiptech.medontime.ui.model.Medication;
 
 public class MedicineFragment extends Fragment {
@@ -88,8 +88,12 @@ public class MedicineFragment extends Fragment {
     String patientId;
 
 
-    Medication test;
-
+    /**
+     * If patient scan QR code will forward to MedicineFragment then in here
+     * will call writeIntoField() function.
+     * Otherwise, Patient need enter their medication information (Name, Unit, Frequency, Quantity, Condition, Unit Type)
+     * will save to our sharedPreference first then go to next step for taking picture of medication
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -166,12 +170,6 @@ public class MedicineFragment extends Fragment {
                     getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();
 
                 }
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    public void run() {
-//                        MedicineFragmentStep2 forwardMedicaionFrag2 = new MedicineFragmentStep2();
-//                        getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment , forwardMedicaionFrag2).commit();                    }
-//                }, 2000);
 
             }
         });
@@ -215,8 +213,7 @@ public class MedicineFragment extends Fragment {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                //TODO (Nancy) Replace the home icon with the actual medication picture
-                //TODO (Nancy) Add the medication name to the content message
+        
                 sendNotification("Medication Reminder", "It is time to take " + medicationName, medicationPic);
             }
         };
@@ -255,7 +252,11 @@ public class MedicineFragment extends Fragment {
         });
     }
 
-
+    /**
+     * After we select our QR code image from our gallery, and get id from image
+     * writeIntoFiled() will be called.
+     * It will get medication information from API, then use liveData and viewModel to populate into field
+     */
     public void writeIntoFeild(){
         medicineViewModel.initGetMedicationByMedicationId(resultQRScan);
         medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
@@ -279,7 +280,7 @@ public class MedicineFragment extends Fragment {
             editText_hoursInBetween.setText(String.valueOf(medicationsResponse.getHoursBetween()));
             btnSetTime.setText(medicationsResponse.getFirstDoseTime());
 
-            medicationPic = (Bitmap) convertBase64ToBitmap(medicationsResponse.getMedicationImage());
+            medicationPic = (Bitmap) ImageBase64Convert.convertBase64ToBitmap(medicationsResponse.getMedicationImage());
 
             String strFirstDoseTime = medicationsResponse.getFirstDoseTime();
             int firstDoseTimeHour = Integer.parseInt(strFirstDoseTime.substring(0, 2));
@@ -299,11 +300,14 @@ public class MedicineFragment extends Fragment {
 
     }
 
-    private Object convertBase64ToBitmap(String b64) {
-        byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
-    }
 
+    /**
+     * This function will go to the right spinner position when we fetch data from API
+     * e.g. Our medication is take 'Every day', then when we fetch from our API and populate data
+     * to spinner will go to the correct drop down 'Every day'
+     * @param s This is string we fetch from our medication like 'Every day', 'Specific day, and etc
+     * @param spinner
+     */
     public void setSpinner(String s, Spinner spinner){
         for (int position = 0; position < spinner.getCount(); position++) {
             if(spinner.getItemAtPosition(position).toString().toLowerCase(Locale.ROOT).trim().equals(s.toLowerCase(Locale.ROOT).trim())) {
@@ -313,6 +317,9 @@ public class MedicineFragment extends Fragment {
         }
     }
 
+    /**
+     * This function will open the android photo gallery.
+     */
     private void startGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -320,6 +327,10 @@ public class MedicineFragment extends Fragment {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
 
+    /**
+     *  This is the function when we select QR code image from our gallery,
+     *  will decode image and give up the id that store in QR code.
+     */
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
 
@@ -360,13 +371,11 @@ public class MedicineFragment extends Fragment {
                     SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
                     String[] medicationIdList = sharedPreferencesMedicationId.getString("MedicationIdStored", "").split(",");
 
-//                    List<String> medicationIdArrayList = new ArrayList<String>();
                     ArrayList<String> medicationIdArrayList = new ArrayList<>();
                     if(!"".equals(medicationIdList[0])){
                         medicationIdArrayList = new ArrayList<>(Arrays.asList(medicationIdList));
                     }
 
-//                    medicationIdArrayList = Arrays.asList(medicationIdList);
                     // 2. after we retrive then we need to add new medicaion id we jsut scan
                     // check if already in the list if not append, otherwise skip
                     SharedPreferences.Editor sharedPreferencesMedicationIdEditor = getActivity().getPreferences(Context.MODE_PRIVATE).edit();
@@ -387,7 +396,6 @@ public class MedicineFragment extends Fragment {
 
                     Toast.makeText(getActivity(),resultQRScan,Toast.LENGTH_LONG).show();
                     writeIntoFeild();
-//                    getMedicine(resultQRScan);
                     Thread.sleep(2000);
 
                 }catch (Exception e){
@@ -395,8 +403,6 @@ public class MedicineFragment extends Fragment {
                     e.printStackTrace();
 
                 }
-
-                //  image_view.setImageBitmap(selectedImage);
 
             } catch (FileNotFoundException e) {
 

@@ -12,9 +12,6 @@ import fingertiptech.medontime.ui.model.Patient;
 
 public class LoginViewModel extends ViewModel {
 
-    /**
-     *
-     */
 
     private MutableLiveData<Patient> patientMutableLiveData;
     private MutableLiveData<List<Patient>> patientListMutableLiveData;
