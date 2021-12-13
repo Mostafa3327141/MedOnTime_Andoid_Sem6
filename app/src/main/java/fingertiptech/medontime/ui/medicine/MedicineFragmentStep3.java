@@ -15,6 +15,15 @@ import android.view.ViewGroup;
 
 import fingertiptech.medontime.R;
 
+/**
+ * This fragment is the 3rd step of the add medication process where the NFC tag needs to be setup.
+ * At this point the patient can position their phone to write the medication ID to the NFC tag
+ * and afterwards it will notify with a popup from MainActivity when it is written.
+ *
+ * If the phone does not have an NFC Adaptor, a pop-up message will be trigger right away to let them know
+ * the medication's still added to our database, but will need to confirm with NFC scanning when the notification
+ * appears.
+ */
 public class MedicineFragmentStep3 extends Fragment {
 
     private MedicineViewModel medicineViewModel;

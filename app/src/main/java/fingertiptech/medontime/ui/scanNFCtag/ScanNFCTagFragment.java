@@ -11,8 +11,12 @@ import androidx.fragment.app.Fragment;
 import fingertiptech.medontime.R;
 
 
-// We could also add another field in the Medication to instead detect whether it's been added to an NFC tag yet.
-
+/**
+ * This fragment can be accessed at anytime to read the medication ID from the tag. It doesn't confirm anything
+ * in our database but is here just to see if there is any data in the tag.
+ *
+ * We may remove this fragment completely in the future.
+ */
 public class ScanNFCTagFragment extends Fragment {
 
     OnDataPass dataPasser;

@@ -76,6 +76,11 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
     LinearLayout toggle_nfc_ui; // this property controls visibility of the NFC widgets in the activity layout.
 
 
+    /**
+     * onObjectIdPassToNFC is a datapass method implemented from the OnObjectIdPassToNFC inner interface located
+     * in MedicineFragmentStep3. This method focuses on passing the medication ID (objectId) to the NFC write
+     * method in order to setup the NFC tag with the new medication added.
+     */
     @Override
     public void onObjectIdPassToNFC(boolean isVisible, String objectId) {
         System.out.println(objectId);
@@ -138,7 +143,10 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         }
     }
 
-    // setting up NFC reading only to confirm the medication was taken from ScanNFCTagFragment
+    /**
+     * The onDataPass method is for setting up NFC reading to confirm the medication was taken from
+     * ScanNFCTagFragment's OnDataPass inner interface.
+     */
     @Override
     public void onDataPass(boolean isVisible) {
         if (isVisible) {
@@ -236,7 +244,10 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
 
     }
 
-    // for NFC tag writing
+    /**
+     * This method is for setting up NFC writing by taking the test parameter and formatting
+     * it to be written. The format is Ndef (NFC Defined Electronic Format)
+     */
     private void write(String text, Tag tag) throws IOException, FormatException {
         NdefRecord[] records = { createRecord(text) };
         NdefMessage message = new NdefMessage(records);
@@ -250,6 +261,10 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         ndef.close();
     }
 
+    /**
+     * This method is for creating an Ndef record to be able to convert the string into an NdefRecord
+     * object to return it.
+     */
     private NdefRecord createRecord(String text) throws UnsupportedEncodingException {
         String lang = "en";
         byte[] textBytes = text.getBytes();
@@ -292,7 +307,10 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         WriteModeOn();
     }
 
-    // enabling NFC writing
+    /**
+     * WriteModeOn is used for setting up the nfc writing by calling the enableForegroundDispatch which
+     * starts up the writing process.
+     */
     private void WriteModeOn() {
         if (nfcAdapter != null) {
             writeMode = true;
@@ -300,7 +318,10 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         }
     }
 
-    // disabling NFC writing
+    /**
+     * WriteModeOff just checks ends the writing process after clicking on the scan here button and writing
+     * to the nfc tag.
+     */
     private void WriteModeOff() {
         if (nfcAdapter != null) {
             writeMode = false;
@@ -308,7 +329,11 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         }
     }
 
-    // for NFC tag reading
+    /**
+     * readFromIntent method first checks to see if the NFC adapter has a message to read as well as
+     * whether there is a tag at all and also takes the Ndef message and prepares it to be passed
+     * into buildTagViews as an argument.
+     */
     private void readFromIntent(Intent intent) {
         String action = intent.getAction();
 
@@ -327,7 +352,10 @@ public class MainActivity extends AppCompatActivity implements MedicineFragmentS
         }
     }
 
-    // for setting up NFC tag views
+    /**
+     * buildTagViews uses the NdefMessage parameter to convert it into a readable string and
+     * then after it is converted, it confirms that it is read.
+     */
     private void buildTagViews(NdefMessage[] msgs) {
         if (msgs == null || msgs.length == 0) return;
 

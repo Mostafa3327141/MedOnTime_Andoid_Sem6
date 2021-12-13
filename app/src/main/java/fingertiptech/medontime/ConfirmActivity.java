@@ -37,6 +37,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * ConfirmActivity's only purpose is for allowing the user be redirected after clicking
+ * on the notification for when it's time to take the medication. What happens here is
+ * it creates multiple calls to the API which retrieves medication data to confirm
+ * when a medication is taken after scanning the NFC tag.
+ *
+ * If using an emulator, just click on the Confirm Here button to confirm for now.
+ */
 public class ConfirmActivity extends AppCompatActivity {
 
     Button btn_confirm_log;
@@ -168,6 +176,10 @@ public class ConfirmActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * This logTest method creates an API call in order to send the log for that patient
+     * history in order for the caretaker to confirm that the patient took the meds.
+     */
     private void logTest(String patientId, String medicationId, String medicationName) {
         android.util.Log.i("test", "logTest()");
 
@@ -206,6 +218,10 @@ public class ConfirmActivity extends AppCompatActivity {
         ndef.close();
     }
 
+    /**
+     * This method is for creating an Ndef record to be able to convert the string into an NdefRecord
+     * object to return it.
+     */
     private NdefRecord createRecord(String text) throws UnsupportedEncodingException {
         String lang = "en";
         byte[] textBytes = text.getBytes();
@@ -248,7 +264,10 @@ public class ConfirmActivity extends AppCompatActivity {
         WriteModeOn();
     }
 
-    // enabling NFC writing
+    /**
+     * WriteModeOn is used for setting up the nfc writing by calling the enableForegroundDispatch which
+     * starts up the writing process.
+     */
     private void WriteModeOn() {
         if (nfcAdapter != null) {
             writeMode = true;
@@ -256,7 +275,10 @@ public class ConfirmActivity extends AppCompatActivity {
         }
     }
 
-    // disabling NFC writing
+    /**
+     * WriteModeOff just checks ends the writing process after clicking on the scan here button and writing
+     * to the nfc tag.
+     */
     private void WriteModeOff() {
         if (nfcAdapter != null) {
             writeMode = false;
@@ -264,7 +286,11 @@ public class ConfirmActivity extends AppCompatActivity {
         }
     }
 
-    // for NFC tag reading
+    /**
+     * readFromIntent method first checks to see if the NFC adapter has a message to read as well as
+     * whether there is a tag at all and also takes the Ndef message and prepares it to be passed
+     * into buildTagViews as an argument.
+     */
     private void readFromIntent(Intent intent) {
         String action = intent.getAction();
 
@@ -283,7 +309,14 @@ public class ConfirmActivity extends AppCompatActivity {
         }
     }
 
-    // for setting up NFC tag views
+    /**
+     * buildTagViews uses the NdefMessage parameter to convert it into a readable string and
+     * then after it is converted, it confirms that it is read.
+     *
+     * Here is also where the comparing of the medication ID from our database with the tag's ID
+     * that was converted in order to determine whether to send the log or to show an alert saying
+     * that notifies the patient they're taking the wrong medication.
+     */
     private void buildTagViews(NdefMessage[] msgs) {
         if (msgs == null || msgs.length == 0) return;
 
