@@ -213,7 +213,7 @@ public class MedicineFragment extends Fragment {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-        
+
                 sendNotification("Medication Reminder", "It is time to take " + medicationName, medicationPic);
             }
         };

@@ -192,8 +192,6 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    // this is popup window will show first name and last name
-    // and patien need to enter correct age and phone to reset password
 
     /**
      * This is pop up dialog, when user login with their email and password first time

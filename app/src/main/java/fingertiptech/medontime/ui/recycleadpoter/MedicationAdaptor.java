@@ -51,7 +51,7 @@ public class MedicationAdaptor extends RecyclerView.Adapter<MedicationAdaptor.Me
         return new MedicationViewHolder(view);    }
 
     /**
-     *
+     *  In here will populate data to recycle view
      */
     @Override
     public void onBindViewHolder(@NonNull @NotNull MedicationAdaptor.MedicationViewHolder holder, int position) {
