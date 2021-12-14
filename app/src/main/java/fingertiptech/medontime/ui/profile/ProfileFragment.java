@@ -14,6 +14,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import fingertiptech.medontime.R;
 
+/**
+ * This java file is associated to Profile fragment
+ * This class uses ViewModel and live data for ease of maintaining
+ * To be implemented later
+ */
+
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;

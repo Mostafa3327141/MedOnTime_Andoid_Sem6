@@ -9,6 +9,11 @@ import java.util.List;
 import fingertiptech.medontime.ui.Repository.MedicationRepository;
 import fingertiptech.medontime.ui.model.Medication;
 
+/**
+ * This class is viewModel for Add medication (step 3) fragment
+ * It uses LiveData to actively access and use medication data
+ */
+
 public class MedicineViewModel extends ViewModel {
 
     private MutableLiveData<Medication> medicationMutableLiveDataWhenAdd;

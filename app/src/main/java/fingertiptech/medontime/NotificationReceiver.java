@@ -21,6 +21,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * This class extends BroadcastReceiver interface and it gets executed when the user clicks on the Notification
+ * It is used to confirm that the patient took the medication and send logs to the API.
+ * The caretaker can then see what time each dose of medication is taken and keep track of everything
+ * It user Intent class to open ConfirmActivity to process the NFC functionality to confirm that this is the right medication based on the medication id
+ */
 public class NotificationReceiver extends BroadcastReceiver {
 
     LogJSONPlaceholder logJSONPlaceholder;

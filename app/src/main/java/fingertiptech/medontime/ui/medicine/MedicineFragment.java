@@ -60,6 +60,10 @@ import fingertiptech.medontime.ui.home.HomeFragment;
 import fingertiptech.medontime.ui.imageConvert.ImageBase64Convert;
 import fingertiptech.medontime.ui.model.Medication;
 
+/**
+ * This java file is associated to Add Medicine (step 1) fragment
+ * This class uses ViewModel and live data for ease of maintaining
+ */
 public class MedicineFragment extends Fragment {
 
     private NotificationManagerCompat notificationManagerCompat;
@@ -123,6 +127,9 @@ public class MedicineFragment extends Fragment {
             writeIntoField();
         }
 
+        /**
+         * The following onClickListener handles action for the "Next" button
+         */
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,6 +178,9 @@ public class MedicineFragment extends Fragment {
             }
         });
 
+        /**
+         * The following onClickListener handles action for the "Scan QR Code" button
+         */
         btnScanQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,6 +197,9 @@ public class MedicineFragment extends Fragment {
             }
         });
 
+        /**
+         * The following onClickListener handles action for the "Set Time" button
+         */
         btnSetTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { setTimeHandling(); }
@@ -196,6 +209,12 @@ public class MedicineFragment extends Fragment {
         return root;
     }
 
+    /**
+     * The following method handles action for the "Set Time" button
+     * This method uses the interval or hours in between each dose as well as the first dose time to send notifications
+     * It checks if the interval field is empty, it lets the user know that this is a required field
+     * If the interval is already filled out, it shows the time picker dialog
+     */
     private void setTimeHandling(){
         if(editText_hoursInBetween.getText().toString().matches("")){
             editText_hoursInBetween.setError("Please enter the Interval before setting time!");
@@ -205,6 +224,10 @@ public class MedicineFragment extends Fragment {
         }
     }
 
+    /**
+     * This method converts the interval to milliseconds adn use it to send notifications
+     * This method uses Timer class and TimerTask class in order to invoke send notification method
+     */
     private void setAlarm() {
         long intervalInMillis = hoursInBetween  * 60 * 60 *1000;
         Timer timer = new Timer();
@@ -218,6 +241,11 @@ public class MedicineFragment extends Fragment {
         Toast.makeText(getContext(), "Alarm is set for: " + firstDoseTime.getTime(), Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * This method displays the time picker dialog box
+     * It uses an instance of Calendar class to save the time picked by the user
+     * This method then call set Alarm method to process sending notifications
+     */
     private void showTimePicker() {
         Calendar currentTime = Calendar.getInstance();
         int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
@@ -417,6 +445,15 @@ public class MedicineFragment extends Fragment {
 
     }
 
+    /**
+     * This Method handles sending notifications.
+     * It uses Notification class as well as NotificationCompat class
+     * It also uses the Intent and Pending Intent class in order to open the confirm activity when clicking on the notification
+     * It passes the Toast message, medication id, medication name and patient id to the notification receiver class and use them to send logs to the API
+     * @param title is the title of the notification.
+     * @param content is the action message
+     * @param medPic is the picture of the medication associated to this current notification
+     */
     public void sendNotification(String title, String content, Bitmap medPic){
 
         Intent activityIntent = new Intent(getContext(), ConfirmActivity.class);

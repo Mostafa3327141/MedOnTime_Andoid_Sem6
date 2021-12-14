@@ -39,6 +39,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * This java file is associated to Register fragment
+ * This class uses ViewModel and live data for ease of maintaining
+ */
+
 public class RegisterFragment extends Fragment {
     // 1. User enter information
     // 2. Hashing password

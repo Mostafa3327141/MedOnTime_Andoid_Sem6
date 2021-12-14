@@ -89,7 +89,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
-            setupPopupDialog("Unfortunately, your device is incompatable for NFC scanning. \n\nYou will need to simply click on the button to confirm without verifying the medication's tag ID with the one in our database.");
+            setupPopupDialog("Unfortunately, your device is incompatible for NFC scanning. \n\nYou will need to simply click on the button to confirm without verifying the medication's tag ID with the one in our database.");
         } else {
             setupPopupDialog("Please put your phone to the NFC tag attached to the pillbox and hold it steady to where the Confirm Here frame is to confirm pill intake.");
 

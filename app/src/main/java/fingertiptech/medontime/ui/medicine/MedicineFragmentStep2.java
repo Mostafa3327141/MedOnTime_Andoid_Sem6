@@ -34,6 +34,11 @@ import fingertiptech.medontime.ui.imageConvert.ImageBase64Convert;
 import fingertiptech.medontime.ui.model.Medication;
 import fingertiptech.medontime.ui.model.Patient;
 
+/**
+ * This java file is associated to Add Medicine (step 2) fragment
+ * This class uses ViewModel and live data for ease of maintaining
+ */
+
 public class MedicineFragmentStep2 extends Fragment {
 
 
