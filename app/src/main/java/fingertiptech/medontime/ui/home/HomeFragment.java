@@ -5,42 +5,25 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
-
-
+import java.util.ArrayList;
 
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.jsonplaceholder.LogJSONPlaceholder;
-
-import java.util.ArrayList;
-
 import fingertiptech.medontime.ui.login.LoginFragment;
-import fingertiptech.medontime.ui.medicationDetail.MedicationDetailedFragmentArgs;
-import fingertiptech.medontime.ui.medicine.MedicineFragment;
-import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
 import fingertiptech.medontime.ui.model.Medication;
 import fingertiptech.medontime.ui.recycleadpoter.MedicationAdaptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import fingertiptech.medontime.ui.model.Log;
 
 /**
  * This java file is associated to Home fragment
@@ -71,7 +54,7 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         Button btnAddMed = root.findViewById(R.id.btnAddMed);
 
-        // If user havn't login will show need to login message if arleady login will show the name
+        // If user havn't login will show need to login message if already login will show the name
         SharedPreferences sharedPreferencesMedicationId = getActivity().getPreferences(Context.MODE_PRIVATE);
         String patientId = sharedPreferencesMedicationId.getString("PatientId", "");
         SharedPreferences sharedPreferencesLoginUserPatientObjectId = getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -89,14 +72,16 @@ public class HomeFragment extends Fragment {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                // in this homefragment will show all the patient medicaion list
-                // 1 . Already got the patient id when scan qr code, so will retrive all data from api
+                // in this homefragment will show all the patient medication list
+                // 1 . Already got the patient id when scan qr code, so will retrieve all data from api
                 ArrayList<Medication> patientAllMedication = new ArrayList<>();
                 // 2. get medication list match the patient id
                 // 3. store in arraylist <medication> and populate to recycle view
                 medicationRecyclerViewItems =root.findViewById(R.id.recycleView_medicine);
                 medicationRecyclerViewItems.setHasFixedSize(true);
                 medicationRecyclerViewItems.setLayoutManager(new LinearLayoutManager(getContext()));
+                // In here will get all medication from our database and we need to filter out the medication id
+                // match to our user medication id
                 if(!"".equals(patientId)){
                     homeViewModel.initGetMedication();
                     homeViewModel.getMedicationListRepository().observe(getViewLifecycleOwner(), medicationsListResponse -> {
@@ -105,23 +90,14 @@ public class HomeFragment extends Fragment {
                                 patientAllMedication.add(medication);
                             }
                         }
-                        // just filiter one same as patient id in sharedpreferce
+                        // just filiter one same as patient id in sharedPreference
                         ArrayList<Medication> medicationList = patientAllMedication;
                         MedicationAdaptor medicationAdaptor = new MedicationAdaptor(getActivity() , medicationList);
                         medicationRecyclerViewItems.setAdapter(medicationAdaptor);
                     });
                 }
 
-                medicationRecyclerViewItems.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String a = "";
-                        HomeFragmentDirections.ActionHomeRecycleToMedicationDetailFragment action =
-                                HomeFragmentDirections.actionHomeRecycleToMedicationDetailFragment();
-                        action.setMedicationObjectId("0");
-                        Navigation.findNavController(v).navigate(action);
-                    }
-                });
+
             }
         }, 2000);
 

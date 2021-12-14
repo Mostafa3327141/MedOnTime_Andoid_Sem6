@@ -23,14 +23,18 @@ public class HomeViewModel extends ViewModel {
     private MutableLiveData<Patient> patientMutableLiveData;
 
     private MedicationRepository medicationRepository;
+
     private PatientRepository patientRepository;
 
+    /**
+     * Livedata will retrieve all medication from our API, and observe to our home fragment
+      */
     public void initGetMedication(){
         if (medicationMutableLiveDataList != null){
             return;
         }
         medicationRepository = MedicationRepository.getInstance();
-        medicationMutableLiveDataList = medicationRepository.getMedicationById();
+        medicationMutableLiveDataList = medicationRepository.getMedicationByQRID();
     }
     public void initGetPatient(String patientId){
         if (patientMutableLiveData != null){

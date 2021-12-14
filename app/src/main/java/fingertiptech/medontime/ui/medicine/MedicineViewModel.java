@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.List;
-
 import fingertiptech.medontime.ui.Repository.MedicationRepository;
 import fingertiptech.medontime.ui.model.Medication;
 
@@ -28,7 +26,7 @@ public class MedicineViewModel extends ViewModel {
             return;
         }
         medicationRepository = MedicationRepository.getInstance();
-        medicationMutableLiveDataWhenGet = medicationRepository.getMedicationById(medicationID);
+        medicationMutableLiveDataWhenGet = medicationRepository.getMedicationByQRID(medicationID);
     }
 //    public void initGetMedication(){
 //        if (medicationMutableLiveData != null){

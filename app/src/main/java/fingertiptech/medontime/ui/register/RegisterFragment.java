@@ -57,12 +57,23 @@ public class RegisterFragment extends Fragment {
     }
     PatientJSONPlaceholder patientJSONPlaceholder;
 
+    /**
+     * Here has  2 scenario
+     * First, is when patient with caretaker enter the email and password which is given by
+     * their caretaker first time. It will jump to register page which will fill the basic information
+     * and patient need to update their own password here
+     * And will call updatePassword() funciton here
+     * Second, patient without caretaker they can register their account in here and will save to our database
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         fragmentRegisterBinding = FragmentRegisterBinding.inflate(getLayoutInflater());
         View view = fragmentRegisterBinding.getRoot();
-//        return inflater.inflate(R.layout.fragment_register, container, false);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://medontime-api.herokuapp.com/API/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -85,7 +96,6 @@ public class RegisterFragment extends Fragment {
 
         // When user login need fill this filed auto
         SharedPreferences sharedPreferencesUserLoginInfo = getActivity().getPreferences(Context.MODE_PRIVATE);
-        final Gson gson = new Gson();
         Patient patientLogin =  getSharedPreferencepatient();
         if(getSharedPreferencepatient() != null){
             fragmentRegisterBinding.txtFirstName.setText(patientLogin.getFirstName());
@@ -97,6 +107,12 @@ public class RegisterFragment extends Fragment {
         return view;
     }
 
+    /**
+     * In here will call Retrofit @PUT action to update our patient password.
+     * When user enter their password will encrypt their password and store to database
+     * @param patient
+     * @param resetPassword
+     */
     private void updatePassword(Patient patient, String resetPassword) {
         Patient updatePatientPass = new Patient(patient.getId(), patient.getPatientID(),patient.getCaretakerID(),
                 patient.getFirstName(),patient.getLastName(),patient.getEmail(),
@@ -126,6 +142,10 @@ public class RegisterFragment extends Fragment {
         });
     }
 
+    /**
+     * In here we get all our patient in our database, in order to know how many patient in our database
+     * We need to generate the patient ID for our patient
+     */
     private void getAllPatient() {
         // need to know how many pantients in db
         Call<List<Patient>> callPatient = patientJSONPlaceholder.getAllPatients();
@@ -155,6 +175,11 @@ public class RegisterFragment extends Fragment {
         });
     }
 
+    /**
+     * In here we get patient information and store to Patient object and we know how many
+     * patient in our database will add one as our patient ID and store to our database
+     * @param totalPatient
+     */
     private void addPatient(int totalPatient) {
         // add patient to db
         Patient patient = new Patient(
@@ -194,6 +219,10 @@ public class RegisterFragment extends Fragment {
         });
     }
 
+    /**
+     * If we had saved patient id before it will return Patient data for the patient with caretaker first time login function
+     * @return
+     */
     private Patient getSharedPreferencepatient(){
         // When user login need fill this filed auto
         SharedPreferences sharedPreferencesUserLoginInfo = getActivity().getPreferences(Context.MODE_PRIVATE);

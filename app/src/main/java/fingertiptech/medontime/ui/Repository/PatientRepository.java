@@ -15,7 +15,9 @@ import fingertiptech.medontime.ui.model.Patient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * Here is our Patient repository to connect our Retrofit service action and our livedata
+ */
 public class PatientRepository {
 
     private static PatientRepository patientRepository;
@@ -32,6 +34,12 @@ public class PatientRepository {
         patientJSONPlaceholder = RetrofitService.cteateService(PatientJSONPlaceholder.class);
     }
 
+    /**
+     * In this function will call @GET action from our interface and fetch patient and store to
+     * our liveData, according to our patient Object ID
+     * @param patientObjectId
+     * @return
+     */
     public MutableLiveData<Patient> getPatient(String patientObjectId){
         MutableLiveData<Patient> patientData = new MutableLiveData<>();
         patientJSONPlaceholder.getPatient(patientObjectId).enqueue(new Callback<Patient>() {
@@ -51,6 +59,10 @@ public class PatientRepository {
         return patientData;
     }
 
+    /**
+     * In this function will call @GET action from our interface and fetch patient and store to
+     * our liveData will store all the patient list
+     */
     public MutableLiveData<List<Patient>> getAllPatient(){
         MutableLiveData<List<Patient>> patientListData = new MutableLiveData<>();
         patientJSONPlaceholder.getAllPatients().enqueue(new Callback<List<Patient>>() {

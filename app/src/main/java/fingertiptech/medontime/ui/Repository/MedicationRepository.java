@@ -13,7 +13,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Here is our Medication repository to connect our Retrofit service action and our livedata
+ */
 public class MedicationRepository {
+
     private static MedicationRepository medicationRepository;
 
     public static MedicationRepository getInstance(){
@@ -29,7 +33,13 @@ public class MedicationRepository {
         medicationJSONPlaceholder = RetrofitService.cteateService(MedicationJSONPlaceholder.class);
     }
 
-    public MutableLiveData<Medication> getMedicationById(String scanQRId){
+    /**
+     * In this function will call @GET action from our interface and fetch medication and store to
+     * our liveData, according to our qrcode ID
+     * @param scanQRId QR code ID
+     * @return
+     */
+    public MutableLiveData<Medication> getMedicationByQRID(String scanQRId){
         MutableLiveData<Medication> medicationData = new MutableLiveData<>();
         medicationJSONPlaceholder.getMedication(scanQRId).enqueue(new Callback<Medication>() {
             @Override
@@ -48,7 +58,12 @@ public class MedicationRepository {
         });
         return medicationData;
     }
-    public MutableLiveData<List<Medication>> getMedicationById(){
+
+    /**
+     * In this function will call @GET action from our interface and fetch medication and store to
+     * our liveData will store all the medication list
+     */
+    public MutableLiveData<List<Medication>> getMedicationByQRID(){
         MutableLiveData<List<Medication>> medicationData = new MutableLiveData<>();
         medicationJSONPlaceholder.getMedicationList().enqueue(new Callback<List<Medication>>() {
             @Override
@@ -67,6 +82,12 @@ public class MedicationRepository {
         });
         return medicationData;
     }
+
+    /**
+     * Here will add medication to our database
+     * @param medication
+     * @return
+     */
     public MutableLiveData<Medication> addMedication(Medication medication){
         MutableLiveData<Medication> medicationData = new MutableLiveData<>();
         medicationJSONPlaceholder.addMedication(medication).enqueue(new Callback<Medication>() {
@@ -87,6 +108,12 @@ public class MedicationRepository {
         return medicationData;
     }
 
+
+    /**
+     * Here will update medication to our database
+     * @param medication
+     * @return
+     */
     public MutableLiveData<Medication> updateMedication(Medication medication){
         MutableLiveData<Medication> medicationData = new MutableLiveData<>();
         medicationJSONPlaceholder.addMedication(medication).enqueue(new Callback<Medication>() {

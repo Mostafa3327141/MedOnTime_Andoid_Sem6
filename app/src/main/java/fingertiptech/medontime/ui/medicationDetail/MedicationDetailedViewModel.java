@@ -23,7 +23,7 @@ public class MedicationDetailedViewModel extends ViewModel {
             return;
         }
         medicationRepository = MedicationRepository.getInstance();
-        medicationMutableLiveDataWhenGet = medicationRepository.getMedicationById(medicationID);
+        medicationMutableLiveDataWhenGet = medicationRepository.getMedicationByQRID(medicationID);
     }
 
     public LiveData<Medication> getMedicationRepositoryWhenGet() {

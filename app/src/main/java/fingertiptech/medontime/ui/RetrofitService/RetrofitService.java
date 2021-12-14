@@ -14,6 +14,12 @@ public class RetrofitService {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
+    /**
+     * Create an implementation of the API endpoints defined by the service interface.
+     * The relative path for a given method is obtained from an annotation on the method describing the request type. The built-in methods are GET, PUT, POST, PATCH, HEAD, DELETE and OPTIONS.
+     * @param serviceClass for interface of Retrofit for action @GET, @POST, @POST
+     * @return
+     */
     public static <T> T cteateService(Class<T> serviceClass) {
         return retrofit.create(serviceClass);
     }
