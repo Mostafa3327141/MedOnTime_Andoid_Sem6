@@ -7,6 +7,12 @@ import androidx.lifecycle.ViewModel;
 import fingertiptech.medontime.ui.Repository.MedicationRepository;
 import fingertiptech.medontime.ui.model.Medication;
 
+/**
+ * This class is viewModel for medication detail fragment
+ * It uses LiveData to actively access and use data
+ */
+
+
 public class MedicationDetailedViewModel extends ViewModel {
     private MutableLiveData<Medication> medicationMutableLiveDataWhenGet;
 

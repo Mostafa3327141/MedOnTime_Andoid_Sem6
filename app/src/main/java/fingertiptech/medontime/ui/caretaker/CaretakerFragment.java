@@ -15,6 +15,13 @@ import androidx.lifecycle.ViewModelProvider;
 import fingertiptech.medontime.R;
 import fingertiptech.medontime.ui.caretaker.CaretakerViewModel;
 
+/**
+ * This java file is associated to Caretakers fragment
+ * This class uses ViewModel and live data for ease of maintaining
+ */
+
+//TODO to be implemented later. To be used for showing the caretaker info
+
 public class CaretakerFragment extends Fragment {
 
     private CaretakerViewModel caretakerViewModel;

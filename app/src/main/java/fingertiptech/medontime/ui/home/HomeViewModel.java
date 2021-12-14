@@ -11,6 +11,11 @@ import fingertiptech.medontime.ui.Repository.PatientRepository;
 import fingertiptech.medontime.ui.model.Medication;
 import fingertiptech.medontime.ui.model.Patient;
 
+/**
+ * This class is viewModel for home fragment
+ * It uses LiveData to actively access and use medication data
+ */
+
 public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<List<Medication>> medicationMutableLiveDataList;

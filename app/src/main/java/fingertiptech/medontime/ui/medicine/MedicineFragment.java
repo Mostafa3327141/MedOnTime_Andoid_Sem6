@@ -16,7 +16,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,8 +112,6 @@ public class MedicineFragment extends Fragment {
         btnSetTime = root.findViewById(R.id.btnSetTime);
 
         editText_hoursInBetween = root.findViewById(R.id.editText_interval);
-
-
         medicineViewModel =
                 new ViewModelProvider(this).get(MedicineViewModel.class);
 
@@ -123,7 +120,7 @@ public class MedicineFragment extends Fragment {
         String medicationListIdOnClick = sharedPreferencesMedicationIdListOnclick.getString("MedicationIdListClick", "");
         if (!"".equals(medicationListIdOnClick)){
             resultQRScan = medicationListIdOnClick;
-            writeIntoFeild();
+            writeIntoField();
         }
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -192,19 +189,20 @@ public class MedicineFragment extends Fragment {
 
         btnSetTime.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(editText_hoursInBetween.getText().toString().matches("")){
-                    editText_hoursInBetween.setError("Please enter the Interval before setting time!");
-                    //Toast.makeText(getActivity(), "Please enter the Interval before setting time!",Toast.LENGTH_LONG).show();
-                }else {
-                    hoursInBetween = Integer.parseInt(editText_hoursInBetween.getText().toString());
-                    showTimePicker();
-                }
-            }
+            public void onClick(View v) { setTimeHandling(); }
         });
 
 
         return root;
+    }
+
+    private void setTimeHandling(){
+        if(editText_hoursInBetween.getText().toString().matches("")){
+            editText_hoursInBetween.setError("Please enter the Interval before setting time!");
+        }else {
+            hoursInBetween = Integer.parseInt(editText_hoursInBetween.getText().toString());
+            showTimePicker();
+        }
     }
 
     private void setAlarm() {
@@ -213,7 +211,6 @@ public class MedicineFragment extends Fragment {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-
                 sendNotification("Medication Reminder", "It is time to take " + medicationName, medicationPic);
             }
         };
@@ -257,7 +254,7 @@ public class MedicineFragment extends Fragment {
      * writeIntoFiled() will be called.
      * It will get medication information from API, then use liveData and viewModel to populate into field
      */
-    public void writeIntoFeild(){
+    public void writeIntoField(){
         medicineViewModel.initGetMedicationByMedicationId(resultQRScan);
         medicineViewModel.getMedicationRepositoryWhenGet().observe(getViewLifecycleOwner(), medicationsResponse -> {
             medicationId = medicationsResponse.getId();
@@ -395,7 +392,7 @@ public class MedicineFragment extends Fragment {
                     Log.wtf("nancy test medicationIdArrayList",String.valueOf(covertArrayListtoString));
 
                     Toast.makeText(getActivity(),resultQRScan,Toast.LENGTH_LONG).show();
-                    writeIntoFeild();
+                    writeIntoField();
                     Thread.sleep(2000);
 
                 }catch (Exception e){

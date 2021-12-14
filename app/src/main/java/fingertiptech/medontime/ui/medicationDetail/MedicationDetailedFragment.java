@@ -31,6 +31,11 @@ import fingertiptech.medontime.ui.jsonplaceholder.PatientJSONPlaceholder;
 import fingertiptech.medontime.ui.medicine.MedicineFragment;
 import fingertiptech.medontime.ui.medicine.MedicineFragmentStep2;
 
+/**
+ * This java file is associated to Medication Detail fragment
+ * This class uses ViewModel and live data for ease of maintaining
+ */
+
 public class MedicationDetailedFragment extends Fragment {
 
     private MedicationDetailedViewModel medicationDetailedViewModel;

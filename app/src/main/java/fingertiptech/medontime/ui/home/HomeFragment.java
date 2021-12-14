@@ -42,6 +42,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import fingertiptech.medontime.ui.model.Log;
 
+/**
+ * This java file is associated to Home fragment
+ * This class uses ViewModel and live data for ease of maintaining
+ * Home fragment prompts the user to log in if they haven't logged in already
+ * It also shows the list of medications associated with the current user
+ */
 
 public class HomeFragment extends Fragment {
 

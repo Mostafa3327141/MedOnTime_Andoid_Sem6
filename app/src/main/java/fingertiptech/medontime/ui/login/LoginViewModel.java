@@ -10,6 +10,13 @@ import fingertiptech.medontime.ui.Repository.MedicationRepository;
 import fingertiptech.medontime.ui.Repository.PatientRepository;
 import fingertiptech.medontime.ui.model.Patient;
 
+
+/**
+ * This class is viewModel for home fragment
+ * It uses LiveData to actively access and use the user data for login purposes
+ */
+
+
 public class LoginViewModel extends ViewModel {
 
 

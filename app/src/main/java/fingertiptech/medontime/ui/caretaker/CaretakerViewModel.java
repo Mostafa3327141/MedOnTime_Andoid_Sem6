@@ -4,6 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * This class is viewModel for Caretakers fragment
+ * It uses LiveData to actively access and use data
+ */
+
 public class CaretakerViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
